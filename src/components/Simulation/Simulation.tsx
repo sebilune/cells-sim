@@ -3,9 +3,10 @@ import createREGL from "regl";
 
 interface SimulationProps {
   onRandomizeRef?: (randomizeFn: () => void) => void;
+  onResetRef?: (resetFn: () => void) => void;
 }
 
-export function Simulation({ onRandomizeRef }: SimulationProps) {
+export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<{
     regl: any;
@@ -519,6 +520,25 @@ export function Simulation({ onRandomizeRef }: SimulationProps) {
       console.log("Rules randomized!", ATTRACTION_RULES);
     }
 
+    // Reset simulation to initial state
+    function resetSimulation() {
+      // Recreate the simulation framebuffers with fresh initial data
+      const newSimulationFBOs = createSimulationFBOs();
+
+      // Clean up old framebuffers
+      simulationFBOs[0].destroy();
+      simulationFBOs[1].destroy();
+
+      // Replace with new framebuffers
+      simulationFBOs[0] = newSimulationFBOs[0];
+      simulationFBOs[1] = newSimulationFBOs[1];
+
+      // Reset frame counter
+      currentFrame = 0;
+
+      console.log("Simulation reset!");
+    }
+
     // Mouse and wheel event handlers for camera control
     const handleMouseDown = (event: MouseEvent) => {
       mouseState.isDragging = true;
@@ -571,6 +591,11 @@ export function Simulation({ onRandomizeRef }: SimulationProps) {
     // Expose randomize function to parent component
     if (onRandomizeRef) {
       onRandomizeRef(randomizeRules);
+    }
+
+    // Expose reset function to parent component
+    if (onResetRef) {
+      onResetRef(resetSimulation);
     }
 
     canvas.style.cursor = "default";

@@ -7,10 +7,17 @@ import "./index.css";
 
 function App() {
   const randomizeRef = useRef<(() => void) | null>(null);
+  const resetRef = useRef<(() => void) | null>(null);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
       randomizeRef.current();
+    }
+  };
+
+  const handleReset = () => {
+    if (resetRef.current) {
+      resetRef.current();
     }
   };
 
@@ -20,8 +27,18 @@ function App() {
         onRandomizeRef={(randomizeFn) => {
           randomizeRef.current = randomizeFn;
         }}
+        onResetRef={(resetFn) => {
+          resetRef.current = resetFn;
+        }}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
+        <Button
+          variant="destructive"
+          onClick={handleReset}
+          title="Reset simulation"
+        >
+          Reset
+        </Button>
         <Button
           variant="outline"
           onClick={handleRandomize}
