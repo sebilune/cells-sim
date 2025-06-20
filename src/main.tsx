@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { Simulation } from "@/components/Simulation";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -37,12 +37,35 @@ function App() {
     [0.2, -0.15, -0.25, 0.3, -0.3, 0.1],
   ];
   const [config, setConfig] = useState(defaultConfig);
-  const [attractionRules, setAttractionRules] = useState(
-    defaultAttractionRules
-  );
-  const [showOverlay, setShowOverlay] = useState(true);
-  const [showRules, setShowRules] = useState(false);
-  const [showPhysics, setShowPhysics] = useState(false);
+  const [attractionRules, setAttractionRules] = useState(() => {
+    try {
+      const stored = localStorage.getItem("cells-sim-rules");
+      return stored ? JSON.parse(stored) : defaultAttractionRules;
+    } catch {
+      return defaultAttractionRules;
+    }
+  });
+  // Settings state persisted in localStorage
+  const defaultSettings = {
+    showOverlay: true,
+    showRules: false,
+    showPhysics: false,
+  };
+  type SettingsState = typeof defaultSettings;
+  const [settings, setSettings] = useState<SettingsState>(() => {
+    try {
+      const stored = localStorage.getItem("cells-sim-settings");
+      return stored ? JSON.parse(stored) : defaultSettings;
+    } catch {
+      return defaultSettings;
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem("cells-sim-settings", JSON.stringify(settings));
+  }, [settings]);
+  useEffect(() => {
+    localStorage.setItem("cells-sim-rules", JSON.stringify(attractionRules));
+  }, [attractionRules]);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
@@ -71,7 +94,7 @@ function App() {
         setAttractionRules={setAttractionRules}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
-        {showOverlay && (
+        {settings.showOverlay && (
           <>
             <Button
               variant="destructive"
@@ -90,24 +113,30 @@ function App() {
           </>
         )}
         <Settings
-          showOverlay={showOverlay}
-          setShowOverlay={setShowOverlay}
-          showRules={showRules}
-          setShowRules={setShowRules}
-          showPhysics={showPhysics}
-          setShowPhysics={setShowPhysics}
+          showOverlay={settings.showOverlay}
+          setShowOverlay={(v) =>
+            setSettings((s: SettingsState) => ({ ...s, showOverlay: v }))
+          }
+          showRules={settings.showRules}
+          setShowRules={(v) =>
+            setSettings((s: SettingsState) => ({ ...s, showRules: v }))
+          }
+          showPhysics={settings.showPhysics}
+          setShowPhysics={(v) =>
+            setSettings((s: SettingsState) => ({ ...s, showPhysics: v }))
+          }
         />
         <ThemeToggle />
       </div>
       <div className="absolute bottom-4 right-4 z-10 flex flex-row gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
-        {showRules && (
+        {settings.showRules && (
           <div className="overflow-x-auto bg-transparent p-0 m-0">
             <div className="inline-block align-bottom bg-transparent p-0 m-0">
               <RulesTable rules={attractionRules} />
             </div>
           </div>
         )}
-        {showPhysics && (
+        {settings.showPhysics && (
           <div className="overflow-x-auto bg-transparent p-0 m-0">
             <div className="inline-block align-bottom bg-transparent p-0 m-0">
               <PhysicsTable config={config} />
