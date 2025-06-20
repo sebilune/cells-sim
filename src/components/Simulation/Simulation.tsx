@@ -330,64 +330,64 @@ export function Simulation({
 
         // Pass 6x6 rules matrix as 12 vec3 uniforms (6 types × 2 vec3 each)
         u_rules0a: () => [
-          attractionRules[0][0],
-          attractionRules[0][1],
-          attractionRules[0][2],
+          Number(attractionRules[0][0].toFixed(2)),
+          Number(attractionRules[0][1].toFixed(2)),
+          Number(attractionRules[0][2].toFixed(2)),
         ], // red->rgb
         u_rules0b: () => [
-          attractionRules[0][3],
-          attractionRules[0][4],
-          attractionRules[0][5],
+          Number(attractionRules[0][3].toFixed(2)),
+          Number(attractionRules[0][4].toFixed(2)),
+          Number(attractionRules[0][5].toFixed(2)),
         ], // red->ycm
         u_rules1a: () => [
-          attractionRules[1][0],
-          attractionRules[1][1],
-          attractionRules[1][2],
+          Number(attractionRules[1][0].toFixed(2)),
+          Number(attractionRules[1][1].toFixed(2)),
+          Number(attractionRules[1][2].toFixed(2)),
         ], // green->rgb
         u_rules1b: () => [
-          attractionRules[1][3],
-          attractionRules[1][4],
-          attractionRules[1][5],
+          Number(attractionRules[1][3].toFixed(2)),
+          Number(attractionRules[1][4].toFixed(2)),
+          Number(attractionRules[1][5].toFixed(2)),
         ], // green->ycm
         u_rules2a: () => [
-          attractionRules[2][0],
-          attractionRules[2][1],
-          attractionRules[2][2],
+          Number(attractionRules[2][0].toFixed(2)),
+          Number(attractionRules[2][1].toFixed(2)),
+          Number(attractionRules[2][2].toFixed(2)),
         ], // blue->rgb
         u_rules2b: () => [
-          attractionRules[2][3],
-          attractionRules[2][4],
-          attractionRules[2][5],
+          Number(attractionRules[2][3].toFixed(2)),
+          Number(attractionRules[2][4].toFixed(2)),
+          Number(attractionRules[2][5].toFixed(2)),
         ], // blue->ycm
         u_rules3a: () => [
-          attractionRules[3][0],
-          attractionRules[3][1],
-          attractionRules[3][2],
+          Number(attractionRules[3][0].toFixed(2)),
+          Number(attractionRules[3][1].toFixed(2)),
+          Number(attractionRules[3][2].toFixed(2)),
         ], // yellow->rgb
         u_rules3b: () => [
-          attractionRules[3][3],
-          attractionRules[3][4],
-          attractionRules[3][5],
+          Number(attractionRules[3][3].toFixed(2)),
+          Number(attractionRules[3][4].toFixed(2)),
+          Number(attractionRules[3][5].toFixed(2)),
         ], // yellow->ycm
         u_rules4a: () => [
-          attractionRules[4][0],
-          attractionRules[4][1],
-          attractionRules[4][2],
+          Number(attractionRules[4][0].toFixed(2)),
+          Number(attractionRules[4][1].toFixed(2)),
+          Number(attractionRules[4][2].toFixed(2)),
         ], // cyan->rgb
         u_rules4b: () => [
-          attractionRules[4][3],
-          attractionRules[4][4],
-          attractionRules[4][5],
+          Number(attractionRules[4][3].toFixed(2)),
+          Number(attractionRules[4][4].toFixed(2)),
+          Number(attractionRules[4][5].toFixed(2)),
         ], // cyan->ycm
         u_rules5a: () => [
-          attractionRules[5][0],
-          attractionRules[5][1],
-          attractionRules[5][2],
+          Number(attractionRules[5][0].toFixed(2)),
+          Number(attractionRules[5][1].toFixed(2)),
+          Number(attractionRules[5][2].toFixed(2)),
         ], // magenta->rgb
         u_rules5b: () => [
-          attractionRules[5][3],
-          attractionRules[5][4],
-          attractionRules[5][5],
+          Number(attractionRules[5][3].toFixed(2)),
+          Number(attractionRules[5][4].toFixed(2)),
+          Number(attractionRules[5][5].toFixed(2)),
         ], // magenta->ycm
       },
 
@@ -512,7 +512,7 @@ export function Simulation({
     // Randomize attraction rules
     function randomizeRules() {
       const newRules = attractionRules.map((row) =>
-        row.map(() => (Math.random() - 0.5) * 2)
+        row.map(() => Number(((Math.random() - 0.5) * 2).toFixed(2)))
       );
       setAttractionRules(newRules);
       console.log("Rules randomized!", newRules);
