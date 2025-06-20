@@ -40,6 +40,9 @@ function App() {
   const [attractionRules, setAttractionRules] = useState(
     defaultAttractionRules
   );
+  const [showOverlay, setShowOverlay] = useState(true);
+  const [showRules, setShowRules] = useState(true);
+  const [showPhysics, setShowPhysics] = useState(true);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
@@ -68,34 +71,49 @@ function App() {
         setAttractionRules={setAttractionRules}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
-        <Button
-          variant="secondary"
-          onClick={handleRandomize}
-          title="Randomize simulation (R)"
-        >
-          Randomize
-        </Button>
-        <Button
-          variant="destructive"
-          onClick={handleReset}
-          title="Reset simulation"
-        >
-          Reset
-        </Button>
+        {showOverlay && (
+          <>
+            <Button
+              variant="destructive"
+              onClick={handleReset}
+              title="Reset simulation"
+            >
+              Reset
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={handleRandomize}
+              title="Randomize simulation (R)"
+            >
+              Randomize
+            </Button>
+          </>
+        )}
+        <Settings
+          showOverlay={showOverlay}
+          setShowOverlay={setShowOverlay}
+          showRules={showRules}
+          setShowRules={setShowRules}
+          showPhysics={showPhysics}
+          setShowPhysics={setShowPhysics}
+        />
         <ThemeToggle />
-        <Settings />
       </div>
       <div className="absolute bottom-4 right-4 z-10 flex flex-row gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
-        <div className="overflow-x-auto bg-transparent p-0 m-0">
-          <div className="inline-block align-bottom bg-transparent p-0 m-0">
-            <RulesTable rules={attractionRules} />
+        {showRules && (
+          <div className="overflow-x-auto bg-transparent p-0 m-0">
+            <div className="inline-block align-bottom bg-transparent p-0 m-0">
+              <RulesTable rules={attractionRules} />
+            </div>
           </div>
-        </div>
-        <div className="overflow-x-auto bg-transparent p-0 m-0">
-          <div className="inline-block align-bottom bg-transparent p-0 m-0">
-            <PhysicsTable config={config} />
+        )}
+        {showPhysics && (
+          <div className="overflow-x-auto bg-transparent p-0 m-0">
+            <div className="inline-block align-bottom bg-transparent p-0 m-0">
+              <PhysicsTable config={config} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
