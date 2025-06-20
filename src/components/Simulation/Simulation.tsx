@@ -21,8 +21,8 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
     // Simulation state
     let camera = {
       x: 0.0,
-      y: 0.0,
-      zoom: 1.0,
+      y: +0.012, // Slight top offset
+      zoom: 0.8, // Initial zoom
     };
 
     let mouseState = {

@@ -27,17 +27,15 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen">
-      <div className="mt-12">
-        <Simulation
-          onRandomizeRef={(randomizeFn) => {
-            randomizeRef.current = randomizeFn;
-          }}
-          onResetRef={(resetFn) => {
-            resetRef.current = resetFn;
-          }}
-        />
-      </div>
+    <div className="w-screen h-screen relative">
+      <Simulation
+        onRandomizeRef={(randomizeFn) => {
+          randomizeRef.current = randomizeFn;
+        }}
+        onResetRef={(resetFn) => {
+          resetRef.current = resetFn;
+        }}
+      />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
         <Button
           variant="destructive"
