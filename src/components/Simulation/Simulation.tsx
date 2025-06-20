@@ -1,11 +1,7 @@
 import { useEffect, useRef } from "preact/hooks";
 import createREGL from "regl";
 
-interface SimulationProps {
-  className?: string;
-}
-
-export function Simulation({ className }: SimulationProps) {
+export function Simulation() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<{
     regl: any;
@@ -80,9 +76,10 @@ export function Simulation({ className }: SimulationProps) {
       return Math.max(2.0, CONFIG.particleSize * scaleFactor);
     }
 
-    // Initialize canvas
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    // Ensure canvas fills the container and wait for proper layout
+    // Simple canvas setup - just set dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     // Create regl instance
     const regl = createREGL({
@@ -611,15 +608,5 @@ export function Simulation({ className }: SimulationProps) {
     };
   }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className={className}
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "block",
-      }}
-    />
-  );
+  return <canvas ref={canvasRef} className="" />;
 }

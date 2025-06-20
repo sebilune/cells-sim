@@ -1,9 +1,10 @@
 import { render } from "preact";
 import { Simulation } from "./components/Simulation";
+import "./index.css";
 
 function App() {
   return (
-    <div style={{ width: "100vw", height: "100vh", margin: 0, padding: 0 }}>
+    <div className="w-screen h-screen">
       <Simulation />
     </div>
   );
