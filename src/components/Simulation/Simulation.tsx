@@ -4,9 +4,30 @@ import createREGL from "regl";
 interface SimulationProps {
   onRandomizeRef?: (randomizeFn: () => void) => void;
   onResetRef?: (resetFn: () => void) => void;
+  attractionRules: number[][];
+  setAttractionRules: (rules: number[][]) => void;
+  config: {
+    maxDistance: number;
+    damping: number;
+    timeScale: number;
+    wallRepel: number;
+    wallForce: number;
+    particleSize: number;
+    useProportionalScaling: boolean;
+    refPopulation: number;
+    scalingRatio: number;
+  };
+  setConfig: (config: SimulationProps["config"]) => void;
 }
 
-export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
+export function Simulation({
+  onRandomizeRef,
+  onResetRef,
+  attractionRules,
+  setAttractionRules,
+  config,
+  setConfig,
+}: SimulationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<{
     regl: any;
@@ -14,7 +35,7 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
   } | null>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !config || !attractionRules) return;
 
     const canvas = canvasRef.current;
 
@@ -45,40 +66,18 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
     const PARTICLE_COUNT_SQRT = Math.ceil(Math.sqrt(PARTICLE_COUNT));
     const SIM_RES = PARTICLE_COUNT_SQRT;
 
-    // 36 interaction rules (6x6 matrix)
-    let ATTRACTION_RULES = [
-      [-0.32, -0.17, 0.34, 0.15, -0.1, 0.2], // Red
-      [-0.34, -0.1, -0.2, 0.15, 0.25, -0.15], // Green
-      [0.15, -0.2, 0.34, -0.17, 0.1, -0.25], // Blue
-      [-0.17, 0.15, -0.32, -0.1, -0.2, 0.3], // Yellow
-      [-0.1, 0.25, 0.1, -0.2, 0.15, -0.3], // Cyan
-      [0.2, -0.15, -0.25, 0.3, -0.3, 0.1], // Magenta
-    ];
-
-    const CONFIG = {
-      maxDistance: 0.25, // Interaction radius in normalized space
-      damping: 0.2, // Velocity damping
-      timeScale: 10.0, // Simulation speed
-      wallRepel: 0.125, // Buffer zone in normalized space
-      wallForce: 0.01, // Wall repulsion strength
-      particleSize: 12.0, // Base particle size
-      useProportionalScaling: true, // Scaling based on population
-      refPopulation: 1200, // Reference population for scaling
-      scalingRatio: 0.5, // Exponent for scaling factor
-    };
-
     // Calculate proportional particle size based on population
     function getEffectiveParticleSize(): number {
-      if (!CONFIG.useProportionalScaling) {
-        return CONFIG.particleSize;
+      if (!config.useProportionalScaling) {
+        return config.particleSize;
       }
 
       // Scale inversely with configurable ratio to keep visual density reasonable
-      const populationRatio = CONFIG.refPopulation / POPULATION;
-      const scaleFactor = Math.pow(populationRatio, CONFIG.scalingRatio);
+      const populationRatio = config.refPopulation / POPULATION;
+      const scaleFactor = Math.pow(populationRatio, config.scalingRatio);
 
       // Apply minimum size threshold to keep particles visible
-      return Math.max(2.0, CONFIG.particleSize * scaleFactor);
+      return Math.max(2.0, config.particleSize * scaleFactor);
     }
 
     // Ensure canvas fills the container and wait for proper layout
@@ -322,73 +321,73 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
         u_resolution: [SIM_RES, SIM_RES],
         u_time: ({ tick }) => tick * 0.01,
 
-        // Pass config values
-        u_maxDistance: () => CONFIG.maxDistance,
-        u_damping: () => CONFIG.damping,
-        u_timeScale: () => CONFIG.timeScale,
-        u_wallRepel: () => CONFIG.wallRepel,
-        u_wallForce: () => CONFIG.wallForce,
+        // Pass config values from props
+        u_maxDistance: () => config.maxDistance,
+        u_damping: () => config.damping,
+        u_timeScale: () => config.timeScale,
+        u_wallRepel: () => config.wallRepel,
+        u_wallForce: () => config.wallForce,
 
         // Pass 6x6 rules matrix as 12 vec3 uniforms (6 types × 2 vec3 each)
         u_rules0a: () => [
-          ATTRACTION_RULES[0][0],
-          ATTRACTION_RULES[0][1],
-          ATTRACTION_RULES[0][2],
+          attractionRules[0][0],
+          attractionRules[0][1],
+          attractionRules[0][2],
         ], // red->rgb
         u_rules0b: () => [
-          ATTRACTION_RULES[0][3],
-          ATTRACTION_RULES[0][4],
-          ATTRACTION_RULES[0][5],
+          attractionRules[0][3],
+          attractionRules[0][4],
+          attractionRules[0][5],
         ], // red->ycm
         u_rules1a: () => [
-          ATTRACTION_RULES[1][0],
-          ATTRACTION_RULES[1][1],
-          ATTRACTION_RULES[1][2],
+          attractionRules[1][0],
+          attractionRules[1][1],
+          attractionRules[1][2],
         ], // green->rgb
         u_rules1b: () => [
-          ATTRACTION_RULES[1][3],
-          ATTRACTION_RULES[1][4],
-          ATTRACTION_RULES[1][5],
+          attractionRules[1][3],
+          attractionRules[1][4],
+          attractionRules[1][5],
         ], // green->ycm
         u_rules2a: () => [
-          ATTRACTION_RULES[2][0],
-          ATTRACTION_RULES[2][1],
-          ATTRACTION_RULES[2][2],
+          attractionRules[2][0],
+          attractionRules[2][1],
+          attractionRules[2][2],
         ], // blue->rgb
         u_rules2b: () => [
-          ATTRACTION_RULES[2][3],
-          ATTRACTION_RULES[2][4],
-          ATTRACTION_RULES[2][5],
+          attractionRules[2][3],
+          attractionRules[2][4],
+          attractionRules[2][5],
         ], // blue->ycm
         u_rules3a: () => [
-          ATTRACTION_RULES[3][0],
-          ATTRACTION_RULES[3][1],
-          ATTRACTION_RULES[3][2],
+          attractionRules[3][0],
+          attractionRules[3][1],
+          attractionRules[3][2],
         ], // yellow->rgb
         u_rules3b: () => [
-          ATTRACTION_RULES[3][3],
-          ATTRACTION_RULES[3][4],
-          ATTRACTION_RULES[3][5],
+          attractionRules[3][3],
+          attractionRules[3][4],
+          attractionRules[3][5],
         ], // yellow->ycm
         u_rules4a: () => [
-          ATTRACTION_RULES[4][0],
-          ATTRACTION_RULES[4][1],
-          ATTRACTION_RULES[4][2],
+          attractionRules[4][0],
+          attractionRules[4][1],
+          attractionRules[4][2],
         ], // cyan->rgb
         u_rules4b: () => [
-          ATTRACTION_RULES[4][3],
-          ATTRACTION_RULES[4][4],
-          ATTRACTION_RULES[4][5],
+          attractionRules[4][3],
+          attractionRules[4][4],
+          attractionRules[4][5],
         ], // cyan->ycm
         u_rules5a: () => [
-          ATTRACTION_RULES[5][0],
-          ATTRACTION_RULES[5][1],
-          ATTRACTION_RULES[5][2],
+          attractionRules[5][0],
+          attractionRules[5][1],
+          attractionRules[5][2],
         ], // magenta->rgb
         u_rules5b: () => [
-          ATTRACTION_RULES[5][3],
-          ATTRACTION_RULES[5][4],
-          ATTRACTION_RULES[5][5],
+          attractionRules[5][3],
+          attractionRules[5][4],
+          attractionRules[5][5],
         ], // magenta->ycm
       },
 
@@ -512,12 +511,11 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
 
     // Randomize attraction rules
     function randomizeRules() {
-      for (let i = 0; i < PARTICLE_TYPES.length; i++) {
-        for (let j = 0; j < PARTICLE_TYPES.length; j++) {
-          ATTRACTION_RULES[i][j] = (Math.random() - 0.5) * 2;
-        }
-      }
-      console.log("Rules randomized!", ATTRACTION_RULES);
+      const newRules = attractionRules.map((row) =>
+        row.map(() => (Math.random() - 0.5) * 2)
+      );
+      setAttractionRules(newRules);
+      console.log("Rules randomized!", newRules);
     }
 
     // Reset simulation to initial state
@@ -592,8 +590,6 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
     if (onRandomizeRef) {
       onRandomizeRef(randomizeRules);
     }
-
-    // Expose reset function to parent component
     if (onResetRef) {
       onResetRef(resetSimulation);
     }
@@ -640,7 +636,7 @@ export function Simulation({ onRandomizeRef, onResetRef }: SimulationProps) {
         simulationRef.current = null;
       }
     };
-  }, []);
+  }, [attractionRules, config, setAttractionRules, setConfig]);
 
   return <canvas ref={canvasRef} className="" />;
 }
