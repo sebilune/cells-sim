@@ -1,8 +1,13 @@
 import { createRoot } from "react-dom/client";
 import { useRef } from "react";
+
 import { Simulation } from "@/components/Simulation";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Settings } from "@/components/Settings";
+
+import { ThemeProvider } from "@/lib/theme-provider";
 import { Button } from "@/components/ui/button";
+
 import "./index.css";
 
 function App() {
@@ -22,15 +27,17 @@ function App() {
   };
 
   return (
-    <div className="w-screen h-screen relative">
-      <Simulation
-        onRandomizeRef={(randomizeFn) => {
-          randomizeRef.current = randomizeFn;
-        }}
-        onResetRef={(resetFn) => {
-          resetRef.current = resetFn;
-        }}
-      />
+    <div className="w-screen h-screen">
+      <div className="mt-12">
+        <Simulation
+          onRandomizeRef={(randomizeFn) => {
+            randomizeRef.current = randomizeFn;
+          }}
+          onResetRef={(resetFn) => {
+            resetRef.current = resetFn;
+          }}
+        />
+      </div>
       <div className="absolute top-4 right-4 z-10 flex gap-2">
         <Button
           variant="destructive"
@@ -40,16 +47,21 @@ function App() {
           Reset
         </Button>
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={handleRandomize}
           title="Randomize simulation (R)"
         >
           Randomize
         </Button>
         <Settings />
+        <ThemeToggle />
       </div>
     </div>
   );
 }
 
-createRoot(document.getElementById("app")!).render(<App />);
+createRoot(document.getElementById("app")!).render(
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <App />
+  </ThemeProvider>
+);

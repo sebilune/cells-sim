@@ -11,7 +11,7 @@ export function Settings() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline">Settings</Button>
+        <Button variant="secondary">Settings</Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid gap-4">
