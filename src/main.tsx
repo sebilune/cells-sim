@@ -8,6 +8,7 @@ import { Settings } from "@/components/Settings";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { Button } from "@/components/ui/button";
 import { RulesTable } from "@/components/RulesTable";
+import { PhysicsTable } from "@/components/PhysicsTable";
 
 import "./index.css";
 
@@ -84,10 +85,15 @@ function App() {
         <Settings />
         <ThemeToggle />
       </div>
-      <div className="absolute bottom-4 right-4 z-10 p-0 m-0 bg-transparent shadow-none border-none">
+      <div className="absolute bottom-4 right-4 z-10 flex flex-row gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
         <div className="overflow-x-auto bg-transparent p-0 m-0">
           <div className="inline-block align-bottom bg-transparent p-0 m-0">
             <RulesTable rules={attractionRules} />
+          </div>
+        </div>
+        <div className="overflow-x-auto bg-transparent p-0 m-0">
+          <div className="inline-block align-bottom bg-transparent p-0 m-0">
+            <PhysicsTable config={config} />
           </div>
         </div>
       </div>
