@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import createREGL from "regl";
 
-export function Simulation() {
+interface SimulationProps {
+  onRandomizeRef?: (randomizeFn: () => void) => void;
+}
+
+export function Simulation({ onRandomizeRef }: SimulationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<{
     regl: any;
@@ -563,6 +567,11 @@ export function Simulation() {
     canvas.addEventListener("mouseleave", handleMouseUp);
     canvas.addEventListener("wheel", handleWheel);
     document.addEventListener("keydown", handleKeyDown);
+
+    // Expose randomize function to parent component
+    if (onRandomizeRef) {
+      onRandomizeRef(randomizeRules);
+    }
 
     canvas.style.cursor = "default";
 
