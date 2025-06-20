@@ -1,4 +1,4 @@
-import { render } from "preact";
+import { createRoot } from "react-dom/client";
 import { Simulation } from "./components/Simulation";
 import "./index.css";
 
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-render(<App />, document.getElementById("app")!);
+createRoot(document.getElementById("app")!).render(<App />);
