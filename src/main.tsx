@@ -41,8 +41,8 @@ function App() {
     defaultAttractionRules
   );
   const [showOverlay, setShowOverlay] = useState(true);
-  const [showRules, setShowRules] = useState(true);
-  const [showPhysics, setShowPhysics] = useState(true);
+  const [showRules, setShowRules] = useState(false);
+  const [showPhysics, setShowPhysics] = useState(false);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
