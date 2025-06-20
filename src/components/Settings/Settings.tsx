@@ -6,12 +6,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Settings as SettingsIcon } from "lucide-react";
 
 export function Settings() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="secondary">Settings</Button>
+        <Button variant="secondary">
+          <SettingsIcon className="w-5 h-5" aria-label="Settings" />
+        </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid gap-4">

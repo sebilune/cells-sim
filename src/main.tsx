@@ -69,21 +69,21 @@ function App() {
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
         <Button
-          variant="destructive"
-          onClick={handleReset}
-          title="Reset simulation"
-        >
-          Reset
-        </Button>
-        <Button
           variant="secondary"
           onClick={handleRandomize}
           title="Randomize simulation (R)"
         >
           Randomize
         </Button>
-        <Settings />
+        <Button
+          variant="destructive"
+          onClick={handleReset}
+          title="Reset simulation"
+        >
+          Reset
+        </Button>
         <ThemeToggle />
+        <Settings />
       </div>
       <div className="absolute bottom-4 right-4 z-10 flex flex-row gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
         <div className="overflow-x-auto bg-transparent p-0 m-0">
