@@ -1,0 +1,19 @@
+{
+  "name": "3d-kaplay",
+  "version": "0.0.0",
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "dependencies": {
+    "glslify": "^7.1.1",
+    "regl": "^2.1.1"
+  }
+}
