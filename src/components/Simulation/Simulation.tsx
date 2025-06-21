@@ -572,19 +572,12 @@ export function Simulation({
       camera.zoom = Math.max(0.1, Math.min(10.0, camera.zoom * zoomFactor));
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "r" || event.key === "R") {
-        randomizeRules();
-      }
-    };
-
     // Add event listeners
     canvas.addEventListener("mousedown", handleMouseDown);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseup", handleMouseUp);
     canvas.addEventListener("mouseleave", handleMouseUp);
     canvas.addEventListener("wheel", handleWheel);
-    document.addEventListener("keydown", handleKeyDown);
 
     // Expose randomize function to parent component
     if (onRandomizeRef) {
@@ -625,7 +618,6 @@ export function Simulation({
         canvas.removeEventListener("mouseup", handleMouseUp);
         canvas.removeEventListener("mouseleave", handleMouseUp);
         canvas.removeEventListener("wheel", handleWheel);
-        document.removeEventListener("keydown", handleKeyDown);
         regl.destroy();
       },
     };

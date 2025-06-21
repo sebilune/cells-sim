@@ -85,6 +85,18 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "r" || event.key === "R") {
+        handleRandomize();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [randomizeRef]);
+
   return (
     <div className="w-screen h-screen relative">
       <Simulation
