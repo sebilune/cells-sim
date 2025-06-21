@@ -1,12 +1,15 @@
 import { createRoot } from "react-dom/client";
 import { useRef, useState, useEffect } from "react";
 
+import { seedToMatrix, matrixToSeed } from "@/utils/seedMatrix";
+
+import { Button } from "@/components/ui/button";
+import { ThemeProvider } from "@/lib/theme-provider";
+
 import { Simulation } from "@/components/Simulation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Settings } from "@/components/Settings";
-
-import { ThemeProvider } from "@/lib/theme-provider";
-import { Button } from "@/components/ui/button";
+import { SeedControls } from "@/components/SeedControls";
 import { RulesTable } from "@/components/RulesTable";
 import { PhysicsTable } from "@/components/PhysicsTable";
 
@@ -110,6 +113,16 @@ function App() {
             >
               Randomize
             </Button>
+            <SeedControls
+              seed={matrixToSeed(attractionRules)}
+              onImport={(seed) => {
+                try {
+                  setAttractionRules(seedToMatrix(seed));
+                } catch (e) {
+                  alert("Invalid seed");
+                }
+              }}
+            />
           </>
         )}
         <Settings
