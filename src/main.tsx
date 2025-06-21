@@ -34,19 +34,22 @@ function App() {
     useProportionalScaling: true,
     refPopulation: 1200,
     scalingRatio: 0.5,
-    mouseRepel: true, // Add mouseRepel to config
+    mouseRepel: true,
   };
 
   const [config, setConfig] = useState(defaultConfig);
   const [attractionRules, setAttractionRules] = useState(() => {
     try {
+      // Try to load rules from localStorage
       const stored = localStorage.getItem("cells-sim-rules");
       if (stored) return JSON.parse(stored);
+
       // If not in localStorage, generate random, store, and return
       const randomRules = randomAttractionRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
     } catch {
+      // If parsing fails, generate random rules
       const randomRules = randomAttractionRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
