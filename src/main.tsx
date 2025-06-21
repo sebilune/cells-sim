@@ -1,7 +1,11 @@
 import { createRoot } from "react-dom/client";
 import { useRef, useState, useEffect } from "react";
 
-import { seedToMatrix, matrixToSeed } from "@/utils/seedMatrix";
+import {
+  seedToMatrix,
+  matrixToSeed,
+  randomAttractionRules,
+} from "@/utils/seedMatrix";
 
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/lib/theme-provider";
@@ -31,21 +35,20 @@ function App() {
     refPopulation: 1200,
     scalingRatio: 0.5,
   };
-  const defaultAttractionRules = [
-    [-0.32, -0.17, 0.34, 0.15, -0.1, 0.2],
-    [-0.34, -0.1, -0.2, 0.15, 0.25, -0.15],
-    [0.15, -0.2, 0.34, -0.17, 0.1, -0.25],
-    [-0.17, 0.15, -0.32, -0.1, -0.2, 0.3],
-    [-0.1, 0.25, 0.1, -0.2, 0.15, -0.3],
-    [0.2, -0.15, -0.25, 0.3, -0.3, 0.1],
-  ];
+
   const [config, setConfig] = useState(defaultConfig);
   const [attractionRules, setAttractionRules] = useState(() => {
     try {
       const stored = localStorage.getItem("cells-sim-rules");
-      return stored ? JSON.parse(stored) : defaultAttractionRules;
+      if (stored) return JSON.parse(stored);
+      // If not in localStorage, generate random, store, and return
+      const randomRules = randomAttractionRules();
+      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+      return randomRules;
     } catch {
-      return defaultAttractionRules;
+      const randomRules = randomAttractionRules();
+      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+      return randomRules;
     }
   });
   // Settings state persisted in localStorage

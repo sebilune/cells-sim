@@ -93,3 +93,21 @@ export function matrixToSeed(matrix: number[][]): string {
   }
   return seed;
 }
+
+/**
+ * Generates a random 6x6 matrix of floats from -1.00 to 1.00, rounded to 2 decimals.
+ * @returns 6x6 matrix with random float values.
+ */
+export function randomAttractionRules(): number[][] {
+  const rules: number[][] = [];
+  for (let i = 0; i < 6; i++) {
+    const row: number[] = [];
+    for (let j = 0; j < 6; j++) {
+      // Random float from -1.00 to 1.00, rounded to 2 decimals
+      const val = Math.round((Math.random() * 2 - 1) * 100) / 100;
+      row.push(val);
+    }
+    rules.push(row);
+  }
+  return rules;
+}
