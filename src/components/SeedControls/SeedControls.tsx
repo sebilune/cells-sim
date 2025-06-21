@@ -94,6 +94,11 @@ export function SeedControls({ seed, onImport }: SeedControlsProps) {
                         e.target.value.replace(/[^0-9a-zA-Z]/g, "")
                       )
                     }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleImport();
+                      }
+                    }}
                     placeholder="Paste or type seed"
                     className="font-mono text-xs flex-1"
                     style={{ minWidth: 0 }}
