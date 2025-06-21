@@ -7,6 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PopulationSlider } from "./PopulationSlider";
 
 interface SettingsProps {
   showOverlay: boolean;
@@ -17,6 +18,8 @@ interface SettingsProps {
   setShowPhysics: (v: boolean) => void;
   mouseRepel: boolean;
   setMouseRepel: (v: boolean) => void;
+  population: number;
+  setPopulation: (v: number) => void;
 }
 
 export function Settings({
@@ -28,6 +31,8 @@ export function Settings({
   setShowPhysics,
   mouseRepel,
   setMouseRepel,
+  population,
+  setPopulation,
 }: SettingsProps) {
   return (
     <Popover>
@@ -81,13 +86,21 @@ export function Settings({
             <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
               Simulation
             </h5>
-            <div className="flex items-center gap-3">
-              <Checkbox
-                id="mouseRepel"
-                checked={mouseRepel}
-                onCheckedChange={setMouseRepel}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  id="mouseRepel"
+                  checked={mouseRepel}
+                  onCheckedChange={setMouseRepel}
+                />
+                <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
+              </div>
+              <PopulationSlider
+                value={population}
+                onChange={setPopulation}
+                min={10}
+                max={100000}
               />
-              <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
             </div>
           </div>
         </div>

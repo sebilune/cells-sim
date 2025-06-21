@@ -172,6 +172,8 @@ function App() {
           }
           mouseRepel={config.mouseRepel}
           setMouseRepel={handleMouseRepel}
+          population={config.population}
+          setPopulation={(v) => setConfig((c) => ({ ...c, population: v }))}
         />
         <ThemeToggle />
       </div>
