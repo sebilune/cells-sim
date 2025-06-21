@@ -21,6 +21,7 @@ interface SimulationProps {
     useProportionalScaling: boolean;
     refPopulation: number;
     scalingRatio: number;
+    mouseRepel: boolean;
   };
   setConfig: (config: SimulationProps["config"]) => void;
 }
@@ -38,6 +39,7 @@ export function Simulation({
     regl: any;
     cleanup: () => void;
   } | null>(null);
+  const mousePos = useRef({ x: 0, y: 0 }); // Store mouse position in simulation
 
   useEffect(() => {
     if (!canvasRef.current || !config || !attractionRules) return;
@@ -259,6 +261,10 @@ export function Simulation({
           Number(attractionRules[5][4].toFixed(2)),
           Number(attractionRules[5][5].toFixed(2)),
         ], // magenta->ycm
+
+        // New mouse interaction uniforms
+        u_mouseRepel: () => (config.mouseRepel ? 1.0 : 0.0),
+        u_mousePos: () => [mousePos.current.x, mousePos.current.y],
       },
 
       framebuffer: () => simulationFBOs[(currentFrame + 1) % 2],
@@ -358,6 +364,14 @@ export function Simulation({
     };
 
     const handleMouseMove = (event: MouseEvent) => {
+      // Convert mouse position to simulation world coordinates
+      const rect = canvas.getBoundingClientRect();
+      const ndcX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const ndcY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+      // Undo camera transform: world = (screen / zoom) + camera
+      mousePos.current.x = ndcX / camera.zoom + camera.x;
+      mousePos.current.y = ndcY / camera.zoom + camera.y;
+
       if (mouseState.isDragging) {
         const deltaX = event.clientX - mouseState.lastX;
         const deltaY = event.clientY - mouseState.lastY;

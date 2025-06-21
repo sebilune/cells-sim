@@ -1,4 +1,4 @@
-// Particle simulation step: updates positions and velocities using particle-life rules
+// Simulation step: updates positions and velocities using particle-life rules
 // Each particle interacts with its neighbors based on attraction rules and wall repulsion
 
 precision highp float;
@@ -13,6 +13,10 @@ uniform float u_damping;
 uniform float u_timeScale;
 uniform float u_wallRepel;
 uniform float u_wallForce;
+
+// Mouse repulsion uniform
+uniform float u_mouseRepel; // 1.0 if enabled, 0.0 if not
+uniform vec2 u_mousePos;    // Mouse position in NDC (-1..1)
 
 // 6x6 attraction rules matrix, split into 12 vec3s for WebGL uniform limits
 uniform vec3 u_rules0a; uniform vec3 u_rules0b;
@@ -122,6 +126,17 @@ void main() {
   }
   if (position.y >= 1.0 - u_wallRepel) {
     velocity.y -= (position.y - (1.0 - u_wallRepel)) * u_wallForce;
+  }
+
+  // Mouse repel logic
+  if (u_mouseRepel > 0.5) {
+    float mouseRadius = 0.1; // Smaller radius for repel
+    float mouseStrength = 2.0; // Repel force strength
+    float d = length(position - u_mousePos);
+    if (d < mouseRadius) {
+      vec2 repel = normalize(position - u_mousePos) * (mouseRadius - d) * mouseStrength;
+      velocity += repel;
+    }
   }
 
   // Output new state

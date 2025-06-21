@@ -15,6 +15,8 @@ interface SettingsProps {
   setShowRules: (v: boolean) => void;
   showPhysics: boolean;
   setShowPhysics: (v: boolean) => void;
+  mouseRepel: boolean;
+  setMouseRepel: (v: boolean) => void;
 }
 
 export function Settings({
@@ -24,6 +26,8 @@ export function Settings({
   setShowRules,
   showPhysics,
   setShowPhysics,
+  mouseRepel,
+  setMouseRepel,
 }: SettingsProps) {
   return (
     <Popover>
@@ -71,6 +75,19 @@ export function Settings({
                 />
                 <Label htmlFor="showPhysics">Physics</Label>
               </div>
+            </div>
+          </div>
+          <div className="pt-2 border-t border-border">
+            <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+              Simulation
+            </h5>
+            <div className="flex items-center gap-3">
+              <Checkbox
+                id="mouseRepel"
+                checked={mouseRepel}
+                onCheckedChange={setMouseRepel}
+              />
+              <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
             </div>
           </div>
         </div>

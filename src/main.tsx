@@ -34,6 +34,7 @@ function App() {
     useProportionalScaling: true,
     refPopulation: 1200,
     scalingRatio: 0.5,
+    mouseRepel: true, // Add mouseRepel to config
   };
 
   const [config, setConfig] = useState(defaultConfig);
@@ -66,6 +67,7 @@ function App() {
       return defaultSettings;
     }
   });
+
   useEffect(() => {
     localStorage.setItem("cells-sim-settings", JSON.stringify(settings));
   }, [settings]);
@@ -83,6 +85,10 @@ function App() {
     if (resetRef.current) {
       resetRef.current();
     }
+  };
+
+  const handleMouseRepel = (v: boolean) => {
+    setConfig((c) => ({ ...c, mouseRepel: !!v }));
   };
 
   useEffect(() => {
@@ -160,6 +166,8 @@ function App() {
           setShowPhysics={(v) =>
             setSettings((s: SettingsState) => ({ ...s, showPhysics: v }))
           }
+          mouseRepel={config.mouseRepel}
+          setMouseRepel={handleMouseRepel}
         />
         <ThemeToggle />
       </div>
