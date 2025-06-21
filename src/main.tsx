@@ -87,7 +87,14 @@ function App() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "r" || event.key === "R") {
+      const active = document.activeElement;
+      const isTextInput =
+        active &&
+        ((active.tagName === "INPUT" &&
+          (active as HTMLInputElement).type === "text") ||
+          active.tagName === "TEXTAREA" ||
+          (active as HTMLElement).isContentEditable);
+      if (!isTextInput && (event.key === "r" || event.key === "R")) {
         handleRandomize();
       }
     };
