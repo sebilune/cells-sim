@@ -28,10 +28,9 @@ export function SeedControls({ seed, onImport }: SeedControlsProps) {
 
   const handleImport = () => {
     let trimmed = importValue.trim();
-    if (trimmed.length > 66) trimmed = trimmed.slice(0, 66);
-    if (/^[0-9a-zA-Z]{1,66}$/.test(trimmed)) {
-      const padded = trimmed.padEnd(66, "0");
-      onImport(padded);
+    if (trimmed.length > 47) trimmed = trimmed.slice(0, 47);
+    if (/^[0-9a-zA-Z]{47}$/.test(trimmed)) {
+      onImport(trimmed);
       setImportValue("");
     }
   };
@@ -82,7 +81,7 @@ export function SeedControls({ seed, onImport }: SeedControlsProps) {
                 </div>
               </div>
               <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
-                Import Seed (0-9, a-z, A-Z)
+                Import Seed (0-9, a-z, A-Z, 47 chars)
               </h5>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3">
@@ -102,7 +101,7 @@ export function SeedControls({ seed, onImport }: SeedControlsProps) {
                     placeholder="Paste or type seed"
                     className="font-mono text-xs flex-1"
                     style={{ minWidth: 0 }}
-                    maxLength={66}
+                    maxLength={47}
                   />
                   <Button
                     size="icon"

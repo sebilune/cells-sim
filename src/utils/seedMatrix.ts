@@ -1,6 +1,5 @@
-// Utilities for converting between a 16-char base-36 seed and a 6x6 matrix of floats
+// Utilities for converting between a 6x6 matrix and a compact base-62 seed string (numbers, uppercase, lowercase)
 
-// Use all two-decimal values from -1.00 to 1.00 (inclusive)
 const DIGIT_TO_FLOAT = (() => {
   const values: number[] = [];
   for (let i = 0; i <= 200; i++) {
@@ -17,23 +16,24 @@ const FLOAT_TO_DIGIT = (() => {
   return map;
 })();
 
-// Use base-62 (0-9, a-z, A-Z)
 const BASE62_CHARS =
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const BASE = 201; // Number of possible float values per cell
+const SEED_LENGTH = 47; // Minimum chars needed for 201^36 in base-62
 
 /**
  * Converts a base-62 seed string into a 6x6 matrix of floats.
- * @param seed - A 66-character base-62 seed string (0-9, a-z, A-Z).
+ * @param seed - A 47-character base-62 seed string (0-9, a-z, A-Z).
  * @returns 6x6 matrix with float values.
  */
 export function seedToMatrix(seed: string): number[][] {
   seed = seed.trim();
-  if (!/^[0-9a-zA-Z]{66}$/.test(seed)) {
+  if (!/^[0-9a-zA-Z]{47}$/.test(seed)) {
     throw new Error(
-      "Seed must be exactly 66 alphanumeric characters (0-9, a-z, A-Z)."
+      "Seed must be exactly 47 alphanumeric characters (0-9, a-z, A-Z). "
     );
   }
-  // Convert from base-62 to a number
+  // Convert from base-62 to a BigInt
   let bigInt = BigInt(0);
   for (let i = 0; i < seed.length; i++) {
     const char = seed[i];
@@ -41,11 +41,11 @@ export function seedToMatrix(seed: string): number[][] {
     if (value === -1) throw new Error("Invalid character in seed");
     bigInt = bigInt * BigInt(62) + BigInt(value);
   }
-  const base = BigInt(201);
+  // Convert BigInt to 36 base-201 digits
   const digits: number[] = [];
   for (let i = 0; i < 36; i++) {
-    digits.unshift(Number(bigInt % base));
-    bigInt = bigInt / base;
+    digits.unshift(Number(bigInt % BigInt(BASE)));
+    bigInt = bigInt / BigInt(BASE);
   }
   const matrix: number[][] = [];
   for (let row = 0; row < 6; row++) {
@@ -59,9 +59,9 @@ export function seedToMatrix(seed: string): number[][] {
 }
 
 /**
- * Converts a 6x6 matrix of floats back into the original seed string (0-9, a-z, A-Z).
+ * Converts a 6x6 matrix of floats back into the base-62 seed string (0-9, a-z, A-Z).
  * @param matrix - 6x6 matrix of floats.
- * @returns The original 66-character seed string (0-9, a-z, A-Z).
+ * @returns The 47-character base-62 seed string (0-9, a-z, A-Z).
  */
 export function matrixToSeed(matrix: number[][]): string {
   if (
@@ -78,18 +78,17 @@ export function matrixToSeed(matrix: number[][]): string {
     }
     return FLOAT_TO_DIGIT[key];
   });
+  // Convert digits to a BigInt
   let bigInt = BigInt(0);
-  const base = BigInt(201);
   for (let i = 0; i < digits.length; i++) {
-    bigInt = bigInt * base + BigInt(digits[i]);
+    bigInt = bigInt * BigInt(BASE) + BigInt(digits[i]);
   }
-  // Convert bigInt to base-62 string (0-9, a-z, A-Z)
+  // Convert BigInt to base-62 string
   let seed = "";
-  const base62 = BigInt(62);
-  while (seed.length < 66) {
-    const remainder = bigInt % base62;
+  for (let i = 0; i < SEED_LENGTH; i++) {
+    const remainder = bigInt % BigInt(62);
     seed = BASE62_CHARS[Number(remainder)] + seed;
-    bigInt = bigInt / base62;
+    bigInt = bigInt / BigInt(62);
   }
   return seed;
 }
