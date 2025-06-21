@@ -12,6 +12,7 @@ interface SimulationProps {
   attractionRules: number[][];
   setAttractionRules: (rules: number[][]) => void;
   config: {
+    population: number;
     maxDistance: number;
     damping: number;
     timeScale: number;
@@ -59,7 +60,7 @@ export function Simulation({
       lastY: 0,
     };
 
-    const POPULATION = 10000;
+    const POPULATION = config.population;
     const PARTICLES_PER_TYPE = POPULATION / 6;
     const PARTICLE_TYPES = [
       { name: "red", color: [255 / 255, 80 / 255, 80 / 255] },

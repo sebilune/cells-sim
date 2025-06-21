@@ -25,6 +25,7 @@ function App() {
 
   // Default config and rules
   const defaultConfig = {
+    population: 10000,
     maxDistance: 0.25,
     damping: 0.2,
     timeScale: 10.0,
