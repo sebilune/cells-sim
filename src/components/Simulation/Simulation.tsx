@@ -382,7 +382,7 @@ export function Simulation({
         const deltaX = event.clientX - mouseState.lastX;
         const deltaY = event.clientY - mouseState.lastY;
         const sensitivity = 0.002 / camera.zoom;
-        camera.x -= deltaX * sensitivity * camera.aspect;
+        camera.x -= deltaX * sensitivity;
         camera.y += deltaY * sensitivity;
         mouseState.lastX = event.clientX;
         mouseState.lastY = event.clientY;
