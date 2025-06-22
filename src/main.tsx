@@ -59,8 +59,8 @@ function App() {
   // Settings state persisted in localStorage
   const defaultSettings = {
     showOverlay: true,
-    showRules: false,
-    showPhysics: false,
+    showRules: true,
+    showPhysics: true,
   };
   type SettingsState = typeof defaultSettings;
   const [settings, setSettings] = useState<SettingsState>(() => {
@@ -177,18 +177,18 @@ function App() {
         />
         <ThemeToggle />
       </div>
-      <div className="absolute bottom-4 right-4 z-10 flex flex-row gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
-        {settings.showRules && (
-          <div className="overflow-x-auto bg-transparent p-0 m-0">
-            <div className="inline-block align-bottom bg-transparent p-0 m-0">
-              <RulesTable rules={attractionRules} />
-            </div>
-          </div>
-        )}
+      <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-4 items-end p-0 m-0 bg-transparent shadow-none border-none">
         {settings.showPhysics && (
           <div className="overflow-x-auto bg-transparent p-0 m-0">
             <div className="inline-block align-bottom bg-transparent p-0 m-0">
               <PhysicsTable config={config} />
+            </div>
+          </div>
+        )}
+        {settings.showRules && (
+          <div className="overflow-x-auto bg-transparent p-0 m-0">
+            <div className="inline-block align-bottom bg-transparent p-0 m-0">
+              <RulesTable rules={attractionRules} />
             </div>
           </div>
         )}
