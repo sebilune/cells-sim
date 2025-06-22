@@ -38,7 +38,7 @@ export function SeedControls({ seed, onImport }: SeedControlsProps) {
   return (
     <>
       {showCopied && (
-        <div className="fixed bottom-6 left-6 z-50 w-fit flex justify-start pointer-events-none">
+        <div className="fixed bottom-6 right-6 z-50 w-fit flex justify-end pointer-events-none">
           <Alert className="w-fit shadow-lg">
             <CheckCircle2Icon className="h-4 w-4" />
             <AlertTitle>Copied!</AlertTitle>
