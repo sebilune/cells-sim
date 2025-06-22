@@ -47,11 +47,17 @@ export function Simulation({
 
     const canvas = canvasRef.current;
 
+    // Track canvas size and aspect ratio
+    let canvasWidth = window.innerWidth;
+    let canvasHeight = window.innerHeight;
+    let aspect = canvasWidth / canvasHeight;
+
     // Simulation state
     let camera = {
       x: 0.0,
       y: +0.012, // Slight top offset
       zoom: 0.8, // Initial zoom
+      aspect: aspect, // Add aspect to camera
     };
 
     let mouseState = {
@@ -89,8 +95,8 @@ export function Simulation({
     }
 
     // Ensure canvas fills the container
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
 
     // Create regl instance
     const regl = createREGL({
@@ -263,7 +269,7 @@ export function Simulation({
           Number(attractionRules[5][5].toFixed(2)),
         ], // magenta->ycm
 
-        // New mouse interaction uniforms
+        // Mouse interaction uniforms
         u_mouseRepel: () => (config.mouseRepel ? 1.0 : 0.0),
         u_mousePos: () => [mousePos.current.x, mousePos.current.y],
       },
@@ -296,10 +302,10 @@ export function Simulation({
           viewportWidth,
           viewportHeight,
         ],
+        u_canvasSize: () => [canvas.width, canvas.height],
+        u_aspect: () => aspect,
         u_particleSize: () => getEffectiveParticleSize(),
-
-        // Pass camera state
-        u_camera: () => [camera.x, camera.y, camera.zoom],
+        u_camera: () => [camera.x, camera.y, camera.zoom, camera.aspect],
 
         // Pass particle type colors
         u_color0: () => PARTICLE_TYPES[0].color,
@@ -365,23 +371,19 @@ export function Simulation({
     };
 
     const handleMouseMove = (event: MouseEvent) => {
-      // Convert mouse position to simulation world coordinates
       const rect = canvas.getBoundingClientRect();
       const ndcX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const ndcY = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
       // Undo camera transform: world = (screen / zoom) + camera
-      mousePos.current.x = ndcX / camera.zoom + camera.x;
+      mousePos.current.x = (ndcX * camera.aspect) / camera.zoom + camera.x;
       mousePos.current.y = ndcY / camera.zoom + camera.y;
 
       if (mouseState.isDragging) {
         const deltaX = event.clientX - mouseState.lastX;
         const deltaY = event.clientY - mouseState.lastY;
-
-        // Convert screen delta to world coordinates
         const sensitivity = 0.002 / camera.zoom;
-        camera.x -= deltaX * sensitivity;
-        camera.y += deltaY * sensitivity; // Flip Y for screen coordinates
-
+        camera.x -= deltaX * sensitivity * camera.aspect;
+        camera.y += deltaY * sensitivity;
         mouseState.lastX = event.clientX;
         mouseState.lastY = event.clientY;
       }
@@ -398,6 +400,17 @@ export function Simulation({
       const zoomFactor = event.deltaY > 0 ? 1 - zoomSpeed : 1 + zoomSpeed;
       camera.zoom = Math.max(0.1, Math.min(10.0, camera.zoom * zoomFactor));
     };
+
+    // Update on window resize
+    const handleResize = () => {
+      canvasWidth = window.innerWidth;
+      canvasHeight = window.innerHeight;
+      aspect = canvasWidth / canvasHeight;
+      camera.aspect = aspect;
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+    };
+    window.addEventListener("resize", handleResize);
 
     // Add event listeners
     canvas.addEventListener("mousedown", handleMouseDown);
@@ -445,6 +458,7 @@ export function Simulation({
         canvas.removeEventListener("mouseup", handleMouseUp);
         canvas.removeEventListener("mouseleave", handleMouseUp);
         canvas.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("resize", handleResize);
         regl.destroy();
       },
     };
