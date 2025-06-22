@@ -1,5 +1,6 @@
 interface PhysicsTableProps {
   config: {
+    population: number;
     maxDistance: number;
     damping: number;
     timeScale: number;
@@ -13,6 +14,7 @@ interface PhysicsTableProps {
 }
 
 const LABELS: Record<string, string> = {
+  population: "Population",
   maxDistance: "Max Distance",
   damping: "Damping",
   timeScale: "Time Scale",
