@@ -8,7 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopulationSlider } from "./components/PopulationSlider";
-import { useSettings } from "./SettingsContext";
+import { useSettings } from "@/providers/SettingsProvider";
 
 export function Settings() {
   const { settings, setSetting, setPhysicsSetting } = useSettings();

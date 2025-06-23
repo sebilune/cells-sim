@@ -8,11 +8,8 @@ import {
 } from "@/utils/seedMatrix";
 
 import { Button } from "@/components/ui/button";
-import { ThemeProvider } from "@/lib/theme-provider";
-import {
-  SettingsProvider,
-  useSettings,
-} from "@/components/Settings/SettingsContext";
+import { ThemeProvider } from "@/providers/ThemeProvider";
+import { SettingsProvider, useSettings } from "@/providers/SettingsProvider";
 import { Settings } from "@/components/Settings";
 
 import { Simulation } from "@/components/Simulation";
