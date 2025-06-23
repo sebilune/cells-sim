@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import type { Physics } from "@/types/simulation";
+import { DEFAULTS } from "@/config/defaults";
 
 export interface SettingsState {
   showOverlay: boolean;
@@ -10,25 +11,6 @@ export interface SettingsState {
   population: number;
   physics: Physics;
 }
-
-const DEFAULTS: SettingsState = {
-  showOverlay: true,
-  showRules: true,
-  showPhysics: true,
-  population: 20000,
-  physics: {
-    maxDistance: 0.25,
-    damping: 0.2,
-    timeScale: 10.0,
-    wallRepel: 0.125,
-    wallForce: 0.01,
-    particleSize: 6.0,
-    useProportionalScaling: true,
-    refPopulation: 1000,
-    scalingRatio: 0.5,
-    mouseRepel: true,
-  },
-};
 
 interface SettingsContextType {
   settings: SettingsState;
