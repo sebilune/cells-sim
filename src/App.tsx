@@ -95,50 +95,56 @@ export function App() {
           if (newConfig.rules) setRules(newConfig.rules);
         }}
       />
-      <div className="absolute top-4 left-4 z-10">
-        <Button
-          asChild
-          variant="outline"
-          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-          title="View source code"
-        >
-          <a
-            href="https://github.com/sebilune/cells-sim"
-            target="_blank"
-            rel="noopener noreferrer"
+      {settings.showOverlay && (
+        <div className="absolute top-4 left-4 z-10">
+          <Button
+            asChild
+            variant="outline"
+            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+            title="View source code"
           >
-            <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata: A
-            "Clusters" Variation
-          </a>
-        </Button>
-      </div>
+            <a
+              href="https://github.com/sebilune/cells-sim"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata: A
+              "Clusters" Variation
+            </a>
+          </Button>
+        </div>
+      )}
       <div className="absolute top-4 right-4 z-10 flex gap-2">
-        <Button
-          variant="default"
-          onClick={handleReset}
-          title="Reset simulation"
-          className="bg-foreground"
-        >
-          Reset
-        </Button>
-        <Button
-          variant="outline"
-          onClick={handleRandomize}
-          title="Randomize simulation (R)"
-          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-        >
-          Randomize
-        </Button>
-        <SeedBtn
-          seed={matrixToSeed(rules)}
-          onImport={(seed) => {
-            try {
-              setRules(seedToMatrix(seed));
-            } catch (e) {
-              alert("Invalid seed");
-            }
-          }}
-        />
+        {settings.showOverlay && (
+          <div className="relative flex gap-2">
+            <Button
+              variant="default"
+              onClick={handleReset}
+              title="Reset simulation"
+              className="bg-foreground"
+            >
+              Reset
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleRandomize}
+              title="Randomize simulation (R)"
+              className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+            >
+              Randomize
+            </Button>
+            <SeedBtn
+              seed={matrixToSeed(rules)}
+              onImport={(seed) => {
+                try {
+                  setRules(seedToMatrix(seed));
+                } catch (e) {
+                  alert("Invalid seed");
+                }
+              }}
+            />
+          </div>
+        )}
         <Settings />
         <ThemeBtn />
       </div>
