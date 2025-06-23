@@ -15,11 +15,14 @@ export function Settings() {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="secondary">
+        <Button
+          variant="outline"
+          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+        >
           <SettingsIcon className="w-5 h-5" aria-label="Settings" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
+      <PopoverContent className="w-80 dark:bg-zinc-950">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="leading-none font-medium">Settings</h4>

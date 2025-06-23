@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { SiGithub as Github } from "react-icons/si";
 
 import {
   seedToMatrix,
@@ -14,8 +15,6 @@ import { Simulation } from "@/components/Simulation";
 import { ThemeBtn } from "@/components/ThemeBtn";
 import { SeedBtn } from "@/components/SeedBtn";
 import { Analytics } from "@/components/Analytics/Analytics";
-
-import "./index.css";
 
 export function App() {
   const { settings } = useSettings();
@@ -96,18 +95,37 @@ export function App() {
           if (newConfig.rules) setRules(newConfig.rules);
         }}
       />
+      <div className="absolute top-4 left-4 z-10">
+        <Button
+          asChild
+          variant="outline"
+          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+          title="View source code"
+        >
+          <a
+            href="https://github.com/sebilune/cells-sim"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata: A
+            "Clusters" Variation
+          </a>
+        </Button>
+      </div>
       <div className="absolute top-4 right-4 z-10 flex gap-2">
         <Button
-          variant="destructive"
+          variant="default"
           onClick={handleReset}
           title="Reset simulation"
+          className="bg-foreground"
         >
           Reset
         </Button>
         <Button
-          variant="secondary"
+          variant="outline"
           onClick={handleRandomize}
           title="Randomize simulation (R)"
+          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
         >
           Randomize
         </Button>

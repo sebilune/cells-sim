@@ -48,11 +48,15 @@ export function SeedBtn({ seed, onImport }: SeedBtnProps) {
       )}
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="secondary" title="Seed controls">
+          <Button
+            variant="outline"
+            title="Seed controls"
+            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+          >
             Seed
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80">
+        <PopoverContent className="w-80 dark:bg-zinc-950">
           <div className="grid gap-4">
             <div className="space-y-2">
               <h4 className="leading-none font-medium">Rules Seed</h4>
