@@ -1,21 +1,44 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
-// Define all settings
+export interface PhysicsSettings {
+  maxDistance: number;
+  damping: number;
+  timeScale: number;
+  wallRepel: number;
+  wallForce: number;
+  particleSize: number;
+  useProportionalScaling: boolean;
+  refPopulation: number;
+  scalingRatio: number;
+  mouseRepel: boolean;
+}
+
 export interface SettingsState {
   showOverlay: boolean;
   showRules: boolean;
   showPhysics: boolean;
-  mouseRepel: boolean;
   population: number;
+  physics: PhysicsSettings;
 }
 
 const DEFAULTS: SettingsState = {
   showOverlay: true,
   showRules: true,
   showPhysics: true,
-  mouseRepel: true,
   population: 20000,
+  physics: {
+    maxDistance: 0.25,
+    damping: 0.2,
+    timeScale: 10.0,
+    wallRepel: 0.125,
+    wallForce: 0.01,
+    particleSize: 6.0,
+    useProportionalScaling: true,
+    refPopulation: 1000,
+    scalingRatio: 0.5,
+    mouseRepel: true,
+  },
 };
 
 interface SettingsContextType {
@@ -25,6 +48,10 @@ interface SettingsContextType {
     value: SettingsState[K]
   ) => void;
   setSettings: (settings: SettingsState) => void;
+  setPhysicsSetting: <K extends keyof PhysicsSettings>(
+    key: K,
+    value: PhysicsSettings[K]
+  ) => void;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -53,12 +80,28 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  // Setter for physics subfields
+  const setPhysicsSetting = <K extends keyof PhysicsSettings>(
+    key: K,
+    value: PhysicsSettings[K]
+  ) => {
+    setSettingsState((prev) => ({
+      ...prev,
+      physics: {
+        ...prev.physics,
+        [key]: value,
+      },
+    }));
+  };
+
   const setSettings = (newSettings: SettingsState) => {
     setSettingsState(newSettings);
   };
 
   return (
-    <SettingsContext.Provider value={{ settings, setSetting, setSettings }}>
+    <SettingsContext.Provider
+      value={{ settings, setSetting, setSettings, setPhysicsSetting }}
+    >
       {children}
     </SettingsContext.Provider>
   );

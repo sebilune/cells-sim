@@ -11,7 +11,7 @@ import { PopulationSlider } from "./components/PopulationSlider";
 import { useSettings } from "./SettingsContext";
 
 export function Settings() {
-  const { settings, setSetting } = useSettings();
+  const { settings, setSetting, setPhysicsSetting } = useSettings();
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -68,8 +68,8 @@ export function Settings() {
               <div className="flex items-center gap-3">
                 <Checkbox
                   id="mouseRepel"
-                  checked={settings.mouseRepel}
-                  onCheckedChange={(v) => setSetting("mouseRepel", !!v)}
+                  checked={settings.physics.mouseRepel}
+                  onCheckedChange={(v) => setPhysicsSetting("mouseRepel", !!v)}
                 />
                 <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
               </div>

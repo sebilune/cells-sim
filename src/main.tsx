@@ -27,41 +27,34 @@ function App() {
   const randomizeRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
 
-  // Default rules logic (keep rules in localStorage, not in settings)
   const [rules, setRules] = useState(() => {
+    // Try to load rules from localStorage
     try {
+      // Attempt to parse existing rules from localStorage
       const stored = localStorage.getItem("cells-sim-rules");
       if (stored) return JSON.parse(stored);
+
+      // If no rules are found, generate random rules
       const randomRules = randomAttractionRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
     } catch {
+      // If parsing fails gen random rules
       const randomRules = randomAttractionRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
     }
   });
 
+  // Save rules to localStorage when changed
   useEffect(() => {
     localStorage.setItem("cells-sim-rules", JSON.stringify(rules));
   }, [rules]);
 
-  // Compose the config for Simulation from settings and rules
   const config = {
     ...settings,
     rules,
-    physics: {
-      maxDistance: 0.25,
-      damping: 0.2,
-      timeScale: 10.0,
-      wallRepel: 0.125,
-      wallForce: 0.01,
-      particleSize: 6.0,
-      useProportionalScaling: true,
-      refPopulation: 1000,
-      scalingRatio: 0.5,
-      mouseRepel: settings.mouseRepel,
-    },
+    physics: settings.physics,
   };
 
   const handleRandomize = () => {
@@ -106,9 +99,7 @@ function App() {
         }}
         config={config}
         setConfig={(newConfig) => {
-          // Only update rules, all other config comes from settings
           if (newConfig.rules) setRules(newConfig.rules);
-          // If you want to allow simulation to update settings, you could call setSetting here
         }}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
