@@ -12,6 +12,7 @@ interface SimulationProps {
   onResetRef?: (resetFn: () => void) => void;
   config: Config;
   setConfig: (config: Config) => void;
+  onFpsUpdate?: (fps: number) => void;
 }
 
 export function Simulation({
@@ -19,6 +20,7 @@ export function Simulation({
   onResetRef,
   config,
   setConfig,
+  onFpsUpdate,
 }: SimulationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const simulationRef = useRef<{
@@ -417,6 +419,10 @@ export function Simulation({
 
     canvas.style.cursor = "default";
 
+    let lastFpsUpdate = performance.now();
+    let frameCount = 0;
+    let fps = 0;
+
     // Main render loop
     const renderLoop = regl.frame(() => {
       regl.clear({
@@ -429,6 +435,20 @@ export function Simulation({
 
       // Render particles to screen
       renderParticles();
+
+      frameCount++;
+
+      // Calculate FPS every 0.5 seconds
+      const now = performance.now();
+      if (now - lastFpsUpdate > 500) {
+        // Frames per second over the last interval
+        fps = (frameCount * 1000) / (now - lastFpsUpdate);
+        // Report FPS to parent component (UI)
+        if (onFpsUpdate) onFpsUpdate(Math.round(fps));
+        // Reset timer and frame counter for next interval
+        lastFpsUpdate = now;
+        frameCount = 0;
+      }
 
       // Advance frame counter
       currentFrame++;
@@ -457,7 +477,7 @@ export function Simulation({
         simulationRef.current = null;
       }
     };
-  }, [config, setConfig]);
+  }, [config, setConfig, onFpsUpdate]);
 
   return <canvas ref={canvasRef} className="" />;
 }

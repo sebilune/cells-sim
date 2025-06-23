@@ -21,6 +21,7 @@ export function App() {
   const { settings } = useSettings();
   const randomizeRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
+  const [fps, setFps] = useState<number | null>(null);
 
   const [rules, setRules] = useState(() => {
     try {
@@ -96,9 +97,11 @@ export function App() {
         setConfig={(newConfig) => {
           if (newConfig.rules) setRules(newConfig.rules);
         }}
+        onFpsUpdate={setFps}
       />
+
       {settings.showOverlay && (
-        <div className="absolute top-4 left-4 z-10">
+        <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
           <Button
             asChild
             variant="outline"
@@ -114,6 +117,14 @@ export function App() {
               "Clusters" Variation
             </a>
           </Button>
+          {fps !== null && (
+            <div
+              className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
+              title="FPS (V-synced)"
+            >
+              FPS: {fps}
+            </div>
+          )}
         </div>
       )}
       <div className="absolute top-4 right-4 z-10 flex gap-2">
