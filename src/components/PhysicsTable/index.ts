@@ -1,1 +1,0 @@
-export { PhysicsTable } from "./PhysicsTable";

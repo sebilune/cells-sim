@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PopulationSlider } from "./PopulationSlider";
+import { PopulationSlider } from "./components/PopulationSlider";
 
 interface SettingsProps {
   showOverlay: boolean;

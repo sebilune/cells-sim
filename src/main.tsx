@@ -14,8 +14,7 @@ import { Simulation } from "@/components/Simulation";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Settings } from "@/components/Settings";
 import { SeedControls } from "@/components/SeedControls";
-import { RulesTable } from "@/components/RulesTable";
-import { PhysicsTable } from "@/components/PhysicsTable";
+import { Analytics } from "@/components/Analytics/Analytics";
 
 import "./index.css";
 
@@ -178,20 +177,12 @@ function App() {
         <ThemeToggle />
       </div>
       <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
-        {settings.showPhysics && (
-          <div className="overflow-x-auto bg-transparent p-0 m-0">
-            <div className="inline-block align-bottom bg-transparent p-0 m-0">
-              <PhysicsTable config={config} />
-            </div>
-          </div>
-        )}
-        {settings.showRules && (
-          <div className="overflow-x-auto bg-transparent p-0 m-0">
-            <div className="inline-block align-bottom bg-transparent p-0 m-0">
-              <RulesTable rules={attractionRules} />
-            </div>
-          </div>
-        )}
+        <Analytics
+          config={config}
+          rules={attractionRules}
+          showPhysics={settings.showPhysics}
+          showRules={settings.showRules}
+        />
       </div>
     </div>
   );
