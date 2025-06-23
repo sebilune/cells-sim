@@ -6,13 +6,10 @@ import simulationStepVert from "./shaders/simulationStep.vert.glsl?raw";
 import renderParticlesFrag from "./shaders/renderParticles.frag.glsl?raw";
 import renderParticlesVert from "./shaders/renderParticles.vert.glsl?raw";
 
-interface SimulationProps {
-  onRandomizeRef?: (randomizeFn: () => void) => void;
-  onResetRef?: (resetFn: () => void) => void;
-  attractionRules: number[][];
-  setAttractionRules: (rules: number[][]) => void;
-  config: {
-    population: number;
+interface SimulationConfig {
+  population: number;
+  rules: number[][];
+  physics: {
     maxDistance: number;
     damping: number;
     timeScale: number;
@@ -24,14 +21,18 @@ interface SimulationProps {
     scalingRatio: number;
     mouseRepel: boolean;
   };
-  setConfig: (config: SimulationProps["config"]) => void;
+}
+
+interface SimulationProps {
+  onRandomizeRef?: (randomizeFn: () => void) => void;
+  onResetRef?: (resetFn: () => void) => void;
+  config: SimulationConfig;
+  setConfig: (config: SimulationConfig) => void;
 }
 
 export function Simulation({
   onRandomizeRef,
   onResetRef,
-  attractionRules,
-  setAttractionRules,
   config,
   setConfig,
 }: SimulationProps) {
@@ -43,7 +44,7 @@ export function Simulation({
   const mousePos = useRef({ x: 0, y: 0 }); // Store mouse position in simulation
 
   useEffect(() => {
-    if (!canvasRef.current || !config || !attractionRules) return;
+    if (!canvasRef.current || !config) return;
 
     const canvas = canvasRef.current;
 
@@ -82,16 +83,19 @@ export function Simulation({
 
     // Calculate proportional particle size based on population
     function getEffectiveParticleSize(): number {
-      if (!config.useProportionalScaling) {
-        return config.particleSize;
+      if (!config.physics.useProportionalScaling) {
+        return config.physics.particleSize;
       }
 
       // Scale inversely with configurable ratio to keep visual density reasonable
-      const populationRatio = config.refPopulation / POPULATION;
-      const scaleFactor = Math.pow(populationRatio, config.scalingRatio);
+      const populationRatio = config.physics.refPopulation / POPULATION;
+      const scaleFactor = Math.pow(
+        populationRatio,
+        config.physics.scalingRatio
+      );
 
       // Apply minimum size threshold to keep particles visible
-      return Math.max(2.0, config.particleSize * scaleFactor);
+      return Math.max(2.0, config.physics.particleSize * scaleFactor);
     }
 
     // Ensure canvas fills the container
@@ -201,76 +205,76 @@ export function Simulation({
         u_time: ({ tick }) => tick * 0.01,
 
         // Pass config values from props
-        u_maxDistance: () => config.maxDistance,
-        u_damping: () => config.damping,
-        u_timeScale: () => config.timeScale,
-        u_wallRepel: () => config.wallRepel,
-        u_wallForce: () => config.wallForce,
+        u_maxDistance: () => config.physics.maxDistance,
+        u_damping: () => config.physics.damping,
+        u_timeScale: () => config.physics.timeScale,
+        u_wallRepel: () => config.physics.wallRepel,
+        u_wallForce: () => config.physics.wallForce,
 
         // Pass 6x6 rules matrix as 12 vec3 uniforms (6 types × 2 vec3 each)
         u_rules0a: () => [
-          Number(attractionRules[0][0].toFixed(2)),
-          Number(attractionRules[0][1].toFixed(2)),
-          Number(attractionRules[0][2].toFixed(2)),
+          Number(config.rules[0][0].toFixed(2)),
+          Number(config.rules[0][1].toFixed(2)),
+          Number(config.rules[0][2].toFixed(2)),
         ], // red->rgb
         u_rules0b: () => [
-          Number(attractionRules[0][3].toFixed(2)),
-          Number(attractionRules[0][4].toFixed(2)),
-          Number(attractionRules[0][5].toFixed(2)),
+          Number(config.rules[0][3].toFixed(2)),
+          Number(config.rules[0][4].toFixed(2)),
+          Number(config.rules[0][5].toFixed(2)),
         ], // red->ycm
         u_rules1a: () => [
-          Number(attractionRules[1][0].toFixed(2)),
-          Number(attractionRules[1][1].toFixed(2)),
-          Number(attractionRules[1][2].toFixed(2)),
+          Number(config.rules[1][0].toFixed(2)),
+          Number(config.rules[1][1].toFixed(2)),
+          Number(config.rules[1][2].toFixed(2)),
         ], // green->rgb
         u_rules1b: () => [
-          Number(attractionRules[1][3].toFixed(2)),
-          Number(attractionRules[1][4].toFixed(2)),
-          Number(attractionRules[1][5].toFixed(2)),
+          Number(config.rules[1][3].toFixed(2)),
+          Number(config.rules[1][4].toFixed(2)),
+          Number(config.rules[1][5].toFixed(2)),
         ], // green->ycm
         u_rules2a: () => [
-          Number(attractionRules[2][0].toFixed(2)),
-          Number(attractionRules[2][1].toFixed(2)),
-          Number(attractionRules[2][2].toFixed(2)),
+          Number(config.rules[2][0].toFixed(2)),
+          Number(config.rules[2][1].toFixed(2)),
+          Number(config.rules[2][2].toFixed(2)),
         ], // blue->rgb
         u_rules2b: () => [
-          Number(attractionRules[2][3].toFixed(2)),
-          Number(attractionRules[2][4].toFixed(2)),
-          Number(attractionRules[2][5].toFixed(2)),
+          Number(config.rules[2][3].toFixed(2)),
+          Number(config.rules[2][4].toFixed(2)),
+          Number(config.rules[2][5].toFixed(2)),
         ], // blue->ycm
         u_rules3a: () => [
-          Number(attractionRules[3][0].toFixed(2)),
-          Number(attractionRules[3][1].toFixed(2)),
-          Number(attractionRules[3][2].toFixed(2)),
+          Number(config.rules[3][0].toFixed(2)),
+          Number(config.rules[3][1].toFixed(2)),
+          Number(config.rules[3][2].toFixed(2)),
         ], // yellow->rgb
         u_rules3b: () => [
-          Number(attractionRules[3][3].toFixed(2)),
-          Number(attractionRules[3][4].toFixed(2)),
-          Number(attractionRules[3][5].toFixed(2)),
+          Number(config.rules[3][3].toFixed(2)),
+          Number(config.rules[3][4].toFixed(2)),
+          Number(config.rules[3][5].toFixed(2)),
         ], // yellow->ycm
         u_rules4a: () => [
-          Number(attractionRules[4][0].toFixed(2)),
-          Number(attractionRules[4][1].toFixed(2)),
-          Number(attractionRules[4][2].toFixed(2)),
+          Number(config.rules[4][0].toFixed(2)),
+          Number(config.rules[4][1].toFixed(2)),
+          Number(config.rules[4][2].toFixed(2)),
         ], // cyan->rgb
         u_rules4b: () => [
-          Number(attractionRules[4][3].toFixed(2)),
-          Number(attractionRules[4][4].toFixed(2)),
-          Number(attractionRules[4][5].toFixed(2)),
+          Number(config.rules[4][3].toFixed(2)),
+          Number(config.rules[4][4].toFixed(2)),
+          Number(config.rules[4][5].toFixed(2)),
         ], // cyan->ycm
         u_rules5a: () => [
-          Number(attractionRules[5][0].toFixed(2)),
-          Number(attractionRules[5][1].toFixed(2)),
-          Number(attractionRules[5][2].toFixed(2)),
+          Number(config.rules[5][0].toFixed(2)),
+          Number(config.rules[5][1].toFixed(2)),
+          Number(config.rules[5][2].toFixed(2)),
         ], // magenta->rgb
         u_rules5b: () => [
-          Number(attractionRules[5][3].toFixed(2)),
-          Number(attractionRules[5][4].toFixed(2)),
-          Number(attractionRules[5][5].toFixed(2)),
+          Number(config.rules[5][3].toFixed(2)),
+          Number(config.rules[5][4].toFixed(2)),
+          Number(config.rules[5][5].toFixed(2)),
         ], // magenta->ycm
 
         // Mouse interaction uniforms
-        u_mouseRepel: () => (config.mouseRepel ? 1.0 : 0.0),
+        u_mouseRepel: () => (config.physics.mouseRepel ? 1.0 : 0.0),
         u_mousePos: () => [mousePos.current.x, mousePos.current.y],
       },
 
@@ -336,10 +340,10 @@ export function Simulation({
 
     // Randomize attraction rules
     function randomizeRules() {
-      const newRules = attractionRules.map((row) =>
+      const newRules = config.rules.map((row) =>
         row.map(() => Number(((Math.random() - 0.5) * 2).toFixed(2)))
       );
-      setAttractionRules(newRules);
+      setConfig({ ...config, rules: newRules });
       console.log("Rules randomized!", newRules);
     }
 
@@ -469,7 +473,7 @@ export function Simulation({
         simulationRef.current = null;
       }
     };
-  }, [attractionRules, config, setAttractionRules, setConfig]);
+  }, [config, setConfig]);
 
   return <canvas ref={canvasRef} className="" />;
 }

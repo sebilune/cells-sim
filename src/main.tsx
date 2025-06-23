@@ -25,42 +25,48 @@ function App() {
   // Default config and rules
   const defaultConfig = {
     population: 10000,
-    maxDistance: 0.25,
-    damping: 0.2,
-    timeScale: 10.0,
-    wallRepel: 0.125,
-    wallForce: 0.01,
-    particleSize: 6.0,
-    useProportionalScaling: true,
-    refPopulation: 1000,
-    scalingRatio: 0.5,
-    mouseRepel: true,
+    physics: {
+      maxDistance: 0.25,
+      damping: 0.2,
+      timeScale: 10.0,
+      wallRepel: 0.125,
+      wallForce: 0.01,
+      particleSize: 6.0,
+      useProportionalScaling: true,
+      refPopulation: 1000,
+      scalingRatio: 0.5,
+      mouseRepel: true,
+    },
+    rules: (() => {
+      try {
+        // Attempt to load rules from localStorage
+        const stored = localStorage.getItem("cells-sim-rules");
+        if (stored) return JSON.parse(stored);
+
+        // If not found, generate random rules and store them
+        const randomRules = randomAttractionRules();
+        localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+
+        return randomRules;
+      } catch {
+        // If parsing fails, generate random rules
+        const randomRules = randomAttractionRules();
+        localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+
+        return randomRules;
+      }
+    })(),
   };
 
   const [config, setConfig] = useState(defaultConfig);
-  const [attractionRules, setAttractionRules] = useState(() => {
-    try {
-      // Try to load rules from localStorage
-      const stored = localStorage.getItem("cells-sim-rules");
-      if (stored) return JSON.parse(stored);
 
-      // If not in localStorage, generate random, store, and return
-      const randomRules = randomAttractionRules();
-      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
-      return randomRules;
-    } catch {
-      // If parsing fails, generate random rules
-      const randomRules = randomAttractionRules();
-      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
-      return randomRules;
-    }
-  });
   // Settings state persisted in localStorage
   const defaultSettings = {
     showOverlay: true,
     showRules: true,
     showPhysics: true,
   };
+
   type SettingsState = typeof defaultSettings;
   const [settings, setSettings] = useState<SettingsState>(() => {
     try {
@@ -71,12 +77,13 @@ function App() {
     }
   });
 
+  // Persist settings and rules to localStorage
   useEffect(() => {
     localStorage.setItem("cells-sim-settings", JSON.stringify(settings));
   }, [settings]);
   useEffect(() => {
-    localStorage.setItem("cells-sim-rules", JSON.stringify(attractionRules));
-  }, [attractionRules]);
+    localStorage.setItem("cells-sim-rules", JSON.stringify(config.rules));
+  }, [config.rules]);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
@@ -91,7 +98,10 @@ function App() {
   };
 
   const handleMouseRepel = (v: boolean) => {
-    setConfig((c) => ({ ...c, mouseRepel: !!v }));
+    setConfig((c) => ({
+      ...c,
+      physics: { ...c.physics, mouseRepel: !!v },
+    }));
   };
 
   useEffect(() => {
@@ -124,8 +134,6 @@ function App() {
         }}
         config={config}
         setConfig={setConfig}
-        attractionRules={attractionRules}
-        setAttractionRules={setAttractionRules}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
         {settings.showOverlay && (
@@ -145,10 +153,10 @@ function App() {
               Randomize
             </Button>
             <SeedControls
-              seed={matrixToSeed(attractionRules)}
+              seed={matrixToSeed(config.rules)}
               onImport={(seed) => {
                 try {
-                  setAttractionRules(seedToMatrix(seed));
+                  setConfig((c) => ({ ...c, rules: seedToMatrix(seed) }));
                 } catch (e) {
                   alert("Invalid seed");
                 }
@@ -169,7 +177,7 @@ function App() {
           setShowPhysics={(v) =>
             setSettings((s: SettingsState) => ({ ...s, showPhysics: v }))
           }
-          mouseRepel={config.mouseRepel}
+          mouseRepel={config.physics.mouseRepel}
           setMouseRepel={handleMouseRepel}
           population={config.population}
           setPopulation={(v) => setConfig((c) => ({ ...c, population: v }))}
@@ -179,7 +187,6 @@ function App() {
       <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
         <Analytics
           config={config}
-          rules={attractionRules}
           showPhysics={settings.showPhysics}
           showRules={settings.showRules}
         />
