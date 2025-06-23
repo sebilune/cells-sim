@@ -4,7 +4,7 @@ export const DEFAULTS: SettingsState = {
   showOverlay: true,
   showRules: true,
   showPhysics: true,
-  population: 20000,
+  population: 4000,
   physics: {
     maxDistance: 0.25,
     damping: 0.2,
@@ -15,6 +15,6 @@ export const DEFAULTS: SettingsState = {
     useProportionalScaling: true,
     refPopulation: 1000,
     scalingRatio: 0.5,
-    mouseRepel: true,
+    mouseRepel: false,
   },
 };
