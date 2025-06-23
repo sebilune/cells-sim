@@ -6,15 +6,15 @@ import { useRef, useState } from "react";
 interface PopulationSliderProps {
   value: number;
   onChange: (value: number) => void;
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
 }
 
 export function PopulationSlider({
   value,
   onChange,
-  min = 10,
-  max = 100000,
+  min,
+  max,
 }: PopulationSliderProps) {
   const [internalValue, setInternalValue] = useState(value);
   const isDragging = useRef(false);
