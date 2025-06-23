@@ -6,6 +6,7 @@ import {
   matrixToSeed,
   randomAttractionRules,
 } from "@/utils/seedMatrix";
+import { worlds } from "@/config/worlds";
 
 import { Button } from "@/components/ui/button";
 import { useSettings } from "@/providers/SettingsProvider";
@@ -27,12 +28,13 @@ export function App() {
       const stored = localStorage.getItem("cells-sim-rules");
       if (stored) return JSON.parse(stored);
 
-      // If no rules are found, generate random rules
-      const randomRules = randomAttractionRules();
-      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
-      return randomRules;
+      // If no rules are found, pick a random seed from the worlds array
+      const randomSeed = worlds[Math.floor(Math.random() * worlds.length)];
+      const matrix = seedToMatrix(randomSeed);
+      localStorage.setItem("cells-sim-rules", JSON.stringify(matrix));
+      return matrix;
     } catch {
-      // If parsing fails gen random rules
+      // If parsing fails, fallback to random rules
       const randomRules = randomAttractionRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
