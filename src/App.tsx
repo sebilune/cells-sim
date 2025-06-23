@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { SiGithub as Github } from "react-icons/si";
 
 import {
@@ -44,11 +44,14 @@ export function App() {
     localStorage.setItem("cells-sim-rules", JSON.stringify(rules));
   }, [rules]);
 
-  const config = {
-    ...settings,
-    rules,
-    physics: settings.physics,
-  };
+  const config = useMemo(
+    () => ({
+      population: settings.population,
+      physics: settings.physics,
+      rules,
+    }),
+    [settings.population, settings.physics, rules]
+  );
 
   const handleRandomize = () => {
     if (randomizeRef.current) {

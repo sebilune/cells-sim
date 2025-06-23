@@ -37,7 +37,7 @@ export function Settings() {
                 checked={settings.showOverlay}
                 onCheckedChange={(v) => setSetting("showOverlay", !!v)}
               />
-              <Label htmlFor="showOverlay">Show Overlay</Label>
+              <Label htmlFor="showOverlay">Overlay</Label>
             </div>
           </div>
           <div className="pt-2 border-t border-border">
