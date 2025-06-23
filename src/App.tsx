@@ -117,14 +117,22 @@ export function App() {
               "Clusters" Variation
             </a>
           </Button>
-          {fps !== null && (
+          <div className="flex flex-row gap-2">
+            {fps !== null && (
+              <div
+                className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
+                title="FPS (V-synced)"
+              >
+                FPS: {fps}
+              </div>
+            )}
             <div
               className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
-              title="FPS (V-synced)"
+              title="Particle Count"
             >
-              FPS: {fps}
+              Particles: {config.population.toLocaleString()}
             </div>
-          )}
+          </div>
         </div>
       )}
       <div className="absolute top-4 right-4 z-10 flex gap-2">
