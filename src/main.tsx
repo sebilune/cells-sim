@@ -11,9 +11,9 @@ import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/lib/theme-provider";
 
 import { Simulation } from "@/components/Simulation";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeBtn } from "@/components/ThemeBtn";
 import { Settings } from "@/components/Settings";
-import { SeedControls } from "@/components/SeedControls";
+import { SeedBtn } from "@/components/SeedBtn";
 import { Analytics } from "@/components/Analytics/Analytics";
 
 import "./index.css";
@@ -152,7 +152,7 @@ function App() {
             >
               Randomize
             </Button>
-            <SeedControls
+            <SeedBtn
               seed={matrixToSeed(config.rules)}
               onImport={(seed) => {
                 try {
@@ -182,7 +182,7 @@ function App() {
           population={config.population}
           setPopulation={(v) => setConfig((c) => ({ ...c, population: v }))}
         />
-        <ThemeToggle />
+        <ThemeBtn />
       </div>
       <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
         <Analytics

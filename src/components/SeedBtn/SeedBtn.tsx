@@ -11,12 +11,12 @@ import { ClipboardCopy, Upload } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2Icon } from "lucide-react";
 
-interface SeedControlsProps {
+interface SeedBtnProps {
   seed: string;
   onImport: (seed: string) => void;
 }
 
-export function SeedControls({ seed, onImport }: SeedControlsProps) {
+export function SeedBtn({ seed, onImport }: SeedBtnProps) {
   const [importValue, setImportValue] = useState("");
   const [showCopied, setShowCopied] = useState(false);
 
