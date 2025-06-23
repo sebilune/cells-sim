@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PopulationSlider } from "./components/PopulationSlider";
+import { Slider } from "./components/Slider";
 import { useSettings } from "@/providers/SettingsProvider";
 
 export function Settings() {
@@ -73,7 +73,9 @@ export function Settings() {
                 />
                 <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
               </div>
-              <PopulationSlider
+              <Slider
+                name="population"
+                label="Population"
                 value={settings.population}
                 onChange={(v) => setSetting("population", v)}
                 min={10}

@@ -1,21 +1,25 @@
 import { cn } from "@/lib/utils";
-import { Slider } from "@/components/ui/slider";
+import { Slider as ShadcnSlider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 
-interface PopulationSliderProps {
+interface SliderProps {
+  name: string;
+  label?: string;
   value: number;
   onChange: (value: number) => void;
   min: number;
   max: number;
 }
 
-export function PopulationSlider({
+export function Slider({
+  name,
+  label,
   value,
   onChange,
   min,
   max,
-}: PopulationSliderProps) {
+}: SliderProps) {
   const [internalValue, setInternalValue] = useState(value);
   const isDragging = useRef(false);
 
@@ -34,15 +38,17 @@ export function PopulationSlider({
 
   return (
     <div className="w-full">
-      <label
-        htmlFor="population-input"
-        className="text-xs font-medium block mb-2"
-      >
-        Population
-      </label>
+      {label && (
+        <label
+          htmlFor={`${name}-input`}
+          className="text-xs font-medium block mb-2"
+        >
+          {label}
+        </label>
+      )}
       <div className="flex flex-row items-center gap-4 w-full">
         <Input
-          id="population-input"
+          id={`${name}-input`}
           type="number"
           min={min}
           max={max}
@@ -50,8 +56,8 @@ export function PopulationSlider({
           onChange={handleInputChange}
           className="font-mono text-xs w-20 h-7 py-1 px-2"
         />
-        <Slider
-          id="population-slider"
+        <ShadcnSlider
+          id={`${name}-slider`}
           value={[internalValue]}
           min={min}
           max={max}
