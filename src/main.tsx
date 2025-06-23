@@ -9,22 +9,47 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/lib/theme-provider";
+import {
+  SettingsProvider,
+  useSettings,
+} from "@/components/Settings/SettingsContext";
+import { Settings } from "@/components/Settings";
 
 import { Simulation } from "@/components/Simulation";
 import { ThemeBtn } from "@/components/ThemeBtn";
-import { Settings } from "@/components/Settings";
 import { SeedBtn } from "@/components/SeedBtn";
 import { Analytics } from "@/components/Analytics/Analytics";
 
 import "./index.css";
 
 function App() {
+  const { settings } = useSettings();
   const randomizeRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
 
-  // Default config and rules
-  const defaultConfig = {
-    population: 10000,
+  // Default rules logic (keep rules in localStorage, not in settings)
+  const [rules, setRules] = useState(() => {
+    try {
+      const stored = localStorage.getItem("cells-sim-rules");
+      if (stored) return JSON.parse(stored);
+      const randomRules = randomAttractionRules();
+      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+      return randomRules;
+    } catch {
+      const randomRules = randomAttractionRules();
+      localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
+      return randomRules;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cells-sim-rules", JSON.stringify(rules));
+  }, [rules]);
+
+  // Compose the config for Simulation from settings and rules
+  const config = {
+    ...settings,
+    rules,
     physics: {
       maxDistance: 0.25,
       damping: 0.2,
@@ -35,55 +60,9 @@ function App() {
       useProportionalScaling: true,
       refPopulation: 1000,
       scalingRatio: 0.5,
-      mouseRepel: true,
+      mouseRepel: settings.mouseRepel,
     },
-    rules: (() => {
-      try {
-        // Attempt to load rules from localStorage
-        const stored = localStorage.getItem("cells-sim-rules");
-        if (stored) return JSON.parse(stored);
-
-        // If not found, generate random rules and store them
-        const randomRules = randomAttractionRules();
-        localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
-
-        return randomRules;
-      } catch {
-        // If parsing fails, generate random rules
-        const randomRules = randomAttractionRules();
-        localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
-
-        return randomRules;
-      }
-    })(),
   };
-
-  const [config, setConfig] = useState(defaultConfig);
-
-  // Settings state persisted in localStorage
-  const defaultSettings = {
-    showOverlay: true,
-    showRules: true,
-    showPhysics: true,
-  };
-
-  type SettingsState = typeof defaultSettings;
-  const [settings, setSettings] = useState<SettingsState>(() => {
-    try {
-      const stored = localStorage.getItem("cells-sim-settings");
-      return stored ? JSON.parse(stored) : defaultSettings;
-    } catch {
-      return defaultSettings;
-    }
-  });
-
-  // Persist settings and rules to localStorage
-  useEffect(() => {
-    localStorage.setItem("cells-sim-settings", JSON.stringify(settings));
-  }, [settings]);
-  useEffect(() => {
-    localStorage.setItem("cells-sim-rules", JSON.stringify(config.rules));
-  }, [config.rules]);
 
   const handleRandomize = () => {
     if (randomizeRef.current) {
@@ -95,13 +74,6 @@ function App() {
     if (resetRef.current) {
       resetRef.current();
     }
-  };
-
-  const handleMouseRepel = (v: boolean) => {
-    setConfig((c) => ({
-      ...c,
-      physics: { ...c.physics, mouseRepel: !!v },
-    }));
   };
 
   useEffect(() => {
@@ -133,62 +105,45 @@ function App() {
           resetRef.current = resetFn;
         }}
         config={config}
-        setConfig={setConfig}
+        setConfig={(newConfig) => {
+          // Only update rules, all other config comes from settings
+          if (newConfig.rules) setRules(newConfig.rules);
+          // If you want to allow simulation to update settings, you could call setSetting here
+        }}
       />
       <div className="absolute top-4 right-4 z-10 flex gap-2">
-        {settings.showOverlay && (
-          <>
-            <Button
-              variant="destructive"
-              onClick={handleReset}
-              title="Reset simulation"
-            >
-              Reset
-            </Button>
-            <Button
-              variant="secondary"
-              onClick={handleRandomize}
-              title="Randomize simulation (R)"
-            >
-              Randomize
-            </Button>
-            <SeedBtn
-              seed={matrixToSeed(config.rules)}
-              onImport={(seed) => {
-                try {
-                  setConfig((c) => ({ ...c, rules: seedToMatrix(seed) }));
-                } catch (e) {
-                  alert("Invalid seed");
-                }
-              }}
-            />
-          </>
-        )}
-        <Settings
-          showOverlay={settings.showOverlay}
-          setShowOverlay={(v) =>
-            setSettings((s: SettingsState) => ({ ...s, showOverlay: v }))
-          }
-          showRules={settings.showRules}
-          setShowRules={(v) =>
-            setSettings((s: SettingsState) => ({ ...s, showRules: v }))
-          }
-          showPhysics={settings.showPhysics}
-          setShowPhysics={(v) =>
-            setSettings((s: SettingsState) => ({ ...s, showPhysics: v }))
-          }
-          mouseRepel={config.physics.mouseRepel}
-          setMouseRepel={handleMouseRepel}
-          population={config.population}
-          setPopulation={(v) => setConfig((c) => ({ ...c, population: v }))}
+        <Button
+          variant="destructive"
+          onClick={handleReset}
+          title="Reset simulation"
+        >
+          Reset
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={handleRandomize}
+          title="Randomize simulation (R)"
+        >
+          Randomize
+        </Button>
+        <SeedBtn
+          seed={matrixToSeed(rules)}
+          onImport={(seed) => {
+            try {
+              setRules(seedToMatrix(seed));
+            } catch (e) {
+              alert("Invalid seed");
+            }
+          }}
         />
+        <Settings />
         <ThemeBtn />
       </div>
       <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
         <Analytics
           config={config}
-          showPhysics={settings.showPhysics}
           showRules={settings.showRules}
+          showPhysics={settings.showPhysics}
         />
       </div>
     </div>
@@ -197,6 +152,8 @@ function App() {
 
 createRoot(document.getElementById("app")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <App />
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>
   </ThemeProvider>
 );

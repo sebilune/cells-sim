@@ -8,32 +8,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PopulationSlider } from "./components/PopulationSlider";
+import { useSettings } from "./SettingsContext";
 
-interface SettingsProps {
-  showOverlay: boolean;
-  setShowOverlay: (v: boolean) => void;
-  showRules: boolean;
-  setShowRules: (v: boolean) => void;
-  showPhysics: boolean;
-  setShowPhysics: (v: boolean) => void;
-  mouseRepel: boolean;
-  setMouseRepel: (v: boolean) => void;
-  population: number;
-  setPopulation: (v: number) => void;
-}
-
-export function Settings({
-  showOverlay,
-  setShowOverlay,
-  showRules,
-  setShowRules,
-  showPhysics,
-  setShowPhysics,
-  mouseRepel,
-  setMouseRepel,
-  population,
-  setPopulation,
-}: SettingsProps) {
+export function Settings() {
+  const { settings, setSetting } = useSettings();
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -53,8 +31,8 @@ export function Settings({
             <div className="flex items-center gap-3">
               <Checkbox
                 id="showOverlay"
-                checked={showOverlay}
-                onCheckedChange={setShowOverlay}
+                checked={settings.showOverlay}
+                onCheckedChange={(v) => setSetting("showOverlay", !!v)}
               />
               <Label htmlFor="showOverlay">Show Overlay</Label>
             </div>
@@ -67,16 +45,16 @@ export function Settings({
               <div className="flex items-center gap-3">
                 <Checkbox
                   id="showRules"
-                  checked={showRules}
-                  onCheckedChange={setShowRules}
+                  checked={settings.showRules}
+                  onCheckedChange={(v) => setSetting("showRules", !!v)}
                 />
                 <Label htmlFor="showRules">Rules</Label>
               </div>
               <div className="flex items-center gap-3">
                 <Checkbox
                   id="showPhysics"
-                  checked={showPhysics}
-                  onCheckedChange={setShowPhysics}
+                  checked={settings.showPhysics}
+                  onCheckedChange={(v) => setSetting("showPhysics", !!v)}
                 />
                 <Label htmlFor="showPhysics">Physics</Label>
               </div>
@@ -90,14 +68,14 @@ export function Settings({
               <div className="flex items-center gap-3">
                 <Checkbox
                   id="mouseRepel"
-                  checked={mouseRepel}
-                  onCheckedChange={setMouseRepel}
+                  checked={settings.mouseRepel}
+                  onCheckedChange={(v) => setSetting("mouseRepel", !!v)}
                 />
                 <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
               </div>
               <PopulationSlider
-                value={population}
-                onChange={setPopulation}
+                value={settings.population}
+                onChange={(v) => setSetting("population", v)}
                 min={10}
                 max={100000}
               />
