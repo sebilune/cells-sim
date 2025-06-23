@@ -1,33 +1,17 @@
 import { useEffect, useRef } from "react";
 import createREGL from "regl";
+import type { Config } from "@/types/simulation";
 
 import simulationStepFrag from "./shaders/simulationStep.frag.glsl?raw";
 import simulationStepVert from "./shaders/simulationStep.vert.glsl?raw";
 import renderParticlesFrag from "./shaders/renderParticles.frag.glsl?raw";
 import renderParticlesVert from "./shaders/renderParticles.vert.glsl?raw";
 
-interface SimulationConfig {
-  population: number;
-  rules: number[][];
-  physics: {
-    maxDistance: number;
-    damping: number;
-    timeScale: number;
-    wallRepel: number;
-    wallForce: number;
-    particleSize: number;
-    useProportionalScaling: boolean;
-    refPopulation: number;
-    scalingRatio: number;
-    mouseRepel: boolean;
-  };
-}
-
 interface SimulationProps {
   onRandomizeRef?: (randomizeFn: () => void) => void;
   onResetRef?: (resetFn: () => void) => void;
-  config: SimulationConfig;
-  setConfig: (config: SimulationConfig) => void;
+  config: Config;
+  setConfig: (config: Config) => void;
 }
 
 export function Simulation({

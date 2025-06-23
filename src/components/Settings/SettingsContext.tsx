@@ -1,25 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-
-export interface PhysicsSettings {
-  maxDistance: number;
-  damping: number;
-  timeScale: number;
-  wallRepel: number;
-  wallForce: number;
-  particleSize: number;
-  useProportionalScaling: boolean;
-  refPopulation: number;
-  scalingRatio: number;
-  mouseRepel: boolean;
-}
+import type { Physics } from "@/types/simulation";
 
 export interface SettingsState {
   showOverlay: boolean;
   showRules: boolean;
   showPhysics: boolean;
+
   population: number;
-  physics: PhysicsSettings;
+  physics: Physics;
 }
 
 const DEFAULTS: SettingsState = {
@@ -48,9 +37,9 @@ interface SettingsContextType {
     value: SettingsState[K]
   ) => void;
   setSettings: (settings: SettingsState) => void;
-  setPhysicsSetting: <K extends keyof PhysicsSettings>(
+  setPhysicsSetting: <K extends keyof Physics>(
     key: K,
-    value: PhysicsSettings[K]
+    value: Physics[K]
   ) => void;
 }
 
@@ -81,9 +70,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   };
 
   // Setter for physics subfields
-  const setPhysicsSetting = <K extends keyof PhysicsSettings>(
+  const setPhysicsSetting = <K extends keyof Physics>(
     key: K,
-    value: PhysicsSettings[K]
+    value: Physics[K]
   ) => {
     setSettingsState((prev) => ({
       ...prev,

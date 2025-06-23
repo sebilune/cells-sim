@@ -1,13 +1,15 @@
+import type { Physics } from "@/types/simulation";
+
 interface PhysicsTableProps {
-  config: Record<string, number | boolean>;
+  physics: Physics;
 }
 
-export function PhysicsTable({ config }: PhysicsTableProps) {
+export function PhysicsTable({ physics }: PhysicsTableProps) {
   return (
     <div>
       <table className="border-collapse bg-transparent">
         <tbody>
-          {Object.entries(config).map(([key, value]) => (
+          {Object.entries(physics).map(([key, value]) => (
             <tr
               key={key}
               className="bg-transparent border-b border-neutral-800 last:border-b-0"

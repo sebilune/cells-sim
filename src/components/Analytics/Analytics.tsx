@@ -1,23 +1,10 @@
+import type { Config } from "@/types/simulation";
+
 import { PhysicsTable } from "./components/PhysicsTable";
 import { RulesTable } from "./components/RulesTable";
 
 interface AnalyticsProps {
-  config: {
-    population: number;
-    physics: {
-      maxDistance: number;
-      damping: number;
-      timeScale: number;
-      wallRepel: number;
-      wallForce: number;
-      particleSize: number;
-      useProportionalScaling: boolean;
-      refPopulation: number;
-      scalingRatio: number;
-      mouseRepel: boolean;
-    };
-    rules: number[][];
-  };
+  config: Config;
   showPhysics?: boolean;
   showRules?: boolean;
 }
@@ -29,7 +16,7 @@ export function Analytics({
 }: AnalyticsProps) {
   return (
     <div className="flex flex-col gap-4 items-start">
-      {showPhysics && <PhysicsTable config={config.physics} />}
+      {showPhysics && <PhysicsTable physics={config.physics} />}
       {showRules && <RulesTable rules={config.rules} />}
     </div>
   );
