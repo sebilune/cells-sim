@@ -24,12 +24,22 @@ export function Slider({
   step = 1,
   float = false,
 }: SliderProps) {
-  const [internalValue, setInternalValue] = useState(value);
+  const [internalValue, setInternalValue] = useState(
+    float ? parseFloat(Number(value).toFixed(1)) : Math.round(value)
+  );
   const isDragging = useRef(false);
 
   // Keep internalValue in sync with value prop
-  if (internalValue !== value && !isDragging.current) {
-    setInternalValue(value);
+  if (
+    (float
+      ? parseFloat(Number(internalValue).toFixed(1)) !==
+        parseFloat(Number(value).toFixed(1))
+      : internalValue !== value) &&
+    !isDragging.current
+  ) {
+    setInternalValue(
+      float ? parseFloat(Number(value).toFixed(1)) : Math.round(value)
+    );
   }
 
   // Allow floats or ints in input
@@ -44,9 +54,12 @@ export function Slider({
       v = parseInt(e.target.value.replace(/[^0-9\-]/g, ""), 10);
       if (isNaN(v)) v = min;
       v = Math.max(min, Math.min(max, v));
+      v = Math.round(v);
     }
     setInternalValue(v);
-    onChange(v);
+
+    // Always pass float
+    onChange(float ? parseFloat(v.toFixed(1)) : Math.round(v));
   };
 
   // onChange when input changes, but not while dragging slider
@@ -62,8 +75,8 @@ export function Slider({
 
   // Format value for display
   const displayValue = float
-    ? internalValue.toFixed(1)
-    : internalValue.toString();
+    ? parseFloat(Number(internalValue).toFixed(1)).toFixed(1)
+    : Math.round(internalValue).toString();
 
   return (
     <div className="w-full">
@@ -98,7 +111,12 @@ export function Slider({
           }}
           onPointerUp={() => {
             isDragging.current = false;
-            onChange(internalValue);
+            // Always pass float
+            onChange(
+              float
+                ? parseFloat(internalValue.toFixed(1))
+                : Math.round(internalValue)
+            );
           }}
           className={cn("w-[60%]")}
         />
