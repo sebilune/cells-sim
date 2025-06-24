@@ -96,7 +96,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
           <div className="pt-4 border-t border-border">
             <Button
               type="button"
-              className="w-full py-2 rounded bg-red-500/90 hover:bg-red-500/80 text-white font-semibold transition-colors"
+              className="w-full bg-red-500/90 hover:bg-red-500/70 text-white"
               title="Reset all settings (Careful!)"
               onClick={() => {
                 localStorage.removeItem("cells-sim-settings");
