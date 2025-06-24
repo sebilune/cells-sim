@@ -156,7 +156,7 @@ export function App() {
               </>
             )}
             <SettingsBtn
-              className="dark:bg-zinc-950 dark:hover:bg-zinc-80"
+              className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
               variant="outline"
               title="Settings"
             />
