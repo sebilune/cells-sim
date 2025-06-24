@@ -128,7 +128,7 @@ export function App() {
                   variant="default"
                   onClick={handleReset}
                   title="Reset simulation"
-                  className="bg-red-500/80 border-1 border-red-400 hover:bg-red-500/60 text-white flex-grow md:flex-none"
+                  className="dark:bg-red-500/90 border-1 bg-red-500 hover:bg-red-500/90 border-red-400 dark:hover:bg-red-500/70 text-white flex-grow md:flex-none"
                 >
                   Reset
                 </Button>
