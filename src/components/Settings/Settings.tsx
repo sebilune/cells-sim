@@ -83,6 +83,7 @@ export function Settings() {
                 onChange={(v) => setSetting("population", v)}
                 min={10}
                 max={100000}
+                step={1000}
               />
             </div>
           </div>
