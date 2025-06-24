@@ -73,7 +73,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
             <div className="flex flex-col gap-3">
               <Slider
                 name="mouseRepel"
-                label="Mouse Interaction"
+                label="Mouse Repulsion"
                 value={settings.physics.mouseRepel}
                 onChange={(v) => setPhysicsSetting("mouseRepel", v)}
                 min={0.0}
