@@ -10,15 +10,18 @@ import {
 import { Slider } from "./components/Slider";
 import { useSettings } from "@/providers/SettingsProvider";
 
-export function Settings() {
+interface SettingsProps {
+  className?: string;
+  variant?: "default" | "outline";
+  title?: string;
+}
+
+export function Settings({ className, variant, title }: SettingsProps) {
   const { settings, setSetting, setPhysicsSetting } = useSettings();
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-        >
+        <Button variant={variant} title={title} className={className}>
           <SettingsIcon className="w-5 h-5" aria-label="Settings" />
         </Button>
       </PopoverTrigger>

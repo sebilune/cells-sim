@@ -100,24 +100,74 @@ export function App() {
         onFpsUpdate={setFps}
       />
 
-      {settings.showOverlay && (
-        <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-          <Button
-            asChild
-            variant="outline"
-            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-            title="View source code"
-          >
-            <a
-              href="https://github.com/sebilune/cells-sim"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata: A
-              "Clusters" Variation
-            </a>
-          </Button>
-          <div className="flex flex-row gap-2">
+      <div className="absolute top-4 left-4 right-4 z-10 flex flex-col">
+        <div className="flex flex-col md:flex-row w-full">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-start w-full md:w-auto">
+            {settings.showOverlay && (
+              <Button
+                asChild
+                variant="outline"
+                className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+                title="View source code"
+              >
+                <a
+                  href="https://github.com/sebilune/cells-sim"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata:
+                  A "Clusters" Variation
+                </a>
+              </Button>
+            )}
+          </div>
+          <div className="flex flex-row flex-1 justify-center md:justify-end items-center gap-2 mt-2 md:mt-0">
+            {settings.showOverlay && (
+              <>
+                <Button
+                  variant="default"
+                  onClick={handleReset}
+                  title="Reset simulation"
+                  className="bg-foreground flex-grow md:flex-none"
+                >
+                  Reset
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleRandomize}
+                  title="Randomize simulation (R)"
+                  className="dark:bg-zinc-950 dark:hover:bg-zinc-800 flex-grow md:flex-none"
+                >
+                  Randomize
+                </Button>
+                <SeedBtn
+                  seed={matrixToSeed(rules)}
+                  onImport={(seed) => {
+                    try {
+                      setRules(seedToMatrix(seed));
+                    } catch (e) {
+                      alert("Invalid seed");
+                    }
+                  }}
+                  className="dark:bg-zinc-950 dark:hover:bg-zinc-800 flex-grow md:flex-none"
+                  title="Import/Export rules seed"
+                  variant="outline"
+                />
+              </>
+            )}
+            <Settings
+              className="dark:bg-zinc-950 dark:hover:bg-zinc-80"
+              variant="outline"
+              title="Settings"
+            />
+            <ThemeBtn
+              className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
+              variant="outline"
+            />
+          </div>
+        </div>
+        {settings.showOverlay && (
+          <div className="flex flex-row gap-2 mt-2">
             {fps !== null && (
               <div
                 className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
@@ -133,41 +183,7 @@ export function App() {
               Particles: {config.population.toLocaleString()}
             </div>
           </div>
-        </div>
-      )}
-      <div className="absolute top-4 right-4 z-10 flex gap-2">
-        {settings.showOverlay && (
-          <div className="relative flex gap-2">
-            <Button
-              variant="default"
-              onClick={handleReset}
-              title="Reset simulation"
-              className="bg-foreground"
-            >
-              Reset
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleRandomize}
-              title="Randomize simulation (R)"
-              className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-            >
-              Randomize
-            </Button>
-            <SeedBtn
-              seed={matrixToSeed(rules)}
-              onImport={(seed) => {
-                try {
-                  setRules(seedToMatrix(seed));
-                } catch (e) {
-                  alert("Invalid seed");
-                }
-              }}
-            />
-          </div>
         )}
-        <Settings />
-        <ThemeBtn />
       </div>
       <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
         <Analytics

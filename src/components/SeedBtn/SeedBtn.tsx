@@ -14,9 +14,18 @@ import { CheckCircle2Icon } from "lucide-react";
 interface SeedBtnProps {
   seed: string;
   onImport: (seed: string) => void;
+  variant?: "default" | "outline";
+  title?: string;
+  className?: string;
 }
 
-export function SeedBtn({ seed, onImport }: SeedBtnProps) {
+export function SeedBtn({
+  seed,
+  onImport,
+  variant,
+  title,
+  className,
+}: SeedBtnProps) {
   const [importValue, setImportValue] = useState("");
   const [showCopied, setShowCopied] = useState(false);
 
@@ -48,11 +57,7 @@ export function SeedBtn({ seed, onImport }: SeedBtnProps) {
       )}
       <Popover>
         <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            title="Seed controls"
-            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-          >
+          <Button variant={variant} title={title} className={className}>
             Seed
           </Button>
         </PopoverTrigger>
