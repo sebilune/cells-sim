@@ -32,6 +32,24 @@ export function Simulation({
   useEffect(() => {
     if (!canvasRef.current || !config) return;
 
+    // If population is 0, skip simulation setup and clear canvas particles
+    if (config.population === 0) {
+      if (simulationRef.current) {
+        simulationRef.current.cleanup();
+        simulationRef.current = null;
+      }
+
+      // Clear the canvas with regl
+      const canvas = canvasRef.current;
+      const gl = canvas.getContext("webgl") || canvas.getContext("webgl2");
+      if (gl) {
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      }
+      return;
+    }
+
     const canvas = canvasRef.current;
 
     // Track canvas size and aspect ratio

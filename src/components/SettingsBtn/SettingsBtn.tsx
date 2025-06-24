@@ -86,7 +86,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
                 label="Population"
                 value={settings.population}
                 onChange={(v) => setSetting("population", v)}
-                min={10}
+                min={0}
                 max={100000}
                 step={1000}
               />
