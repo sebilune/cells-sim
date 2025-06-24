@@ -15,6 +15,6 @@ export const DEFAULTS: SettingsState = {
     useProportionalScaling: true,
     refPopulation: 1000,
     scalingRatio: 0.5,
-    mouseRepel: false,
+    mouseRepel: 1.0,
   },
 };

@@ -260,7 +260,8 @@ export function Simulation({
         ], // magenta->ycm
 
         // Mouse interaction uniforms
-        u_mouseRepel: () => (config.physics.mouseRepel ? 1.0 : 0.0),
+        u_mouseRepel: () => config.physics.mouseRepel,
+        u_mouseRepelRadius: () => config.physics.mouseRepel * 0.1,
         u_mousePos: () => [mousePos.current.x, mousePos.current.y],
       },
 

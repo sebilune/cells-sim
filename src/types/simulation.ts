@@ -8,7 +8,7 @@ export interface Physics {
   useProportionalScaling: boolean;
   refPopulation: number;
   scalingRatio: number;
-  mouseRepel: boolean;
+  mouseRepel: number; // Now a float between 0.0 and 5.0
 }
 
 export interface Config {

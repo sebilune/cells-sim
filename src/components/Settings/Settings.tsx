@@ -68,14 +68,16 @@ export function Settings() {
               Simulation
             </h5>
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  id="mouseRepel"
-                  checked={settings.physics.mouseRepel}
-                  onCheckedChange={(v) => setPhysicsSetting("mouseRepel", !!v)}
-                />
-                <Label htmlFor="mouseRepel">Mouse Repulsion</Label>
-              </div>
+              <Slider
+                name="mouseRepel"
+                label="Mouse Interaction"
+                value={settings.physics.mouseRepel}
+                onChange={(v) => setPhysicsSetting("mouseRepel", v)}
+                min={0.0}
+                max={5.0}
+                step={0.5}
+                float={true}
+              />
               <Slider
                 name="population"
                 label="Population"

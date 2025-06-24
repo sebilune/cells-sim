@@ -15,8 +15,9 @@ uniform float u_wallRepel;
 uniform float u_wallForce;
 
 // Mouse repulsion uniform
-uniform float u_mouseRepel; // 1.0 if enabled, 0.0 if not
-uniform vec2 u_mousePos;    // Mouse position in NDC (-1..1)
+uniform float u_mouseRepel; // Strength
+uniform float u_mouseRepelRadius; // Radius (NDC)
+uniform vec2 u_mousePos;    // Mouse position (NDC)
 
 // 6x6 attraction rules matrix, split into 12 vec3s for WebGL uniform limits
 uniform vec3 u_rules0a; uniform vec3 u_rules0b;
@@ -129,9 +130,9 @@ void main() {
   }
 
   // Mouse repel logic
-  if (u_mouseRepel > 0.5) {
-    float mouseRadius = 0.1; // Smaller radius for repel
-    float mouseStrength = 2.0; // Repel force strength
+  if (u_mouseRepel > 0.01 && u_mouseRepelRadius > 0.01) {
+    float mouseRadius = u_mouseRepelRadius;
+    float mouseStrength = u_mouseRepel;
     float d = length(position - u_mousePos);
     if (d < mouseRadius) {
       vec2 repel = normalize(position - u_mousePos) * (mouseRadius - d) * mouseStrength;
