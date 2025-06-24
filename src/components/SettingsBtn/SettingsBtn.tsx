@@ -18,6 +18,7 @@ interface SettingsBtnProps {
 
 export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
   const { settings, setSetting, setPhysicsSetting } = useSettings();
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -91,6 +92,20 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
                 step={2000}
               />
             </div>
+          </div>
+          <div className="pt-4 border-t border-border">
+            <Button
+              type="button"
+              className="w-full py-2 rounded bg-red-500/90 hover:bg-red-500/80 text-white font-semibold transition-colors"
+              title="Reset all settings (Careful!)"
+              onClick={() => {
+                localStorage.removeItem("cells-sim-settings");
+                localStorage.removeItem("cells-sim-rules");
+                window.location.reload();
+              }}
+            >
+              Reset All Settings
+            </Button>
           </div>
         </div>
       </PopoverContent>
