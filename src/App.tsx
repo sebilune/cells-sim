@@ -10,7 +10,7 @@ import { worlds } from "@/config/worlds";
 
 import { Button } from "@/components/ui/button";
 import { useSettings } from "@/providers/SettingsProvider";
-import { Settings } from "@/components/Settings";
+import { SettingsBtn } from "@/components/SettingsBtn";
 
 import { Simulation } from "@/components/Simulation";
 import { ThemeBtn } from "@/components/ThemeBtn";
@@ -155,7 +155,7 @@ export function App() {
                 />
               </>
             )}
-            <Settings
+            <SettingsBtn
               className="dark:bg-zinc-950 dark:hover:bg-zinc-80"
               variant="outline"
               title="Settings"

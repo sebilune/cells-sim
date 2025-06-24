@@ -10,13 +10,13 @@ import {
 import { Slider } from "./components/Slider";
 import { useSettings } from "@/providers/SettingsProvider";
 
-interface SettingsProps {
+interface SettingsBtnProps {
   className?: string;
   variant?: "default" | "outline";
   title?: string;
 }
 
-export function Settings({ className, variant, title }: SettingsProps) {
+export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
   const { settings, setSetting, setPhysicsSetting } = useSettings();
   return (
     <Popover>
