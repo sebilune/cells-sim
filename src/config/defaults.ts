@@ -3,7 +3,7 @@ import type { SettingsState } from "@/providers/SettingsProvider";
 export const DEFAULTS: SettingsState = {
   showOverlay: true,
   showRules: true,
-  showPhysics: true,
+  showPhysics: false,
   population: 4000,
   physics: {
     maxDistance: 0.25,
