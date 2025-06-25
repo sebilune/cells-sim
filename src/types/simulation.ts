@@ -8,11 +8,24 @@ export interface Physics {
   useProportionalScaling: boolean;
   refPopulation: number;
   scalingRatio: number;
-  mouseRepel: number; // Now a float between 0.0 and 5.0
+  mouseRepel: number;
 }
+
+export type Rules = number[][];
 
 export interface Config {
   population: number;
-  rules: number[][];
+  rules: Rules;
+  physics: Physics;
+}
+
+interface Overlay {
+  showOverlay: boolean;
+  showRules: boolean;
+  showPhysics: boolean;
+}
+
+export interface Settings extends Overlay {
+  population: number;
   physics: Physics;
 }

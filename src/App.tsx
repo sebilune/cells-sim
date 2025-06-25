@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import type { Config, Settings, Rules } from "@/types/simulation";
 
 import {
   seedToMatrix,
@@ -14,12 +15,12 @@ import { Analytics } from "@/components/Analytics";
 import { Controls } from "@/components/Controls";
 
 export function App() {
-  const { settings } = useSettings();
+  const { settings } = useSettings() as { settings: Settings };
   const randomizeRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
   const [fps, setFps] = useState<number | null>(null);
 
-  const [rules, setRules] = useState(() => {
+  const [rules, setRules] = useState<Rules>(() => {
     try {
       // Attempt to load rules from localStorage
       const stored = localStorage.getItem("cells-sim-rules");
@@ -43,7 +44,7 @@ export function App() {
     localStorage.setItem("cells-sim-rules", JSON.stringify(rules));
   }, [rules]);
 
-  const config = {
+  const config: Config = {
     population: settings.population,
     physics: settings.physics,
     rules,

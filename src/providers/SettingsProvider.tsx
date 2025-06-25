@@ -1,24 +1,15 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
+
+import type { Settings } from "@/types/simulation";
 import type { Physics } from "@/types/simulation";
+
 import { DEFAULTS } from "@/config/defaults";
 
-export interface SettingsState {
-  showOverlay: boolean;
-  showRules: boolean;
-  showPhysics: boolean;
-
-  population: number;
-  physics: Physics;
-}
-
 interface SettingsContextType {
-  settings: SettingsState;
-  setSetting: <K extends keyof SettingsState>(
-    key: K,
-    value: SettingsState[K]
-  ) => void;
-  setSettings: (settings: SettingsState) => void;
+  settings: Settings;
+  setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+  setSettings: (settings: Settings) => void;
   setPhysicsSetting: <K extends keyof Physics>(
     key: K,
     value: Physics[K]
@@ -32,7 +23,7 @@ const SettingsContext = createContext<SettingsContextType | undefined>(
 const LOCAL_STORAGE_KEY = "cells-sim-settings";
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettingsState] = useState<SettingsState>(() => {
+  const [settings, setSettingsState] = useState<Settings>(() => {
     const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
     return stored ? { ...DEFAULTS, ...JSON.parse(stored) } : DEFAULTS;
   });
@@ -41,11 +32,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(settings));
   }, [settings]);
 
-  const setSetting = <K extends keyof SettingsState>(
-    key: K,
-    value: SettingsState[K]
-  ) => {
-    setSettingsState((prev) => ({
+  const setSetting = <K extends keyof Settings>(key: K, value: Settings[K]) => {
+    setSettingsState((prev: Settings) => ({
       ...prev,
       [key]: value,
     }));
@@ -56,7 +44,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     key: K,
     value: Physics[K]
   ) => {
-    setSettingsState((prev) => ({
+    setSettingsState((prev: Settings) => ({
       ...prev,
       physics: {
         ...prev.physics,
@@ -65,7 +53,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     }));
   };
 
-  const setSettings = (newSettings: SettingsState) => {
+  const setSettings = (newSettings: Settings) => {
     setSettingsState(newSettings);
   };
 

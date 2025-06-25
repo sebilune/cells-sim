@@ -3,17 +3,18 @@ import { Button } from "@/lib/ui/button";
 import { SeedBtn } from "./components/SeedBtn";
 import { SettingsBtn } from "./components/SettingsBtn";
 import { ThemeBtn } from "./components/ThemeBtn";
+import type { Settings, Config, Rules } from "@/types/simulation";
 
 interface ControlsProps {
-  settings: any;
+  settings: Settings;
   fps: number | null;
-  config: any;
+  config: Config;
   handleReset: () => void;
   handleRandomize: () => void;
-  rules: any;
-  setRules: (rules: any) => void;
-  matrixToSeed: (rules: any) => string;
-  seedToMatrix: (seed: string) => any;
+  rules: Rules;
+  setRules: (rules: Rules) => void;
+  matrixToSeed: (rules: Rules) => string;
+  seedToMatrix: (seed: string) => Rules;
 }
 
 export default function Controls({
