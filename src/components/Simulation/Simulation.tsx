@@ -498,5 +498,5 @@ export function Simulation({
     };
   }, [config, setConfig, onFpsUpdate]);
 
-  return <canvas ref={canvasRef} className="" />;
+  return <canvas ref={canvasRef} className="bg-black" />;
 }
