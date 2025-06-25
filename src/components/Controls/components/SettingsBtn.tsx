@@ -3,7 +3,7 @@ import { Button } from "@/lib/ui/button";
 import { Label } from "@/lib/ui/label";
 import { Checkbox } from "@/lib/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/lib/ui/popover";
-import { Slider } from "./components/Slider";
+import { Slider } from "./Slider";
 import { useSettings } from "@/providers/SettingsProvider";
 
 interface SettingsBtnProps {

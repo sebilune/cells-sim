@@ -1,1 +1,0 @@
-export { SeedBtn } from "./SeedBtn";
