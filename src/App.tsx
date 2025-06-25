@@ -8,7 +8,7 @@ import {
 } from "@/utils/seedMatrix";
 import { worlds } from "@/config/worlds";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/ui/button";
 import { useSettings } from "@/providers/SettingsProvider";
 import { SettingsBtn } from "@/components/SettingsBtn";
 
