@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/shared/utils";
 import { Slider as ShadcnSlider } from "@/lib/ui/slider";
 import { Input } from "@/lib/ui/input";
 import { useRef, useState } from "react";
