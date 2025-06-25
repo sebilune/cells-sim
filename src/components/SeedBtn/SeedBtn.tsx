@@ -47,9 +47,9 @@ export function SeedBtn({
   return (
     <>
       {showCopied && (
-        <div className="fixed bottom-6 right-6 z-50 w-fit flex justify-end pointer-events-none">
-          <Alert className="w-fit shadow-lg">
-            <CheckCircle2Icon className="h-4 w-4" />
+        <div className="fixed z-50 flex justify-end pointer-events-none bottom-6 right-6 w-fit">
+          <Alert className="shadow-lg w-fit">
+            <CheckCircle2Icon className="w-4 h-4" />
             <AlertTitle>Copied!</AlertTitle>
             <AlertDescription>Seed copied to clipboard.</AlertDescription>
           </Alert>
@@ -64,10 +64,10 @@ export function SeedBtn({
         <PopoverContent className="w-80 dark:bg-zinc-950">
           <div className="grid gap-4">
             <div className="space-y-2">
-              <h4 className="leading-none font-medium">Rules Seed</h4>
+              <h4 className="font-medium leading-none">Rules Seed</h4>
             </div>
             <div className="pt-2 border-t border-border">
-              <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+              <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
                 Export Seed
               </h5>
               <div className="flex flex-col gap-2 mb-2">
@@ -76,7 +76,7 @@ export function SeedBtn({
                     id="seed-export"
                     value={seed}
                     readOnly
-                    className="font-mono text-xs flex-1"
+                    className="flex-1 font-mono text-xs"
                     style={{ minWidth: 0 }}
                   />
                   <Button
@@ -89,7 +89,7 @@ export function SeedBtn({
                   </Button>
                 </div>
               </div>
-              <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+              <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
                 Import Seed (0-9, a-z, A-Z, 47 chars)
               </h5>
               <div className="flex flex-col gap-2">
@@ -108,7 +108,7 @@ export function SeedBtn({
                       }
                     }}
                     placeholder="Paste or type seed"
-                    className="font-mono text-xs flex-1"
+                    className="flex-1 font-mono text-xs"
                     style={{ minWidth: 0 }}
                     maxLength={47}
                   />

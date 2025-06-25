@@ -12,14 +12,14 @@ export function RulesTable({ rules, rowLabels, colLabels }: RulesTableProps) {
 
   return (
     <div>
-      <table className="border-collapse bg-transparent">
+      <table className="bg-transparent border-collapse">
         <thead>
           <tr>
-            <th className="whitespace-nowrap bg-transparent border-b border-neutral-700"></th>
+            <th className="bg-transparent border-b whitespace-nowrap border-neutral-700"></th>
             {cols.map((col, j) => (
               <th
                 key={j}
-                className="whitespace-nowrap bg-transparent font-semibold text-xs px-2 py-1 border-b border-neutral-700 text-neutral-100"
+                className="px-2 py-1 text-xs font-semibold bg-transparent border-b whitespace-nowrap border-neutral-700 text-neutral-100"
               >
                 {col}
               </th>
@@ -32,13 +32,13 @@ export function RulesTable({ rules, rowLabels, colLabels }: RulesTableProps) {
               key={i}
               className="bg-transparent border-b border-neutral-800 last:border-b-0"
             >
-              <td className="font-medium whitespace-nowrap bg-transparent text-xs px-2 py-1 border-r border-neutral-700 text-neutral-100">
+              <td className="px-2 py-1 text-xs font-medium bg-transparent border-r whitespace-nowrap border-neutral-700 text-neutral-100">
                 {rows[i]}
               </td>
               {row.map((val, j) => (
                 <td
                   key={j}
-                  className="whitespace-nowrap bg-transparent text-xs px-2 py-1 border-r border-neutral-800 last:border-r-0 text-neutral-100"
+                  className="px-2 py-1 text-xs bg-transparent border-r whitespace-nowrap border-neutral-800 last:border-r-0 text-neutral-100"
                 >
                   {val.toFixed(2)}
                 </td>

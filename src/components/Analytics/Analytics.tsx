@@ -15,7 +15,7 @@ export function Analytics({
   showRules = true,
 }: AnalyticsProps) {
   return (
-    <div className="flex flex-col gap-4 items-start">
+    <div className="flex flex-col items-start gap-4">
       {showPhysics && <PhysicsTable physics={config.physics} />}
       {showRules && <RulesTable rules={config.rules} />}
     </div>

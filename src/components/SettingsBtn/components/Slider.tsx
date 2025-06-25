@@ -83,12 +83,12 @@ export function Slider({
       {label && (
         <label
           htmlFor={`${name}-input`}
-          className="text-xs font-medium block mb-3"
+          className="block mb-3 text-xs font-medium"
         >
           {label}
         </label>
       )}
-      <div className="flex flex-row items-center gap-4 w-full">
+      <div className="flex flex-row items-center w-full gap-4">
         <Input
           id={`${name}-input`}
           type="number"
@@ -97,7 +97,7 @@ export function Slider({
           step={step}
           value={displayValue}
           onChange={handleInputChange}
-          className="font-mono text-xs w-20 h-7 py-1 px-2"
+          className="w-20 px-2 py-1 font-mono text-xs h-7"
         />
         <ShadcnSlider
           id={`${name}-slider`}

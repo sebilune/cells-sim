@@ -29,10 +29,10 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
       <PopoverContent className="w-80 dark:bg-zinc-950">
         <div className="grid gap-4">
           <div className="space-y-2">
-            <h4 className="leading-none font-medium">Settings</h4>
+            <h4 className="font-medium leading-none">Settings</h4>
           </div>
           <div className="pt-2 border-t border-border">
-            <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+            <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               General
             </h5>
             <div className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
             </div>
           </div>
           <div className="pt-2 border-t border-border">
-            <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+            <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               Analytics
             </h5>
             <div className="flex flex-col gap-2">
@@ -68,7 +68,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
             </div>
           </div>
           <div className="pt-2 border-t border-border">
-            <h5 className="text-xs font-semibold mb-2 text-muted-foreground">
+            <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               Simulation
             </h5>
             <div className="flex flex-col gap-3">
@@ -96,7 +96,7 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
           <div className="pt-4 border-t border-border">
             <Button
               type="button"
-              className="w-full dark:bg-red-500/90 border-1 bg-red-500 hover:bg-red-500/90 border-red-400 dark:hover:bg-red-500/70 text-white"
+              className="w-full text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70"
               title="Reset all settings (Careful!)"
               onClick={() => {
                 localStorage.removeItem("cells-sim-settings");

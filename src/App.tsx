@@ -85,7 +85,7 @@ export function App() {
   }, [randomizeRef]);
 
   return (
-    <div className="w-screen h-screen relative">
+    <div className="relative w-screen h-screen">
       <Simulation
         onRandomizeRef={(randomizeFn) => {
           randomizeRef.current = randomizeFn;
@@ -100,9 +100,9 @@ export function App() {
         onFpsUpdate={setFps}
       />
 
-      <div className="absolute top-4 left-4 right-4 z-10 flex flex-col">
-        <div className="flex flex-col md:flex-row w-full">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-start w-full md:w-auto">
+      <div className="absolute z-10 flex flex-col top-4 left-4 right-4">
+        <div className="flex flex-col w-full md:flex-row">
+          <div className="flex flex-col w-full md:flex-row md:items-center md:justify-start md:w-auto">
             {settings.showOverlay && (
               <Button
                 asChild
@@ -121,14 +121,14 @@ export function App() {
               </Button>
             )}
           </div>
-          <div className="flex flex-row flex-1 justify-center md:justify-end items-center gap-2 mt-2 md:mt-0">
+          <div className="flex flex-row items-center justify-center flex-1 gap-2 mt-2 md:justify-end md:mt-0">
             {settings.showOverlay && (
               <>
                 <Button
                   variant="default"
                   onClick={handleReset}
                   title="Reset simulation"
-                  className="dark:bg-red-500/90 border-1 bg-red-500 hover:bg-red-500/90 border-red-400 dark:hover:bg-red-500/70 text-white flex-grow md:flex-none"
+                  className="flex-grow text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70 md:flex-none"
                 >
                   Reset
                 </Button>
@@ -136,7 +136,7 @@ export function App() {
                   variant="outline"
                   onClick={handleRandomize}
                   title="Randomize simulation (R)"
-                  className="dark:bg-zinc-950 dark:hover:bg-zinc-800 flex-grow md:flex-none"
+                  className="flex-grow dark:bg-zinc-950 dark:hover:bg-zinc-800 md:flex-none"
                 >
                   Randomize
                 </Button>
@@ -149,7 +149,7 @@ export function App() {
                       alert("Invalid seed");
                     }
                   }}
-                  className="dark:bg-zinc-950 dark:hover:bg-zinc-800 flex-grow md:flex-none"
+                  className="flex-grow dark:bg-zinc-950 dark:hover:bg-zinc-800 md:flex-none"
                   title="Import/Export rules seed"
                   variant="outline"
                 />
@@ -170,14 +170,14 @@ export function App() {
           <div className="flex flex-row gap-2 mt-2">
             {fps !== null && (
               <div
-                className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
+                className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-400/60 border-green-400/90 text-zinc-50"
                 title="FPS (V-synced)"
               >
                 FPS: {fps}
               </div>
             )}
             <div
-              className="rounded-full bg-green-400/60 border-2 border-green-400/90 text-zinc-50 text-xs font-mono px-3 py-1 shadow text-center select-none self-start"
+              className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-400/60 border-green-400/90 text-zinc-50"
               title="Particle Count"
             >
               Particles: {config.population.toLocaleString()}
@@ -185,7 +185,7 @@ export function App() {
           </div>
         )}
       </div>
-      <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-4 items-start p-0 m-0 bg-transparent shadow-none border-none">
+      <div className="absolute z-10 flex flex-col items-start gap-4 p-0 m-0 bg-transparent border-none shadow-none bottom-4 left-4">
         <Analytics
           config={config}
           showRules={settings.showRules}
