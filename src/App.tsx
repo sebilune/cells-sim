@@ -2,11 +2,11 @@ import { useRef, useState, useEffect } from "react";
 import type { Config, Settings, Rules } from "@/types/simulation";
 
 import {
-  seedToMatrix,
+  getDefaultRules,
+  getRandomRules,
   matrixToSeed,
-  randomAttractionRules,
+  seedToMatrix,
 } from "@/utils/seedMatrix";
-import { worlds } from "@/config/worlds";
 
 import { useSettings } from "@/providers/SettingsProvider";
 
@@ -15,25 +15,26 @@ import { Analytics } from "@/components/Analytics";
 import { Controls } from "@/components/Controls";
 
 export function App() {
-  const { settings } = useSettings() as { settings: Settings };
-  const randomizeRef = useRef<(() => void) | null>(null);
   const resetRef = useRef<(() => void) | null>(null);
+  const randomizeRef = useRef<(() => void) | null>(null);
   const [fps, setFps] = useState<number | null>(null);
-
+  const { settings, resetSettings } = useSettings() as {
+    settings: Settings;
+    resetSettings: () => void;
+  };
   const [rules, setRules] = useState<Rules>(() => {
     try {
       // Attempt to load rules from localStorage
       const stored = localStorage.getItem("cells-sim-rules");
       if (stored) return JSON.parse(stored);
 
-      // If no rules are found, pick a random seed from the worlds array
-      const randomSeed = worlds[Math.floor(Math.random() * worlds.length)];
-      const matrix = seedToMatrix(randomSeed);
+      // If not found, get default rules
+      const matrix = getDefaultRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(matrix));
       return matrix;
     } catch {
       // If parsing fails, fallback to random rules
-      const randomRules = randomAttractionRules();
+      const randomRules = getRandomRules();
       localStorage.setItem("cells-sim-rules", JSON.stringify(randomRules));
       return randomRules;
     }
@@ -50,18 +51,27 @@ export function App() {
     rules,
   };
 
+  // Randomize rules
   const handleRandomize = () => {
     if (randomizeRef.current) {
       randomizeRef.current();
     }
   };
 
+  // Reset rules
   const handleReset = () => {
     if (resetRef.current) {
       resetRef.current();
     }
   };
 
+  // Reset all settings and rules to defaults
+  const handleResetAll = () => {
+    resetSettings();
+    setRules(getDefaultRules());
+  };
+
+  // "R" to randomize rules
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const active = document.activeElement;
@@ -108,6 +118,7 @@ export function App() {
           setRules={setRules}
           matrixToSeed={matrixToSeed}
           seedToMatrix={seedToMatrix}
+          handleResetAll={handleResetAll}
         />
       </div>
       <div className="absolute z-10 flex flex-col items-start gap-4 p-0 m-0 bg-transparent border-none shadow-none bottom-4 left-4">

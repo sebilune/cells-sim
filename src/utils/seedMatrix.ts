@@ -1,5 +1,7 @@
 // Utilities for converting between a 6x6 matrix and a compact base-62 seed string (numbers, uppercase, lowercase)
 
+import { worlds } from "@/config/worlds";
+
 const DIGIT_TO_FLOAT = (() => {
   const values: number[] = [];
   for (let i = 0; i <= 200; i++) {
@@ -97,7 +99,7 @@ export function matrixToSeed(matrix: number[][]): string {
  * Generates a random 6x6 matrix of floats from -1.00 to 1.00, rounded to 2 decimals.
  * @returns 6x6 matrix with random float values.
  */
-export function randomAttractionRules(): number[][] {
+export function getRandomRules(): number[][] {
   const rules: number[][] = [];
   for (let i = 0; i < 6; i++) {
     const row: number[] = [];
@@ -109,4 +111,10 @@ export function randomAttractionRules(): number[][] {
     rules.push(row);
   }
   return rules;
+}
+
+// Returns a default rules matrix (random world seed)
+export function getDefaultRules() {
+  const randomSeed = worlds[Math.floor(Math.random() * worlds.length)];
+  return seedToMatrix(randomSeed);
 }

@@ -6,27 +6,29 @@ import { ThemeBtn } from "./components/ThemeBtn";
 import type { Settings, Config, Rules } from "@/types/simulation";
 
 interface ControlsProps {
-  settings: Settings;
-  fps: number | null;
   config: Config;
-  handleReset: () => void;
+  fps: number | null;
   handleRandomize: () => void;
-  rules: Rules;
-  setRules: (rules: Rules) => void;
+  handleReset: () => void;
+  handleResetAll?: () => void;
   matrixToSeed: (rules: Rules) => string;
+  rules: Rules;
   seedToMatrix: (seed: string) => Rules;
+  setRules: (rules: Rules) => void;
+  settings: Settings;
 }
 
 export default function Controls({
-  settings,
-  fps,
   config,
-  handleReset,
+  fps,
   handleRandomize,
-  rules,
-  setRules,
+  handleReset,
+  handleResetAll,
   matrixToSeed,
+  rules,
   seedToMatrix,
+  setRules,
+  settings,
 }: ControlsProps) {
   return (
     <>
@@ -88,6 +90,7 @@ export default function Controls({
             className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
             variant="outline"
             title="Settings"
+            onResetAll={handleResetAll}
           />
           <ThemeBtn
             className="dark:bg-zinc-950 dark:hover:bg-zinc-800"

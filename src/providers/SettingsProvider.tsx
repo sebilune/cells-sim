@@ -7,13 +7,14 @@ import type { Physics } from "@/types/simulation";
 import { DEFAULTS } from "@/config/defaults";
 
 interface SettingsContextType {
-  settings: Settings;
-  setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
-  setSettings: (settings: Settings) => void;
+  resetSettings: () => void;
   setPhysicsSetting: <K extends keyof Physics>(
     key: K,
     value: Physics[K]
   ) => void;
+  setSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void;
+  setSettings: (settings: Settings) => void;
+  settings: Settings;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -57,9 +58,20 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     setSettingsState(newSettings);
   };
 
+  // Reset settings to defaults
+  const resetSettings = () => {
+    setSettingsState(DEFAULTS);
+  };
+
   return (
     <SettingsContext.Provider
-      value={{ settings, setSetting, setSettings, setPhysicsSetting }}
+      value={{
+        settings,
+        setSetting,
+        setSettings,
+        setPhysicsSetting,
+        resetSettings,
+      }}
     >
       {children}
     </SettingsContext.Provider>

@@ -10,9 +10,15 @@ interface SettingsBtnProps {
   className?: string;
   variant?: "default" | "outline";
   title?: string;
+  onResetAll?: () => void;
 }
 
-export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
+export function SettingsBtn({
+  className,
+  variant,
+  title,
+  onResetAll,
+}: SettingsBtnProps) {
   const { settings, setSetting, setPhysicsSetting } = useSettings();
 
   return (
@@ -95,9 +101,9 @@ export function SettingsBtn({ className, variant, title }: SettingsBtnProps) {
               className="w-full text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70"
               title="Reset all settings (Careful!)"
               onClick={() => {
-                localStorage.removeItem("cells-sim-settings");
-                localStorage.removeItem("cells-sim-rules");
-                window.location.reload();
+                if (onResetAll) {
+                  onResetAll();
+                }
               }}
             >
               Reset All Settings
