@@ -46,8 +46,8 @@ export default function Controls({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Github className="w-4 h-4 mr-2" /> Sebi's Cellular Automata: A
-                "Clusters" Variation
+                <Github className="w-4 h-4" />
+                Sebi's Cellular Automata: A "Clusters" Variation
               </a>
             </Button>
           )}
