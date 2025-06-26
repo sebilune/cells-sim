@@ -1,6 +1,6 @@
-import type { SettingsState } from "@/providers/SettingsProvider";
+import type { Settings } from "@/types/simulation";
 
-export const DEFAULTS: SettingsState = {
+export const DEFAULTS: Settings = {
   showOverlay: true,
   showRules: true,
   showPhysics: false,
