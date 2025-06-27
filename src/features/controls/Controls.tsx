@@ -1,5 +1,5 @@
 import { SiGithub as Github } from "react-icons/si";
-import { Button } from "@/lib/ui/button";
+import { Button } from "@/components/ui/button";
 import { SeedBtn } from "./components/SeedBtn";
 import { SettingsBtn } from "./components/SettingsBtn";
 import { ThemeBtn } from "./components/ThemeBtn";

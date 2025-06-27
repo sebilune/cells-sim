@@ -10,9 +10,9 @@ import {
 
 import { useSettings } from "@/providers/SettingsProvider";
 
-import { Simulation } from "@/components/Simulation";
-import { Analytics } from "@/components/Analytics";
-import { Controls } from "@/components/Controls";
+import { Simulation } from "@/features/simulation";
+import { Analytics } from "@/features/analytics";
+import { Controls } from "@/features/controls";
 
 export function App() {
   const resetRef = useRef<(() => void) | null>(null);

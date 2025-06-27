@@ -5,7 +5,7 @@ import { SettingsProvider } from "@/providers/SettingsProvider";
 
 import { App } from "./App";
 
-import "./index.css";
+import "./styles/index.css";
 
 createRoot(document.getElementById("app")!).render(
   <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

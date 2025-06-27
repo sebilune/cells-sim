@@ -1,6 +1,6 @@
-import { cn } from "@/lib/shared/utils";
-import { Slider as ShadcnSlider } from "@/lib/ui/slider";
-import { Input } from "@/lib/ui/input";
+import { cn } from "@/lib/utils";
+import { Slider as ShadcnSlider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { useRef, useState } from "react";
 
 interface SliderProps {

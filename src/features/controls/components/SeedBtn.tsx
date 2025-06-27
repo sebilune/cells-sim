@@ -1,10 +1,14 @@
 import { useState } from "react";
 
-import { Button } from "@/lib/ui/button";
-import { Input } from "@/lib/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/lib/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { ClipboardCopy, Upload } from "lucide-react";
-import { Alert, AlertTitle, AlertDescription } from "@/lib/ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2Icon } from "lucide-react";
 
 interface SeedBtnProps {

@@ -1,8 +1,12 @@
 import { Settings as SettingsIcon } from "lucide-react";
-import { Button } from "@/lib/ui/button";
-import { Label } from "@/lib/ui/label";
-import { Checkbox } from "@/lib/ui/checkbox";
-import { Popover, PopoverContent, PopoverTrigger } from "@/lib/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Slider } from "./Slider";
 import { useSettings } from "@/providers/SettingsProvider";
 
