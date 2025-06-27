@@ -10,7 +10,7 @@ A web based cellular automata simulation playground powered by my own variation 
 - Customizable attraction/repulsion rules between particle types.
 - Adjustable physics parameters for diverse behaviors.
 - GPU accelerated with WebGL.
-- Live experimentation with interactive controls
+- Live experimentation with interactive controls.
 
 ##
 
