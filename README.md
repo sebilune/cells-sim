@@ -1,14 +1,18 @@
 # Cellular Automata: A "Clusters" Variation
 
-<img src="./src/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="160" height="auto">
+<div>
+    <img src="./docs/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="160" height="auto">
+    <p>
+        A web based cellular automata simulation playground powered by my own variation of <a href="http://www.ventrella.com/Clusters">Jeffrey Ventrella's "Clusters"</a> algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. It was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, cellular like behaviors can emerge from a simple set of rules that particles follow.
+    </p>
+</div>
 
-A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. It was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, cellular like behaviors can emerge from a simple set of rules that particles follow.
+##
 
-## Showcase ([cells-sim.vercel.app](https://cells-sim.vercel.app))
-
-<video src="./src/assets/video/showcase.mp4" controls width="640" poster="./src/assets/img/logo.png">
-    Your browser does not support the video tag.
-</video>
+<div align="center">
+    <img src="./docs/assets/img/showcase.gif"auto">
+    <p><a href="http://cells-sim.vercel.app">cells-sim.vercel.app</a></p>
+</div>
 
 ## How It Works
 
