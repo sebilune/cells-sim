@@ -1,6 +1,6 @@
 # Cellular Automata: A "Clusters" Variation
 
-<img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="160" align="right" />
+<img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="120" align="right" />
 
 A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns.
 
