@@ -133,7 +133,7 @@ This will start the development server at `http://localhost:5173`.
 
 ##
 
-This project was made as an exploration of mine into the field of Artificial Life, to understand how complex, life-like behaviors can emerge from a simple set of rules. <img src="./docs/assets/img/peepo_heart.png" alt="Peepo Heart" width="24" height="24" style="vertical-align: text-bottom; display: inline;">
+This project was made as an exploration of mine into the field of Artificial Life, to understand how complex cellular behaviors can emerge from a simple set of rules. <img src="./docs/assets/img/peepo_heart.png" alt="Peepo Heart" width="24" height="24" style="vertical-align: text-bottom; display: inline;">
 
 ## License
 
