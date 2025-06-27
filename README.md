@@ -1,12 +1,10 @@
 # Cellular Automata: A "Clusters" Variation
 
-<img src="./src/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="120" height="auto">
+<img src="./src/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="160" height="auto">
 
-A web based cellular automata simulation playground inspired by [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns.
+A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. It was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, cellular like behaviors can emerge from a simple set of rules that particles follow.
 
 ## How It Works
-
-This simulation was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, life-like behaviors can emerge from a simple set of rules which particles follow. The system is modeled as a discrete-time, two-dimensional particle system where the behavior of each particle is determined by forces exerted upon it by other particles.
 
 ### Particle State
 
@@ -14,16 +12,16 @@ The simulation consists of a population of up to a million particles. Each parti
 
 - **Position** `(x, y)`: Its coordinates in the 2D space.
 - **Velocity** `(vx, vy)`: Its speed and direction of movement.
-- **Type**: Red, green, blue, yellow, cyan, or magenta.
+- **Type**: Red, Green, Blue, Yellow, Cyan, or Magenta.
 
 ### Rules of Interaction
 
-The core of the simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the fundamental laws of the simulated space, specifying the nature of the force between any two particle types. For a particle of color `A` and a particle color of `B`, the matrix contains a value, `n`, that dictates their interaction.
+The simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the core laws of the simulated space, specifying the nature of the force between any two particle types. For a particle of type `A` and a particle of type `B`, the matrix contains a value `n`, that dictates their interaction.
 
 - If `n` is **positive**, the force is **attractive**, pulling the particles together.
 - If `n` is **negative**, the force is **repulsive**, pushing them apart.
 
-The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between -1 and 1. This randomization creates a vast landscape of possible worlds, each with its own unique physics, leading to an incredible diversity of emergent patterns.
+The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between -1 and 1. This randomization creates a landscape of possible worlds, leading to an almost infinite diversity of patterns.
 
 <!-- TODO: Add an image here showing the 6x6 grid of the rules matrix, perhaps with colors indicating attraction (warm colors like red/yellow) and repulsion (cool colors like blue/purple). -->
 
@@ -54,24 +52,23 @@ To make the real-time simulation of thousands of particles possible, the entire 
 
 ### Emergence
 
-The often organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The simple, local interaction rules, when applied simultaneously to thousands of particles, give rise to complex, self-organizing global structures. Depending on the (random) rule set, you can witness behaviors analogous to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." This simulation serves as a powerful illustration of how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
+The often organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The simple, local interaction rules, when applied simultaneously to thousands of particles, give rise to complex, self-organizing global structures. Depending on the (random) rule set, you can witness behaviors analogous to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
 
 <!-- TODO: Add a gallery of screenshots here showcasing different emergent patterns from different random rule sets. For example, one showing tight clusters, one showing swirling galaxies, and one showing filament-like structures. -->
-
-The simulation is powered by a custom GLSL (OpenGL Shading Language) implementation of the "Clusters" algorithm. The core of the simulation runs on the GPU, allowing for a massive number of particles to be processed in real-time.
 
 The simulation consists of two main shaders:
 
 - **Step Shader:** This shader is responsible for updating the position and velocity of each particle based on a set of rules. These rules define the attraction and repulsion forces between different types of particles.
 - **Render Shader:** This shader is responsible for rendering the particles to the screen. It uses the particle positions and types to draw each particle with its corresponding color.
 
-The simulation customizable, many parameters are adjustable such as the number of particles, the rules of interaction, and the physics.
+The simulation is customizable, many parameters are adjustable such as the number of particles, the rules of interaction, and the physics.
 
 ## Usage
 
-The simulation can be controlled using the settings panel, in the top-right corner of the screen. The following settings can be adjusted:
+The simulation can be controlled using the settings panel, in the top-right corner of the screen. The following can be adjusted:
 
-- **Overlay:** Toggles the visibility of the overlay, which displays the simulation's performance metrics.
+- **Overlay:** Toggles the visibility of the overlay, which displays the UI excluding for the settings and theme button.
+- **Analytics:** Controls the visibility of the current rules and physics tables at the bottom left of the screen.
 - **Population:** Controls the number of particles in the simulation.
 - **Physics:** Controls the physical properties of the simulation. You can adjust parameters such as:
 
