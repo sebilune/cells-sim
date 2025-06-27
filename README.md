@@ -103,15 +103,21 @@ View settings can be controlled using the following mouse and keyboard shortcuts
 - **Click and drag:** Camera panning.
 - **Scroll wheel:** Zoom in/out.
 
-## Stack
+## Technologies
 
-- **React:** JavaScript library for UI.
-- **TypeScript:** Typed superset of JavaScript.
-- **Vite:** Build tool for modern web apps.
-- **regl:** Functional WebGL library.
-- **GLSL:** OpenGL Shading Language.
-- **Tailwind CSS:** Utility-first CSS framework.
-- **Radix UI:** Unstyled, accessible React components.
+<p align="center">
+  <a href="https://github.com/sebilune">
+    <img src="https://skillicons.dev/icons?i=vite,react,tailwind,ts,bun&perline=8" />
+  </a>
+</p>
+
+- **[React:](https://react.dev/)** JavaScript library for UI.
+- **[TypeScript:](https://www.typescriptlang.org/)** Typed superset of JavaScript.
+- **[Vite:](https://vite.dev/)** Build tool for modern web apps.
+- **[regl:](https://github.com/regl-project/regl)** Functional WebGL library.
+- **[GLSL:](https://docs.gl/sl4/all)** OpenGL Shading Language.
+- **[Tailwind CSS:](https://tailwindcss.com/)** Utility CSS framework.
+- **[Shadcn:](https://ui.shadcn.com/)** React UI components via [Radix UI](https://www.radix-ui.com/).
 
 ## Installation
 
