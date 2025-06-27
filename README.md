@@ -1,16 +1,13 @@
 # Cellular Automata: A "Clusters" Variation
 
-<div>
-    <img src="./docs/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="160" height="auto">
-    <p>
-        A web based cellular automata simulation playground powered by my own variation of <a href="http://www.ventrella.com/Clusters">Jeffrey Ventrella's "Clusters"</a> algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. 
-    </p>
-</div>
+<img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="160" align="right" />
+
+A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns.
 
 ##
 
 <div align="center">
-    <img src="./docs/assets/img/showcase.gif"auto">
+    <img src="./docs/assets/img/showcase.gif" auto>
     <p><a href="http://cells-sim.vercel.app">cells-sim.vercel.app</a></p>
 </div>
 
