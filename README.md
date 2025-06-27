@@ -3,7 +3,7 @@
 <div>
     <img src="./docs/assets/img/logo.png" align="right" alt="Cells Sim Logo" width="160" height="auto">
     <p>
-        A web based cellular automata simulation playground powered by my own variation of <a href="http://www.ventrella.com/Clusters">Jeffrey Ventrella's "Clusters"</a> algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. It was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, cellular like behaviors can emerge from a simple set of rules that particles follow.
+        A web based cellular automata simulation playground powered by my own variation of <a href="http://www.ventrella.com/Clusters">Jeffrey Ventrella's "Clusters"</a> algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. 
     </p>
 </div>
 
@@ -125,6 +125,10 @@ npm run dev
 ```
 
 This will start the development server at `http://localhost:5173`.
+
+##
+
+This project was made as an exploration of mine into the field of Artificial Life, to understand how complex, life-like behaviors can emerge from a simple set of rules. <img src="./docs/assets/img/peepo_heart.png" alt="Peepo Heart" width="24" height="24" style="vertical-align: text-bottom; display: inline;">
 
 ## License
 
