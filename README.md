@@ -4,6 +4,12 @@
 
 A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns. It was made as an exploration of mine into the field of Artificial Life, demonstrating how complex, cellular like behaviors can emerge from a simple set of rules that particles follow.
 
+## Showcase ([cells-sim.vercel.app](https://cells-sim.vercel.app))
+
+<video src="./src/assets/video/showcase.mp4" controls width="640" poster="./src/assets/img/logo.png">
+    Your browser does not support the video tag.
+</video>
+
 ## How It Works
 
 ### Particle State
