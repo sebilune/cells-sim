@@ -38,6 +38,7 @@ The simulation's emergent behavior lies in a `6x6` interaction matrix. This matr
 
 The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between `-1` and `1`. These randomizations lead to an almost infinite diversity of patterns.
 
+<br>
 <div align="center">
 <table>
   <tr>
@@ -105,8 +106,8 @@ The magnitude of this interaction coefficient determines the strength of the for
   </tr>
 </table>
 </div>
-
 <p align="center"><em>Example Matrix<br>Values &gt;0 indicate attraction; values &lt;0 indicate repulsion.</em></p>
+<br>
 
 ### Force Law and Simulation Loop
 
