@@ -114,19 +114,23 @@ The simulation evolves in discrete time steps. In each step, the following calcu
 
 - **Force Calculation**: The net force on a particle is the sum of forces from all other particles within a predefined `maxDistance`. The force exerted by one particle on another follows a simplified gravity-like law:
 
+  <br>
   <div align="center">
     <img src="./docs/assets/img/force_calculation.png" alt="F = g / d"  />
   </div>
+  <br>
 
   where `g` is the interaction value from the rules matrix and `d` is the distance between the particles. This inverse relationship means that closer particles exert a stronger influence.
 
 - **Numerical Integration**: Once the total force vector is calculated for a particle, its velocity and position are updated using a semi-implicit Euler integration method:
 
+  <br> 
   <div align="center">
     <img src="./docs/assets/img/numerical_integration_v_new.png" alt="v_new equation" />
     <br/>
     <img src="./docs/assets/img/numerical_integration_x_new.png" alt="x_new equation"  />
   </div>
+  <br>
 
   The `damping` factor acts like friction, preventing the system from becoming unstable and allowing structures to form and stabilize.
 
@@ -199,7 +203,7 @@ View settings can be controlled using the following mouse and keyboard shortcuts
 If you would like to get a local build of this project, clone the repository and install the dependencies:
 
 ```bash
-git clone https://github.com/your-username/cells-sim.git
+git clone https://github.com/sebilune/cells-sim.git
 cd cells-sim
 npm install
 ```
