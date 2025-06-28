@@ -38,7 +38,76 @@ The simulation's emergent behavior lies in a `6x6` interaction matrix. This matr
 
 The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between $-1$ and $1$. These randomizations lead to an almost infinite diversity of patterns.
 
-<!-- TODO: Add an image here showing the 6x6 grid of the rules matrix, perhaps with colors indicating attraction (warm colors like red/yellow) and repulsion (cool colors like blue/purple). -->
+<div align="center">
+<p align="center"><em>Example Matrix</em></p>
+<table>
+  <tr>
+    <th></th>
+    <th style="background:#ff4d4d;"></th>
+    <th style="background:#4dff4d;"></th>
+    <th style="background:#4d4dff;"></th>
+    <th style="background:#ffff4d;"></th>
+    <th style="background:#4dffff;"></th>
+    <th style="background:#ff4dff;"></th>
+  </tr>
+  <tr>
+    <th style="background:#ff4d4d;"></th>
+    <td>0.8</td>
+    <td>-0.5</td>
+    <td>0.2</td>
+    <td>-0.7</td>
+    <td>0.1</td>
+    <td>-0.3</td>
+  </tr>
+  <tr>
+    <th style="background:#4dff4d;"></th>
+    <td>-0.4</td>
+    <td>0.7</td>
+    <td>-0.6</td>
+    <td>0.3</td>
+    <td>-0.2</td>
+    <td>0.5</td>
+  </tr>
+  <tr>
+    <th style="background:#4d4dff;"></th>
+    <td>0.3</td>
+    <td>-0.1</td>
+    <td>0.9</td>
+    <td>-0.8</td>
+    <td>0.4</td>
+    <td>-0.5</td>
+  </tr>
+  <tr>
+    <th style="background:#ffff4d;"></th>
+    <td>-0.6</td>
+    <td>0.2</td>
+    <td>-0.7</td>
+    <td>0.6</td>
+    <td>-0.3</td>
+    <td>0.8</td>
+  </tr>
+  <tr>
+    <th style="background:#4dffff;"></th>
+    <td>0.2</td>
+    <td>-0.4</td>
+    <td>0.5</td>
+    <td>-0.2</td>
+    <td>0.7</td>
+    <td>-0.6</td>
+  </tr>
+  <tr>
+    <th style="background:#ff4dff;"></th>
+    <td>-0.5</td>
+    <td>0.3</td>
+    <td>-0.8</td>
+    <td>0.4</td>
+    <td>-0.1</td>
+    <td>0.9</td>
+  </tr>
+</table>
+</div>
+
+<p align="center"><em>Values &gt;0 indicate attraction; values &lt;0 indicate repulsion. Header colors correspond to particle types: Red, Green, Blue, Yellow, Cyan, Magenta.</em></p>
 
 ### Force Law and Simulation Loop
 
@@ -65,8 +134,6 @@ The simulation evolves in discrete time steps. In each step, the following calcu
 
 - **Boundary Conditions**: A simple wall repulsion force is applied to keep particles within the visible area, preventing them from flying off-screen.
 
-<!-- TODO: Add a diagram here illustrating two particles of different types, their distance 'd', and the resulting force vector 'F' between them. Show both an attractive (g > 0) and a repulsive (g < 0) case. -->
-
 ### Computing
 
 To make the real-time simulation of thousands of particles possible, the entire computational workload is offloaded to the GPU using WebGL.
@@ -79,7 +146,7 @@ To make the real-time simulation of thousands of particles possible, the entire 
 
 The often organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The simple, local interaction rules, when applied simultaneously to thousands of particles, give rise to complex, self-organizing global structures. Depending on the (random) rule set, you can witness behaviors analogous to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
 
-<!-- TODO: Add a gallery of screenshots here showcasing different emergent patterns from different random rule sets. For example, one showing tight clusters, one showing swirling galaxies, and one showing filament-like structures. -->
+<!-- TODO: Add a gallery of screenshots here -->
 
 The simulation consists of two main shaders:
 
