@@ -39,19 +39,18 @@ The simulation's emergent behavior lies in a `6x6` interaction matrix. This matr
 The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between $-1$ and $1$. These randomizations lead to an almost infinite diversity of patterns.
 
 <div align="center">
-<p align="center"><em>Example Matrix</em></p>
 <table>
   <tr>
     <th></th>
-    <th style="background:#ff4d4d;"></th>
-    <th style="background:#4dff4d;"></th>
-    <th style="background:#4d4dff;"></th>
-    <th style="background:#ffff4d;"></th>
-    <th style="background:#4dffff;"></th>
-    <th style="background:#ff4dff;"></th>
+    <th>Red</th>
+    <th>Green</th>
+    <th>Blue</th>
+    <th>Yellow</th>
+    <th>Cyan</th>
+    <th>Magenta</th>
   </tr>
   <tr>
-    <th style="background:#ff4d4d;"></th>
+    <th>Red</th>
     <td>0.8</td>
     <td>-0.5</td>
     <td>0.2</td>
@@ -60,7 +59,7 @@ The magnitude of this interaction coefficient determines the strength of the for
     <td>-0.3</td>
   </tr>
   <tr>
-    <th style="background:#4dff4d;"></th>
+    <th>Green</th>
     <td>-0.4</td>
     <td>0.7</td>
     <td>-0.6</td>
@@ -69,7 +68,7 @@ The magnitude of this interaction coefficient determines the strength of the for
     <td>0.5</td>
   </tr>
   <tr>
-    <th style="background:#4d4dff;"></th>
+    <th>Blue</th>
     <td>0.3</td>
     <td>-0.1</td>
     <td>0.9</td>
@@ -78,7 +77,7 @@ The magnitude of this interaction coefficient determines the strength of the for
     <td>-0.5</td>
   </tr>
   <tr>
-    <th style="background:#ffff4d;"></th>
+    <th>Yellow</th>
     <td>-0.6</td>
     <td>0.2</td>
     <td>-0.7</td>
@@ -87,7 +86,7 @@ The magnitude of this interaction coefficient determines the strength of the for
     <td>0.8</td>
   </tr>
   <tr>
-    <th style="background:#4dffff;"></th>
+    <th>Cyan</th>
     <td>0.2</td>
     <td>-0.4</td>
     <td>0.5</td>
@@ -96,7 +95,7 @@ The magnitude of this interaction coefficient determines the strength of the for
     <td>-0.6</td>
   </tr>
   <tr>
-    <th style="background:#ff4dff;"></th>
+    <th>Magenta</th>
     <td>-0.5</td>
     <td>0.3</td>
     <td>-0.8</td>
@@ -107,7 +106,7 @@ The magnitude of this interaction coefficient determines the strength of the for
 </table>
 </div>
 
-<p align="center"><em>Values &gt;0 indicate attraction; values &lt;0 indicate repulsion. Header colors correspond to particle types: Red, Green, Blue, Yellow, Cyan, Magenta.</em></p>
+<p align="center"><em>Example Matrix<br>Values &gt;0 indicate attraction; values &lt;0 indicate repulsion.</em></p>
 
 ### Force Law and Simulation Loop
 
