@@ -25,18 +25,18 @@ A web based cellular automata simulation playground powered by my own variation 
 
 The simulation consists of a population of up to a million particles. Each particle is a distinct entity defined by its state, which includes:
 
-- **Position** $(x, y)$: Its coordinates in the 2D space.
-- **Velocity** $(v_x, v_y)$: Its speed and direction of movement.
+- **Position** `(x, y)`: Its coordinates in the 2D space.
+- **Velocity** `(v_x, v_y)`: Its speed and direction of movement.
 - **Type**: Red, Green, Blue, Yellow, Cyan, or Magenta.
 
 ### Rules of Interaction
 
-The simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the core laws of the simulated space, specifying the force between any two particle types. For a particle of type $\text{A}$ and a particle of type $\text{B}$, the matrix contains a value $g$, that dictates their interaction.
+The simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the core laws of the simulated space, specifying the force between any two particle types. For a particle of type `A` and a particle of type `B`, the matrix contains a value `g`, that dictates their interaction.
 
-- If $g$ is **positive**, the force is **attractive**, pulling the particles together.
-- If $g$ is **negative**, the force is **repulsive**, pushing them apart.
+- If `g` is **positive**, the force is **attractive**, pulling the particles together.
+- If `g` is **negative**, the force is **repulsive**, pushing them apart.
 
-The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between $-1$ and $1$. These randomizations lead to an almost infinite diversity of patterns.
+The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between `-1` and `1`. These randomizations lead to an almost infinite diversity of patterns.
 
 <div align="center">
 <table>
@@ -114,20 +114,19 @@ The simulation evolves in discrete time steps. In each step, the following calcu
 
 - **Force Calculation**: The net force on a particle is the sum of forces from all other particles within a predefined `maxDistance`. The force exerted by one particle on another follows a simplified gravity-like law:
 
-  $$
-  F = \frac{g}{d}
-  $$
+  <div align="center">
+    <img src="./docs/assets/img/force_calculation.png" alt="F = g / d"  />
+  </div>
 
-  where $g$ is the interaction value from the rules matrix and $d$ is the distance between the particles. This inverse relationship means that closer particles exert a stronger influence.
+  where `g` is the interaction value from the rules matrix and `d` is the distance between the particles. This inverse relationship means that closer particles exert a stronger influence.
 
 - **Numerical Integration**: Once the total force vector is calculated for a particle, its velocity and position are updated using a semi-implicit Euler integration method:
 
-  $$
-  \begin{align*}
-  \vec{v}_{\text{new}} &= (\vec{v}_{\text{old}} + \vec{F}_{\text{total}}) \cdot \text{damping} \\
-  \vec{x}_{\text{new}} &= \vec{x}_{\text{old}} + \vec{v}_{\text{new}} \cdot \text{time scale}
-  \end{align*}
-  $$
+  <div align="center">
+    <img src="./docs/assets/img/numerical_integration_v_new.png" alt="v_new equation" />
+    <br/>
+    <img src="./docs/assets/img/numerical_integration_x_new.png" alt="x_new equation"  />
+  </div>
 
   The `damping` factor acts like friction, preventing the system from becoming unstable and allowing structures to form and stabilize.
 
