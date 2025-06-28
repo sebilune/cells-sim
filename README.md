@@ -25,18 +25,18 @@ A web based cellular automata simulation playground powered by my own variation 
 
 The simulation consists of a population of up to a million particles. Each particle is a distinct entity defined by its state, which includes:
 
-- **Position** `(x, y)`: Its coordinates in the 2D space.
-- **Velocity** `(vx, vy)`: Its speed and direction of movement.
+- **Position** $(x, y)$: Its coordinates in the 2D space.
+- **Velocity** $(v_x, v_y)$: Its speed and direction of movement.
 - **Type**: Red, Green, Blue, Yellow, Cyan, or Magenta.
 
 ### Rules of Interaction
 
-The simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the core laws of the simulated space, specifying the nature of the force between any two particle types. For a particle of type `A` and a particle of type `B`, the matrix contains a value `n`, that dictates their interaction.
+The simulation's emergent behavior lies in a `6x6` interaction matrix. This matrix defines the core laws of the simulated space, specifying the force between any two particle types. For a particle of type $\text{A}$ and a particle of type $\text{B}$, the matrix contains a value $g$, that dictates their interaction.
 
-- If `n` is **positive**, the force is **attractive**, pulling the particles together.
-- If `n` is **negative**, the force is **repulsive**, pushing them apart.
+- If $g$ is **positive**, the force is **attractive**, pulling the particles together.
+- If $g$ is **negative**, the force is **repulsive**, pushing them apart.
 
-The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between -1 and 1. This randomization creates a landscape of possible worlds, leading to an almost infinite diversity of patterns.
+The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between $-1$ and $1$. These randomizations lead to an almost infinite diversity of patterns.
 
 <!-- TODO: Add an image here showing the 6x6 grid of the rules matrix, perhaps with colors indicating attraction (warm colors like red/yellow) and repulsion (cool colors like blue/purple). -->
 
@@ -44,16 +44,26 @@ The magnitude of this interaction coefficient determines the strength of the for
 
 The simulation evolves in discrete time steps. In each step, the following calculations are performed for every particle in parallel:
 
-1.  **Force Calculation**: The net force on a particle is the sum of forces from all other particles within a predefined `maxDistance`. The force exerted by one particle on another follows a simplified gravity-like law: `F = g / d`, where `g` is the interaction value from the rules matrix and `d` is the distance between the particles. This inverse relationship means that closer particles exert a stronger influence.
+- **Force Calculation**: The net force on a particle is the sum of forces from all other particles within a predefined `maxDistance`. The force exerted by one particle on another follows a simplified gravity-like law:
 
-2.  **Numerical Integration**: Once the total force vector is calculated for a particle, its velocity and position are updated using a semi-implicit Euler integration method:
+  $$
+  F = \frac{g}{d}
+  $$
 
-    - `velocity_new = (velocity_old + total_force) * damping`
-    - `position_new = position_old + velocity_new * timeScale`
+  where $g$ is the interaction value from the rules matrix and $d$ is the distance between the particles. This inverse relationship means that closer particles exert a stronger influence.
 
-    The `damping` factor acts like friction, preventing the system from becoming unstable and allowing structures to form and stabilize.
+- **Numerical Integration**: Once the total force vector is calculated for a particle, its velocity and position are updated using a semi-implicit Euler integration method:
 
-3.  **Boundary Conditions**: A simple wall repulsion force is applied to keep particles within the visible area, preventing them from flying off-screen.
+  $$
+  \begin{align*}
+  \vec{v}_{\text{new}} &= (\vec{v}_{\text{old}} + \vec{F}_{\text{total}}) \cdot \text{damping} \\
+  \vec{x}_{\text{new}} &= \vec{x}_{\text{old}} + \vec{v}_{\text{new}} \cdot \text{time scale}
+  \end{align*}
+  $$
+
+  The `damping` factor acts like friction, preventing the system from becoming unstable and allowing structures to form and stabilize.
+
+- **Boundary Conditions**: A simple wall repulsion force is applied to keep particles within the visible area, preventing them from flying off-screen.
 
 <!-- TODO: Add a diagram here illustrating two particles of different types, their distance 'd', and the resulting force vector 'F' between them. Show both an attractive (g > 0) and a repulsive (g < 0) case. -->
 
