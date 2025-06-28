@@ -142,7 +142,7 @@ To make the real-time simulation of thousands of particles possible, the entire 
 
 ### Emergence
 
-The often organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The simple, local interaction rules, when applied simultaneously to thousands of particles, give rise to complex, self-organizing global structures. Depending on the (random) rule set, you can witness behaviors analogous to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
+The organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The interaction rules, when applied simultaneously to thousands of particles, give rise to self-organizing structures. Depending on the rule set, you can see behaviors similar to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
 
 <!-- TODO: Add a gallery of screenshots here -->
 
@@ -151,7 +151,7 @@ The simulation consists of two main shaders:
 - **Step Shader:** This shader is responsible for updating the position and velocity of each particle based on a set of rules. These rules define the attraction and repulsion forces between different types of particles.
 - **Render Shader:** This shader is responsible for rendering the particles to the screen. It uses the particle positions and types to draw each particle with its corresponding color.
 
-The simulation is customizable, many parameters are adjustable such as the number of particles, the rules of interaction, and the physics.
+The simulation space is very customizable, many parameters are adjustable such as the number of particles, the rules of interaction, and the physics.
 
 ## Usage
 
