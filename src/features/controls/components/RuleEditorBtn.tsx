@@ -130,7 +130,7 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
           Rules
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto min-w-[22rem] max-w-[28rem] p-0 dark:bg-zinc-950">
+      <PopoverContent className="w-auto min-w-[32rem] max-w-[28rem] p-0 dark:bg-zinc-950">
         <div className="grid gap-4 p-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Rules</h4>
@@ -159,12 +159,12 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
             </h5>
             <div className="flex items-center gap-2 flex-nowrap">
               <Select value={fromColor} onValueChange={setFromColor}>
-                <SelectTrigger className="w-20 h-8 px-2 py-1 ">
+                <SelectTrigger className="h-8 px-2 py-1 w-26">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {colorOptions.map((color) => (
-                    <SelectItem key={color} value={color} className="h-8 ">
+                    <SelectItem key={color} value={color} className="h-8">
                       {color}
                     </SelectItem>
                   ))}
@@ -172,12 +172,12 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
               </Select>
               <MoveRight className="w-5 h-5" />
               <Select value={toColor} onValueChange={setToColor}>
-                <SelectTrigger className="w-20 h-8 px-2 py-1 ">
+                <SelectTrigger className="h-8 px-2 py-1 w-26">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {colorOptions.map((color) => (
-                    <SelectItem key={color} value={color} className="h-8 ">
+                    <SelectItem key={color} value={color} className="h-8">
                       {color}
                     </SelectItem>
                   ))}
