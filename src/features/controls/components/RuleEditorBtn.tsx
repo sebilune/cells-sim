@@ -23,11 +23,11 @@ interface RuleEditorBtnProps {
   colorOptions: string[];
 }
 
-export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
+export const RuleEditorBtn = ({
   rules,
   setRules,
   colorOptions,
-}) => {
+}: RuleEditorBtnProps) => {
   const [fromColor, setFromColor] = useState(colorOptions[0]);
   const [toColor, setToColor] = useState(colorOptions[0]);
   const [ruleValue, setRuleValue] = useState(0.5);
