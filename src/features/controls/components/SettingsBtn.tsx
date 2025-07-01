@@ -181,7 +181,7 @@ export function SettingsBtn({
                 />
                 <Slider
                   name="refPopulation"
-                  label="Scaling Reference Population"
+                  label="Scaling Reference (Population)"
                   value={settings.physics.refPopulation}
                   onChange={(v) => setPhysicsSetting("refPopulation", v)}
                   min={100}
