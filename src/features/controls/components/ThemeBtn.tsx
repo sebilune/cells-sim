@@ -1,14 +1,19 @@
+import { useTheme } from "@/providers/ThemeProvider";
+
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/providers/ThemeProvider";
 
 interface ThemeBtnProps {
   className?: string;
-  variant?: "default" | "outline";
   title?: string;
+  variant?: "default" | "outline" | "secondary" | "custom";
 }
 
-export function ThemeBtn({ className, variant, title }: ThemeBtnProps) {
+export function ThemeBtn({
+  className,
+  title,
+  variant = "custom",
+}: ThemeBtnProps) {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {

@@ -1,10 +1,13 @@
+import type { Settings, Config, Rules } from "@/types/simulation";
+
 import { SiGithub as Github } from "react-icons/si";
+
 import { Button } from "@/components/ui/button";
+
 import { SeedBtn } from "./components/SeedBtn";
 import { SettingsBtn } from "./components/SettingsBtn";
 import { ThemeBtn } from "./components/ThemeBtn";
 import { RuleEditorBtn } from "./components/RuleEditorBtn";
-import type { Settings, Config, Rules } from "@/types/simulation";
 
 interface ControlsProps {
   config: Config;
@@ -36,16 +39,11 @@ export default function Controls({
       <div className="flex flex-col w-full md:flex-row">
         <div className="flex flex-col w-full md:flex-row md:items-center md:justify-start md:w-auto">
           {settings.showOverlay && (
-            <Button
-              asChild
-              variant="outline"
-              className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-              title="View source code"
-            >
+            <Button asChild variant="custom" title="View source code">
               <a
                 href="https://github.com/sebilune/cells-sim"
-                target="_blank"
                 rel="noopener noreferrer"
+                target="_blank"
               >
                 <Github className="w-4 h-4" />
                 Sebi's Cellular Automata: A "Clusters" Variation
@@ -57,22 +55,23 @@ export default function Controls({
           {settings.showOverlay && (
             <>
               <Button
-                variant="default"
                 onClick={handleReset}
                 title="Reset simulation"
+                variant="default"
                 className="flex-grow text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70 md:flex-none"
               >
                 Reset
               </Button>
               <Button
-                variant="outline"
                 onClick={handleRandomize}
                 title="Randomize simulation (R)"
-                className="flex-grow dark:bg-zinc-950 dark:hover:bg-zinc-800 md:flex-none"
+                className="flex-grow md:flex-none"
+                variant="custom"
               >
                 Randomize
               </Button>
               <SeedBtn
+                className="flex-grow md:flex-none"
                 seed={matrixToSeed(rules)}
                 onImport={(seed) => {
                   try {
@@ -81,27 +80,23 @@ export default function Controls({
                     alert("Invalid seed");
                   }
                 }}
-                className="flex-grow dark:bg-zinc-950 dark:hover:bg-zinc-800 md:flex-none"
                 title="Import/Export rules seed"
-                variant="outline"
+                variant="custom"
               />
             </>
           )}
           <RuleEditorBtn
+            colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
             rules={rules}
             setRules={setRules}
-            colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
+            variant="custom"
           />
           <SettingsBtn
-            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-            variant="outline"
-            title="Settings"
             onResetAll={handleResetAll}
+            title="Settings"
+            variant="custom"
           />
-          <ThemeBtn
-            className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
-            variant="outline"
-          />
+          <ThemeBtn variant="custom" />
         </div>
       </div>
       {settings.showOverlay && (

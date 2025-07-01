@@ -21,12 +21,14 @@ interface RuleEditorBtnProps {
   rules: number[][];
   setRules: (rules: number[][]) => void;
   colorOptions: string[];
+  variant?: "default" | "outline" | "secondary" | "custom";
 }
 
 export const RuleEditorBtn = ({
   rules,
   setRules,
   colorOptions,
+  variant = "custom",
 }: RuleEditorBtnProps) => {
   const [fromColor, setFromColor] = useState(colorOptions[0]);
   const [toColor, setToColor] = useState(colorOptions[0]);
@@ -126,11 +128,11 @@ export const RuleEditorBtn = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" title="Edit Custom Rules">
+        <Button variant={variant} title="Edit Custom Rules">
           Rules
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto min-w-[32rem] max-w-[28rem] p-0 dark:bg-zinc-950">
+      <PopoverContent className="w-auto min-w-[32rem] max-w-[28rem] p-0 ">
         <div className="grid gap-4 p-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Rules</h4>

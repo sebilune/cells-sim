@@ -16,14 +16,14 @@ import { useSettings } from "@/providers/SettingsProvider";
 
 interface SettingsBtnProps {
   className?: string;
-  variant?: "default" | "outline";
+  variant?: "default" | "outline" | "secondary" | "custom";
   title?: string;
   onResetAll?: () => void;
 }
 
 export function SettingsBtn({
   className,
-  variant,
+  variant = "custom",
   title,
   onResetAll,
 }: SettingsBtnProps) {
@@ -36,7 +36,7 @@ export function SettingsBtn({
           <SettingsIcon className="w-5 h-5" aria-label="Settings" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 max-h-[70vh] p-0 dark:bg-zinc-950">
+      <PopoverContent className="w-80 max-h-[70vh] p-0">
         <ScrollArea className="h-[70vh] w-full">
           <div className="grid gap-4 p-4">
             <div className="space-y-2">

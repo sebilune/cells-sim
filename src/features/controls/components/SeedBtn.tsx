@@ -14,7 +14,7 @@ import { CheckCircle2Icon } from "lucide-react";
 interface SeedBtnProps {
   seed: string;
   onImport: (seed: string) => void;
-  variant?: "default" | "outline";
+  variant?: "default" | "outline" | "secondary" | "custom";
   title?: string;
   className?: string;
 }
@@ -22,7 +22,7 @@ interface SeedBtnProps {
 export function SeedBtn({
   seed,
   onImport,
-  variant,
+  variant = "custom",
   title,
   className,
 }: SeedBtnProps) {
@@ -61,7 +61,7 @@ export function SeedBtn({
             Seed
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-80 dark:bg-zinc-950">
+        <PopoverContent className="w-80">
           <div className="grid gap-4">
             <div className="space-y-2">
               <h4 className="font-medium leading-none">Rules Seed</h4>
