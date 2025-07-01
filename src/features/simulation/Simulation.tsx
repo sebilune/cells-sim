@@ -29,7 +29,18 @@ export function Simulation({
     regl: any;
     cleanup: () => void;
   } | null>(null);
-  const mousePos = useRef({ x: 0, y: 0 }); // Store mouse position in simulation
+  const mousePos = useRef({ x: 0, y: 0 });
+
+  // Refs for rules and physics
+  const rulesRef = useRef(config.rules);
+  const physicsRef = useRef(config.physics);
+
+  useEffect(() => {
+    rulesRef.current = config.rules;
+  }, [config.rules]);
+  useEffect(() => {
+    physicsRef.current = config.physics;
+  }, [config.physics]);
 
   useEffect(() => {
     if (!canvasRef.current || !config) return;
@@ -193,78 +204,78 @@ export function Simulation({
         u_resolution: [SIM_RES, SIM_RES],
         u_time: ({ tick }) => tick * 0.01,
 
-        // Pass config values from props
-        u_maxDistance: () => config.physics.maxDistance,
-        u_damping: () => config.physics.damping,
-        u_timeScale: () => config.physics.timeScale,
-        u_wallRepel: () => config.physics.wallRepel,
-        u_wallForce: () => config.physics.wallForce,
+        // Use refs for physics
+        u_maxDistance: () => physicsRef.current.maxDistance,
+        u_damping: () => physicsRef.current.damping,
+        u_timeScale: () => physicsRef.current.timeScale,
+        u_wallRepel: () => physicsRef.current.wallRepel,
+        u_wallForce: () => physicsRef.current.wallForce,
 
-        // Pass 6x6 rules matrix as 12 vec3 uniforms (6 types × 2 vec3 each)
+        // Use refs for rules (6x6 matrix as vec3 uniforms, 6 types * 2 vec3 each)
         u_rules0a: () => [
-          Number(config.rules[0][0].toFixed(2)),
-          Number(config.rules[0][1].toFixed(2)),
-          Number(config.rules[0][2].toFixed(2)),
-        ], // red->rgb
+          Number(rulesRef.current[0][0].toFixed(2)),
+          Number(rulesRef.current[0][1].toFixed(2)),
+          Number(rulesRef.current[0][2].toFixed(2)),
+        ], // red -> rgb
         u_rules0b: () => [
-          Number(config.rules[0][3].toFixed(2)),
-          Number(config.rules[0][4].toFixed(2)),
-          Number(config.rules[0][5].toFixed(2)),
-        ], // red->ycm
+          Number(rulesRef.current[0][3].toFixed(2)),
+          Number(rulesRef.current[0][4].toFixed(2)),
+          Number(rulesRef.current[0][5].toFixed(2)),
+        ], // red -> ycm
         u_rules1a: () => [
-          Number(config.rules[1][0].toFixed(2)),
-          Number(config.rules[1][1].toFixed(2)),
-          Number(config.rules[1][2].toFixed(2)),
-        ], // green->rgb
+          Number(rulesRef.current[1][0].toFixed(2)),
+          Number(rulesRef.current[1][1].toFixed(2)),
+          Number(rulesRef.current[1][2].toFixed(2)),
+        ], // green -> rgb
         u_rules1b: () => [
-          Number(config.rules[1][3].toFixed(2)),
-          Number(config.rules[1][4].toFixed(2)),
-          Number(config.rules[1][5].toFixed(2)),
-        ], // green->ycm
+          Number(rulesRef.current[1][3].toFixed(2)),
+          Number(rulesRef.current[1][4].toFixed(2)),
+          Number(rulesRef.current[1][5].toFixed(2)),
+        ], // green -> ycm
         u_rules2a: () => [
-          Number(config.rules[2][0].toFixed(2)),
-          Number(config.rules[2][1].toFixed(2)),
-          Number(config.rules[2][2].toFixed(2)),
-        ], // blue->rgb
+          Number(rulesRef.current[2][0].toFixed(2)),
+          Number(rulesRef.current[2][1].toFixed(2)),
+          Number(rulesRef.current[2][2].toFixed(2)),
+        ], // blue -> rgb
         u_rules2b: () => [
-          Number(config.rules[2][3].toFixed(2)),
-          Number(config.rules[2][4].toFixed(2)),
-          Number(config.rules[2][5].toFixed(2)),
-        ], // blue->ycm
+          Number(rulesRef.current[2][3].toFixed(2)),
+          Number(rulesRef.current[2][4].toFixed(2)),
+          Number(rulesRef.current[2][5].toFixed(2)),
+        ], // blue -> ycm
         u_rules3a: () => [
-          Number(config.rules[3][0].toFixed(2)),
-          Number(config.rules[3][1].toFixed(2)),
-          Number(config.rules[3][2].toFixed(2)),
-        ], // yellow->rgb
+          Number(rulesRef.current[3][0].toFixed(2)),
+          Number(rulesRef.current[3][1].toFixed(2)),
+          Number(rulesRef.current[3][2].toFixed(2)),
+        ], // yellow -> rgb
         u_rules3b: () => [
-          Number(config.rules[3][3].toFixed(2)),
-          Number(config.rules[3][4].toFixed(2)),
-          Number(config.rules[3][5].toFixed(2)),
-        ], // yellow->ycm
+          Number(rulesRef.current[3][3].toFixed(2)),
+          Number(rulesRef.current[3][4].toFixed(2)),
+          Number(rulesRef.current[3][5].toFixed(2)),
+        ], // yellow -> ycm
         u_rules4a: () => [
-          Number(config.rules[4][0].toFixed(2)),
-          Number(config.rules[4][1].toFixed(2)),
-          Number(config.rules[4][2].toFixed(2)),
-        ], // cyan->rgb
+          Number(rulesRef.current[4][0].toFixed(2)),
+          Number(rulesRef.current[4][1].toFixed(2)),
+          Number(rulesRef.current[4][2].toFixed(2)),
+        ], // cyan -> rgb
         u_rules4b: () => [
-          Number(config.rules[4][3].toFixed(2)),
-          Number(config.rules[4][4].toFixed(2)),
-          Number(config.rules[4][5].toFixed(2)),
-        ], // cyan->ycm
+          Number(rulesRef.current[4][3].toFixed(2)),
+          Number(rulesRef.current[4][4].toFixed(2)),
+          Number(rulesRef.current[4][5].toFixed(2)),
+        ], // cyan -> ycm
         u_rules5a: () => [
-          Number(config.rules[5][0].toFixed(2)),
-          Number(config.rules[5][1].toFixed(2)),
-          Number(config.rules[5][2].toFixed(2)),
-        ], // magenta->rgb
+          Number(rulesRef.current[5][0].toFixed(2)),
+          Number(rulesRef.current[5][1].toFixed(2)),
+          Number(rulesRef.current[5][2].toFixed(2)),
+        ], // magenta -> rgb
         u_rules5b: () => [
-          Number(config.rules[5][3].toFixed(2)),
-          Number(config.rules[5][4].toFixed(2)),
-          Number(config.rules[5][5].toFixed(2)),
-        ], // magenta->ycm
+          Number(rulesRef.current[5][3].toFixed(2)),
+          Number(rulesRef.current[5][4].toFixed(2)),
+          Number(rulesRef.current[5][5].toFixed(2)),
+        ], // magenta -> ycm
 
         // Mouse interaction uniforms
-        u_mouseRepel: () => config.physics.mouseRepel,
-        u_mouseRepelRadius: () => config.physics.mouseRepel * 0.1,
+        u_mouseRepel: () => physicsRef.current.mouseRepel,
+        u_mouseRepelRadius: () => physicsRef.current.mouseRepel * 0.1,
         u_mousePos: () => [mousePos.current.x, mousePos.current.y],
       },
 
@@ -298,7 +309,7 @@ export function Simulation({
         ],
         u_canvasSize: () => [canvas.width, canvas.height],
         u_aspect: () => aspect,
-        u_particleSize: () => config.physics.particleSize,
+        u_particleSize: () => physicsRef.current.particleSize,
         u_camera: () => [camera.x, camera.y, camera.zoom, camera.aspect],
 
         // Pass particle type colors
@@ -481,7 +492,7 @@ export function Simulation({
         simulationRef.current = null;
       }
     };
-  }, [config, setConfig, onFpsUpdate]);
+  }, [config.population, setConfig, onFpsUpdate]);
 
   return <canvas ref={canvasRef} className="bg-black" />;
 }
