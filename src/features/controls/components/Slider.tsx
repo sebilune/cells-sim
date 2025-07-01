@@ -126,7 +126,7 @@ export function Slider({
                 : Math.round(internalValue)
             );
           }}
-          className={cn("w-[60%]")}
+          className={cn("w-[60%] cursor-pointer")}
         />
       </div>
     </div>

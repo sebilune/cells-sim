@@ -51,6 +51,7 @@ export function SettingsBtn({
                   id="showOverlay"
                   checked={settings.showOverlay}
                   onCheckedChange={(v) => setSetting("showOverlay", !!v)}
+                  className="cursor-pointer"
                 />
                 <Label htmlFor="showOverlay">Overlay</Label>
               </div>
@@ -65,6 +66,7 @@ export function SettingsBtn({
                     id="showRules"
                     checked={settings.showRules}
                     onCheckedChange={(v) => setSetting("showRules", !!v)}
+                    className="cursor-pointer"
                   />
                   <Label htmlFor="showRules">Rules</Label>
                 </div>
@@ -73,6 +75,7 @@ export function SettingsBtn({
                     id="showPhysics"
                     checked={settings.showPhysics}
                     onCheckedChange={(v) => setSetting("showPhysics", !!v)}
+                    className="cursor-pointer"
                   />
                   <Label htmlFor="showPhysics">Physics</Label>
                 </div>

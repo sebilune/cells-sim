@@ -109,7 +109,7 @@ export const RuleEditorBtn = ({
           <span>{value}</span>
         </div>
         <button
-          className="px-2 ml-4 text-lg text-muted-foreground"
+          className="px-2 ml-4 text-lg cursor-pointer text-muted-foreground"
           title="Remove custom rule"
           onClick={() => {
             setCustomRules((prev) => {
@@ -161,7 +161,7 @@ export const RuleEditorBtn = ({
             </h5>
             <div className="flex items-center gap-2 flex-nowrap">
               <Select value={fromColor} onValueChange={setFromColor}>
-                <SelectTrigger className="h-8 px-2 py-1 w-26">
+                <SelectTrigger className="h-8 px-2 py-1 cursor-pointer w-26">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -174,7 +174,7 @@ export const RuleEditorBtn = ({
               </Select>
               <MoveRight className="w-5 h-5" />
               <Select value={toColor} onValueChange={setToColor}>
-                <SelectTrigger className="h-8 px-2 py-1 w-26">
+                <SelectTrigger className="h-8 px-2 py-1 cursor-pointer w-26">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
