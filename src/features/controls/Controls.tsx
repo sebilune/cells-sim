@@ -107,14 +107,14 @@ export default function Controls({
         <div className="flex flex-row gap-2 mt-2">
           {fps !== null && (
             <div
-              className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-400/60 border-green-400/90 text-zinc-50"
+              className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-700/90 border-green-400/90 text-zinc-50"
               title="FPS (V-synced)"
             >
               FPS: {fps}
             </div>
           )}
           <div
-            className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-400/60 border-green-400/90 text-zinc-50"
+            className="self-start px-3 py-1 font-mono text-xs text-center border-2 rounded-full shadow select-none bg-green-700/90 border-green-400/90 text-zinc-50"
             title="Particle Count"
           >
             Particles: {config.population.toLocaleString()}
