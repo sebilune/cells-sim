@@ -105,7 +105,7 @@ export function Slider({
           step={step}
           value={displayValue}
           onChange={handleInputChange}
-          className="w-20 px-2 py-1 font-mono text-xs h-7"
+          className="w-20 px-2 py-1 font-mono text-xs h-9"
         />
         <ShadcnSlider
           id={`${name}-slider`}

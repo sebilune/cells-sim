@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SeedBtn } from "./components/SeedBtn";
 import { SettingsBtn } from "./components/SettingsBtn";
 import { ThemeBtn } from "./components/ThemeBtn";
+import { RuleEditorBtn } from "./components/RuleEditorBtn";
 import type { Settings, Config, Rules } from "@/types/simulation";
 
 interface ControlsProps {
@@ -63,6 +64,18 @@ export default function Controls({
               >
                 Reset
               </Button>
+              <RuleEditorBtn
+                rules={rules}
+                setRules={setRules}
+                colorOptions={[
+                  "Red",
+                  "Green",
+                  "Blue",
+                  "Yellow",
+                  "Cyan",
+                  "Magenta",
+                ]}
+              />
               <Button
                 variant="outline"
                 onClick={handleRandomize}
