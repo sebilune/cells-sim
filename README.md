@@ -173,9 +173,6 @@ The simulation can be controlled using the settings panel, in the top-right corn
   - `wallRepel`: Strength of repulsion from the simulation boundaries.
   - `wallForce`: Additional force applied near the walls.
   - `particleSize`: Size of each particle.
-  - `useProportionalScaling`: Whether particle size scales with population.
-  - `refPopulation`: Reference population for scaling calculations.
-  - `scalingRatio`: Ratio used for proportional scaling.
   - `mouseRepel`: Strength of repulsion from the mouse cursor.
 
 View settings can be controlled using the following mouse and keyboard shortcuts:

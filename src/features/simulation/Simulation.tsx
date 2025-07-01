@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
+
 import createREGL from "regl";
-import type { Config } from "@/types/simulation";
 
 import simulationStepFrag from "./shaders/simulationStep.frag.glsl?raw";
 import simulationStepVert from "./shaders/simulationStep.vert.glsl?raw";
 import renderParticlesFrag from "./shaders/renderParticles.frag.glsl?raw";
 import renderParticlesVert from "./shaders/renderParticles.vert.glsl?raw";
+
+import type { Config } from "@/types/simulation";
 
 interface SimulationProps {
   onRandomizeRef?: (randomizeFn: () => void) => void;
@@ -84,23 +86,6 @@ export function Simulation({
     const PARTICLE_COUNT = PARTICLES_PER_TYPE * PARTICLE_TYPES.length;
     const PARTICLE_COUNT_SQRT = Math.ceil(Math.sqrt(PARTICLE_COUNT));
     const SIM_RES = PARTICLE_COUNT_SQRT;
-
-    // Calculate proportional particle size based on population
-    function getEffectiveParticleSize(): number {
-      if (!config.physics.useProportionalScaling) {
-        return config.physics.particleSize;
-      }
-
-      // Scale inversely with configurable ratio to keep visual density reasonable
-      const populationRatio = config.physics.refPopulation / POPULATION;
-      const scaleFactor = Math.pow(
-        populationRatio,
-        config.physics.scalingRatio
-      );
-
-      // Apply minimum size threshold to keep particles visible
-      return Math.max(2.0, config.physics.particleSize * scaleFactor);
-    }
 
     // Ensure canvas fills the container
     canvas.width = canvasWidth;
@@ -313,7 +298,7 @@ export function Simulation({
         ],
         u_canvasSize: () => [canvas.width, canvas.height],
         u_aspect: () => aspect,
-        u_particleSize: () => getEffectiveParticleSize(),
+        u_particleSize: () => config.physics.particleSize,
         u_camera: () => [camera.x, camera.y, camera.zoom, camera.aspect],
 
         // Pass particle type colors

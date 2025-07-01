@@ -5,9 +5,6 @@ export interface Physics {
   wallRepel: number;
   wallForce: number;
   particleSize: number;
-  useProportionalScaling: boolean;
-  refPopulation: number;
-  scalingRatio: number;
   mouseRepel: number;
 }
 

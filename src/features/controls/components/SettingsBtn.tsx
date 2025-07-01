@@ -93,20 +93,11 @@ export function SettingsBtn({
                   step={0.5}
                   float={true}
                 />
-                <Slider
-                  name="population"
-                  label="Population"
-                  value={settings.population}
-                  onChange={(v) => setSetting("population", v)}
-                  min={0}
-                  max={100000}
-                  step={2000}
-                />
               </div>
             </div>
             <div className="pt-2 border-t border-border">
               <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
-                Simulation Physics
+                Physics
               </h5>
               <div className="flex flex-col gap-3">
                 <Slider
@@ -168,25 +159,6 @@ export function SettingsBtn({
                   max={20.0}
                   step={0.1}
                   float={true}
-                />
-                <Slider
-                  name="scalingRatio"
-                  label="Scaling Ratio"
-                  value={settings.physics.scalingRatio}
-                  onChange={(v) => setPhysicsSetting("scalingRatio", v)}
-                  min={0.0}
-                  max={2.0}
-                  step={0.01}
-                  float={true}
-                />
-                <Slider
-                  name="refPopulation"
-                  label="Scaling Reference (Population)"
-                  value={settings.physics.refPopulation}
-                  onChange={(v) => setPhysicsSetting("refPopulation", v)}
-                  min={100}
-                  max={10000}
-                  step={100}
                 />
               </div>
             </div>
