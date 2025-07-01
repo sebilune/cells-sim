@@ -32,7 +32,7 @@ export const RuleEditorBtn = ({
 }: RuleEditorBtnProps) => {
   const [fromColor, setFromColor] = useState(colorOptions[0]);
   const [toColor, setToColor] = useState(colorOptions[0]);
-  const [ruleValue, setRuleValue] = useState(0.5);
+  const [ruleValue, setRuleValue] = useState<string>("0.5");
   const [open, setOpen] = useState(false);
   const [customRules, setCustomRules] = useState<{ [key: string]: number }>({});
 
@@ -65,12 +65,20 @@ export const RuleEditorBtn = ({
   const handleSetRule = () => {
     const fromIdx = colorOptions.indexOf(fromColor);
     const toIdx = colorOptions.indexOf(toColor);
+
+    let v = parseFloat(ruleValue);
+
+    if (isNaN(v)) return; // Don't set if not a number
+    if (v <= -1) v = -0.99;
+    if (v >= 1) v = 0.99;
+
     if (fromIdx !== -1 && toIdx !== -1) {
       const key = `${fromIdx},${toIdx}`;
-      setCustomRules((prev) => ({ ...prev, [key]: ruleValue }));
+      setCustomRules((prev) => ({ ...prev, [key]: v }));
       const newRules = rules.map((row, i) =>
-        row.map((val, j) => (i === fromIdx && j === toIdx ? ruleValue : val))
+        row.map((val, j) => (i === fromIdx && j === toIdx ? v : val))
       );
+
       setRules(newRules);
     }
   };
@@ -86,8 +94,14 @@ export const RuleEditorBtn = ({
       row.map((val, j) => {
         const key = `${i},${j}`;
         if (customRules[key] !== undefined) return val;
-        // Random value between -1 and 1, rounded to 2 decimals
-        return Math.round((Math.random() * 2 - 1) * 100) / 100;
+        // Random value between -0.99 and 0.99, excluding 0
+        let r = 0;
+        while (r === 0) {
+          r =
+            Math.round((Math.random() * 1.98 - 0.99 + Number.EPSILON) * 100) /
+            100;
+        }
+        return r;
       })
     );
     setRules(newRules);
@@ -192,7 +206,7 @@ export const RuleEditorBtn = ({
                 max={1}
                 step={0.01}
                 value={ruleValue}
-                onChange={(e) => setRuleValue(Number(e.target.value))}
+                onChange={(e) => setRuleValue(e.target.value)}
                 className="w-20 px-2 py-1 h-9 "
               />
               <Button
