@@ -62,11 +62,13 @@ export function Slider({
     onChange(float ? parseFloat(v.toFixed(1)) : Math.round(v));
   };
 
-  // onChange when input changes, but not while dragging slider
   const handleSliderChange = ([v]: number[]) => {
     let newValue = v;
     if (float) {
-      newValue = parseFloat(newValue.toFixed(1));
+      // Step for float precision
+      const decimals =
+        step && step < 1 ? step.toString().split(".")[1]?.length || 1 : 1;
+      newValue = parseFloat(newValue.toFixed(decimals));
     } else {
       newValue = Math.round(newValue);
     }
@@ -75,7 +77,13 @@ export function Slider({
 
   // Format value for display
   const displayValue = float
-    ? parseFloat(Number(internalValue).toFixed(1)).toFixed(1)
+    ? (() => {
+        const decimals =
+          step && step < 1 ? step.toString().split(".")[1]?.length || 1 : 1;
+        return parseFloat(Number(internalValue).toFixed(decimals)).toFixed(
+          decimals
+        );
+      })()
     : Math.round(internalValue).toString();
 
   return (
