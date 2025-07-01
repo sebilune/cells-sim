@@ -209,6 +209,18 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
               <div className="flex flex-col gap-1">{customRuleList}</div>
             </div>
           )}
+          {customRuleList.length > 0 && (
+            <div className="pt-4 border-t border-border">
+              <Button
+                type="button"
+                className="w-full text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70"
+                title="Clear all custom rules"
+                onClick={() => setCustomRules({})}
+              >
+                Clear Custom Rules
+              </Button>
+            </div>
+          )}
         </div>
       </PopoverContent>
     </Popover>
