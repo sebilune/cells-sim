@@ -64,18 +64,6 @@ export default function Controls({
               >
                 Reset
               </Button>
-              <RuleEditorBtn
-                rules={rules}
-                setRules={setRules}
-                colorOptions={[
-                  "Red",
-                  "Green",
-                  "Blue",
-                  "Yellow",
-                  "Cyan",
-                  "Magenta",
-                ]}
-              />
               <Button
                 variant="outline"
                 onClick={handleRandomize}
@@ -99,6 +87,11 @@ export default function Controls({
               />
             </>
           )}
+          <RuleEditorBtn
+            rules={rules}
+            setRules={setRules}
+            colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
+          />
           <SettingsBtn
             className="dark:bg-zinc-950 dark:hover:bg-zinc-800"
             variant="outline"
