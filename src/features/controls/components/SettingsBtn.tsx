@@ -93,6 +93,15 @@ export function SettingsBtn({
                   step={0.5}
                   float={true}
                 />
+                <Slider
+                  name="population"
+                  label="Population"
+                  value={settings.population}
+                  onChange={(v) => setSetting("population", v)}
+                  min={0}
+                  max={100000}
+                  step={2000}
+                />
               </div>
             </div>
             <div className="pt-2 border-t border-border">
