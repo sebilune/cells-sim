@@ -1,4 +1,4 @@
-# Cellular Automata: A "Clusters" Variation
+# 🧬 Cellular Simulations: A "Clusters" Variation
 
 <img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="120" align="right" />
 
