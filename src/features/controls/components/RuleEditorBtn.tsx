@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { MoveRight, Tally4 } from "lucide-react";
 
 import {
   Popover,
@@ -71,7 +72,7 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
                   ))}
                 </SelectContent>
               </Select>
-              <span>To</span>
+              <MoveRight className="w-5 h-5" />
               <Select value={toColor} onValueChange={setToColor}>
                 <SelectTrigger className="w-20 h-8 px-2 py-1 ">
                   <SelectValue />
@@ -84,7 +85,7 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
                   ))}
                 </SelectContent>
               </Select>
-              <span>:</span>
+              <Tally4 />
               <Input
                 type="number"
                 min={-1}
