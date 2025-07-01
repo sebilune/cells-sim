@@ -24,22 +24,20 @@ export function Slider({
   step = 1,
   float = false,
 }: SliderProps) {
-  const [internalValue, setInternalValue] = useState(
-    float ? parseFloat(Number(value).toFixed(1)) : Math.round(value)
-  );
+  // Calculate decimals from step
+  const decimals =
+    float && step < 1 ? (step.toString().split(".")[1] || "").length : 0;
+
+  // Helper to round to correct decimals
+  const round = (v: number) =>
+    float ? parseFloat(v.toFixed(decimals)) : Math.round(v);
+
+  const [internalValue, setInternalValue] = useState(round(value));
   const isDragging = useRef(false);
 
   // Keep internalValue in sync with value prop
-  if (
-    (float
-      ? parseFloat(Number(internalValue).toFixed(1)) !==
-        parseFloat(Number(value).toFixed(1))
-      : internalValue !== value) &&
-    !isDragging.current
-  ) {
-    setInternalValue(
-      float ? parseFloat(Number(value).toFixed(1)) : Math.round(value)
-    );
+  if (round(internalValue) !== round(value) && !isDragging.current) {
+    setInternalValue(round(value));
   }
 
   // Allow floats or ints in input
@@ -49,42 +47,25 @@ export function Slider({
       v = parseFloat(e.target.value.replace(/[^0-9.\-]/g, ""));
       if (isNaN(v)) v = min;
       v = Math.max(min, Math.min(max, v));
-      v = parseFloat(v.toFixed(1));
+      v = round(v);
     } else {
       v = parseInt(e.target.value.replace(/[^0-9\-]/g, ""), 10);
       if (isNaN(v)) v = min;
       v = Math.max(min, Math.min(max, v));
-      v = Math.round(v);
+      v = round(v);
     }
     setInternalValue(v);
-
-    // Always pass float
-    onChange(float ? parseFloat(v.toFixed(1)) : Math.round(v));
+    onChange(v);
   };
 
   const handleSliderChange = ([v]: number[]) => {
-    let newValue = v;
-    if (float) {
-      // Step for float precision
-      const decimals =
-        step && step < 1 ? step.toString().split(".")[1]?.length || 1 : 1;
-      newValue = parseFloat(newValue.toFixed(decimals));
-    } else {
-      newValue = Math.round(newValue);
-    }
-    setInternalValue(newValue);
+    setInternalValue(round(v));
   };
 
   // Format value for display
   const displayValue = float
-    ? (() => {
-        const decimals =
-          step && step < 1 ? step.toString().split(".")[1]?.length || 1 : 1;
-        return parseFloat(Number(internalValue).toFixed(decimals)).toFixed(
-          decimals
-        );
-      })()
-    : Math.round(internalValue).toString();
+    ? round(internalValue).toFixed(decimals)
+    : round(internalValue).toString();
 
   return (
     <div className="w-full">
@@ -119,12 +100,7 @@ export function Slider({
           }}
           onPointerUp={() => {
             isDragging.current = false;
-            // Always pass float
-            onChange(
-              float
-                ? parseFloat(internalValue.toFixed(1))
-                : Math.round(internalValue)
-            );
+            onChange(round(internalValue));
           }}
           className={cn("w-[60%] cursor-pointer")}
         />
