@@ -93,7 +93,7 @@ export function SettingsBtn({
                   onChange={(v) => setPhysicsSetting("mouseRepel", v)}
                   min={0.0}
                   max={5.0}
-                  step={0.5}
+                  step={0.01}
                   float={true}
                 />
                 <Slider
