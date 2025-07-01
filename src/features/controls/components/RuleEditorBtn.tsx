@@ -55,6 +55,20 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Rules</h4>
           </div>
+          <div className="pt-4 border-t border-border">
+            <Button
+              type="button"
+              className="w-full"
+              title="Set All to Zero (Sets all rules to zero)"
+              onClick={() => {
+                const zeroed = rules.map((row) => row.map(() => 0));
+                setRules(zeroed);
+              }}
+            >
+              Set All Rules to Zero
+            </Button>
+          </div>
+          {/* Set Rules section */}
           <div className="pt-2 border-t border-border">
             <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               Set Rules
