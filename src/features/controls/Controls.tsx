@@ -63,7 +63,10 @@ export default function Controls({
                 Reset
               </Button>
               <Button
-                onClick={handleRandomize}
+                onClick={() => {
+                  handleRandomize();
+                  handleReset();
+                }}
                 title="Randomize simulation (R)"
                 className="flex-grow md:flex-none"
                 variant="custom"
