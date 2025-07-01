@@ -104,7 +104,7 @@ export function SettingsBtn({
                   value={settings.population}
                   onChange={(v) => setSetting("population", v)}
                   min={0}
-                  max={100000}
+                  max={500000}
                   step={2000}
                 />
               </div>

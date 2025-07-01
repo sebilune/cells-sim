@@ -2,11 +2,11 @@
 
 <img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="120" align="right" />
 
-A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of up to a million particles using rules of attraction and repulsion, creating complex and organic patterns.
+A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of hundreds of thousands of particles using rules of attraction and repulsion, creating complex and organic patterns.
 
 ### Features
 
-- Simulate up to a million interacting particles.
+- Simulate hundreds of thousands of interacting particles smoothly in the browser.
 - Customizable attraction/repulsion rules between particle types.
 - Adjustable physics parameters for diverse behaviors.
 - GPU accelerated with WebGL.
@@ -23,7 +23,7 @@ A web based cellular automata simulation playground powered by my own variation 
 
 ### Particle State
 
-The simulation consists of a population of up to a million particles. Each particle is a distinct entity defined by its state, which includes:
+The simulation consists of a starting population of 4,000 particles. Each particle is a distinct entity defined by its state, which includes:
 
 - **Position** `(x, y)`: Its coordinates in the 2D space.
 - **Velocity** `(v_x, v_y)`: Its speed and direction of movement.
@@ -165,8 +165,8 @@ The simulation can be controlled using the settings panel, in the top-right corn
 - **Overlay:** Toggles the visibility of the overlay, which displays the UI excluding for the settings and theme button.
 - **Analytics:** Controls the visibility of the current rules and physics tables at the bottom left of the screen.
 - **Population:** Controls the number of particles in the simulation.
+- **Rules:** Defines the interaction rules between particle types. You can adjust the values in the `6x6` matrix to change how particles of different types interact with each other.
 - **Physics:** Controls the physical properties of the simulation. You can adjust parameters such as:
-
   - `maxDistance`: Maximum distance for particle interactions.
   - `damping`: Amount of velocity reduction per step (friction).
   - `timeScale`: Speed at which the simulation runs.
