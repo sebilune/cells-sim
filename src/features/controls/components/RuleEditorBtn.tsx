@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { MoveRight, Tally4 } from "lucide-react";
 
 import {
@@ -31,17 +32,96 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
   const [toColor, setToColor] = useState(colorOptions[0]);
   const [ruleValue, setRuleValue] = useState(0.5);
   const [open, setOpen] = useState(false);
+  const [customRules, setCustomRules] = useState<{ [key: string]: number }>({});
+
+  // Load custom rules from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("cells-sim-custom-rules");
+    if (stored) {
+      setCustomRules(JSON.parse(stored));
+    }
+  }, []);
+
+  // Save custom rules to localStorage when changed
+  useEffect(() => {
+    localStorage.setItem("cells-sim-custom-rules", JSON.stringify(customRules));
+  }, [customRules]);
+
+  // Apply custom rules on top of rules matrix
+  useEffect(() => {
+    if (Object.keys(customRules).length > 0) {
+      const newRules = rules.map((row, i) =>
+        row.map((val, j) => {
+          const key = `${i},${j}`;
+          return customRules[key] !== undefined ? customRules[key] : val;
+        })
+      );
+      setRules(newRules);
+    }
+  }, [Object.keys(customRules).join("")]);
 
   const handleSetRule = () => {
     const fromIdx = colorOptions.indexOf(fromColor);
     const toIdx = colorOptions.indexOf(toColor);
     if (fromIdx !== -1 && toIdx !== -1) {
+      const key = `${fromIdx},${toIdx}`;
+      setCustomRules((prev) => ({ ...prev, [key]: ruleValue }));
       const newRules = rules.map((row, i) =>
         row.map((val, j) => (i === fromIdx && j === toIdx ? ruleValue : val))
       );
       setRules(newRules);
     }
   };
+
+  const handleClearAll = () => {
+    setCustomRules({});
+    const zeroed = rules.map((row) => row.map(() => 0));
+    setRules(zeroed);
+  };
+
+  const handleRandomizeRemaining = () => {
+    const newRules = rules.map((row, i) =>
+      row.map((val, j) => {
+        const key = `${i},${j}`;
+        if (customRules[key] !== undefined) return val;
+        // Random value between -1 and 1, rounded to 2 decimals
+        return Math.round((Math.random() * 2 - 1) * 100) / 100;
+      })
+    );
+    setRules(newRules);
+  };
+
+  // Helper to display custom rules
+  const customRuleList = Object.entries(customRules).map(([key, value]) => {
+    const [fromIdx, toIdx] = key.split(",").map(Number);
+    return (
+      <div
+        key={key}
+        className="flex items-center justify-between gap-2 px-4 py-2 font-mono text-sm border rounded-md"
+      >
+        <div className="flex items-center gap-2">
+          <span>{colorOptions[fromIdx]}</span>
+          <span className="mx-1">-&gt;</span>
+          <span>{colorOptions[toIdx]}</span>
+          <span className="mx-1">:</span>
+          <span>{value}</span>
+        </div>
+        <button
+          className="px-2 ml-4 text-lg text-muted-foreground"
+          title="Remove custom rule"
+          onClick={() => {
+            setCustomRules((prev) => {
+              const next = { ...prev };
+              delete next[key];
+              return next;
+            });
+          }}
+        >
+          X
+        </button>
+      </div>
+    );
+  });
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -55,20 +135,24 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Rules</h4>
           </div>
-          <div className="pt-4 border-t border-border">
+          <div className="flex gap-2 pt-4 border-t border-border">
             <Button
               type="button"
-              className="w-full"
+              className="flex-grow"
               title="Set All to Zero (Sets all rules to zero)"
-              onClick={() => {
-                const zeroed = rules.map((row) => row.map(() => 0));
-                setRules(zeroed);
-              }}
+              onClick={handleClearAll}
             >
               Set All Rules to Zero
             </Button>
+            <Button
+              type="button"
+              className="flex-grow"
+              title="Randomize remaining rules (Not custom)"
+              onClick={handleRandomizeRemaining}
+            >
+              Randomize Remaining Rules
+            </Button>
           </div>
-          {/* Set Rules section */}
           <div className="pt-2 border-t border-border">
             <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               Set Rules
@@ -114,6 +198,14 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
               </Button>
             </div>
           </div>
+          {customRuleList.length > 0 && (
+            <div className="pt-2 border-t border-border">
+              <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
+                Custom Rules
+              </h5>
+              <div className="flex flex-col gap-1">{customRuleList}</div>
+            </div>
+          )}
         </div>
       </PopoverContent>
     </Popover>
