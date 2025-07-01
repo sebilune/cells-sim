@@ -16,7 +16,7 @@ A web based cellular automata simulation playground powered by my own variation 
 
 <div align="center">
     <img src="./docs/assets/img/showcase.gif" auto>
-    <p><a href="http://cells-sim.vercel.app">cells-sim.vercel.app</a></p>
+    <p><a href="http://cells.sebilune.dev">cells.sebilune.dev</a></p>
 </div>
 
 ## How It Works
