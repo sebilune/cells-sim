@@ -193,7 +193,10 @@ export const RuleEditorBtn: React.FC<RuleEditorBtnProps> = ({
                 onChange={(e) => setRuleValue(Number(e.target.value))}
                 className="w-20 px-2 py-1 h-9 "
               />
-              <Button className="px-4 h-9 nowrap" onClick={handleSetRule}>
+              <Button
+                className="flex-grow px-4 h-9 nowrap"
+                onClick={handleSetRule}
+              >
                 Set Rule
               </Button>
             </div>
