@@ -96,6 +96,7 @@ export default function Controls({
           />
           <SettingsBtn
             onResetAll={handleResetAll}
+            handleReset={handleReset}
             title="Settings"
             variant="custom"
           />

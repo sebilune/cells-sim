@@ -19,6 +19,7 @@ interface SettingsBtnProps {
   variant?: "default" | "outline" | "secondary" | "custom";
   title?: string;
   onResetAll?: () => void;
+  handleReset?: () => void;
 }
 
 export function SettingsBtn({
@@ -26,6 +27,7 @@ export function SettingsBtn({
   variant = "custom",
   title,
   onResetAll,
+  handleReset,
 }: SettingsBtnProps) {
   const { settings, setSetting, setPhysicsSetting } = useSettings();
 
@@ -182,6 +184,9 @@ export function SettingsBtn({
                 onClick={() => {
                   if (onResetAll) {
                     onResetAll();
+                  }
+                  if (handleReset) {
+                    handleReset();
                   }
                 }}
               >
