@@ -51,7 +51,7 @@ export default function Controls({
                 target="_blank"
                 className="flex flex-wrap items-center"
               >
-                <Github className="w-4 h-4 mr-2" />
+                <Github className="w-4 h-4" />
                 <span className="mr-1">Sebi's Cellular Automata:</span>
                 <span>A "Clusters" Variation</span>
               </a>
