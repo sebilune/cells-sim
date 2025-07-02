@@ -93,15 +93,22 @@ export default function Controls({
                 title="Import/Export rules seed"
                 variant="custom"
               />
+              <RuleEditorBtn
+                className="flex-grow lg:flex-none"
+                colorOptions={[
+                  "Red",
+                  "Green",
+                  "Blue",
+                  "Yellow",
+                  "Cyan",
+                  "Magenta",
+                ]}
+                rules={rules}
+                setRules={setRules}
+                variant="custom"
+              />
             </>
           )}
-          <RuleEditorBtn
-            className="flex-grow lg:flex-none"
-            colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
-            rules={rules}
-            setRules={setRules}
-            variant="custom"
-          />
           <SettingsBtn
             className="flex-grow lg:flex-none"
             onResetAll={handleResetAll}
