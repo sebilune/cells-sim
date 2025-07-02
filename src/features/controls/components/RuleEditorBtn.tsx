@@ -18,16 +18,18 @@ import {
 import { Input } from "@/components/ui/input";
 
 interface RuleEditorBtnProps {
+  className?: string;
+  colorOptions: string[];
   rules: number[][];
   setRules: (rules: number[][]) => void;
-  colorOptions: string[];
   variant?: "default" | "outline" | "secondary" | "custom";
 }
 
 export const RuleEditorBtn = ({
+  className,
+  colorOptions,
   rules,
   setRules,
-  colorOptions,
   variant = "custom",
 }: RuleEditorBtnProps) => {
   const [fromColor, setFromColor] = useState(colorOptions[0]);
@@ -142,7 +144,11 @@ export const RuleEditorBtn = ({
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant={variant} title="Edit Custom Rules">
+        <Button
+          className={className}
+          variant={variant}
+          title="Edit Custom Rules"
+        >
           Rules
         </Button>
       </PopoverTrigger>

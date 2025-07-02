@@ -51,7 +51,7 @@ export default function Controls({
             </Button>
           )}
         </div>
-        <div className="flex flex-row items-center justify-center flex-1 gap-2 mt-2 md:justify-end md:mt-0">
+        <div className="flex flex-row flex-wrap items-center justify-center flex-1 gap-2 mt-2 md:flex-nowrap md:justify-end md:mt-0">
           {settings.showOverlay && (
             <>
               <Button
@@ -89,18 +89,20 @@ export default function Controls({
             </>
           )}
           <RuleEditorBtn
+            className="flex-grow md:flex-none"
             colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
             rules={rules}
             setRules={setRules}
             variant="custom"
           />
           <SettingsBtn
+            className="flex-grow md:flex-none"
             onResetAll={handleResetAll}
             handleReset={handleReset}
             title="Settings"
             variant="custom"
           />
-          <ThemeBtn variant="custom" />
+          <ThemeBtn className="flex-grow md:flex-none" variant="custom" />
         </div>
       </div>
       {settings.showOverlay && (
