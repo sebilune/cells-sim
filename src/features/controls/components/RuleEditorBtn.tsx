@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { MoveRight, Tally4 } from "lucide-react";
+import { ArrowRightLeft, Tally4 } from "lucide-react";
 
 import {
   Popover,
@@ -115,17 +115,17 @@ export const RuleEditorBtn = ({
     return (
       <div
         key={key}
-        className="flex items-center justify-between gap-2 px-4 py-2 font-mono text-sm border rounded-md"
+        className="flex items-center justify-between px-4 py-2 font-mono text-sm border rounded-md gap-x-2 gap-y-1"
       >
-        <div className="flex items-center gap-2">
+        <div className="flex-wrap items-center gap-2">
           <span>{colorOptions[fromIdx]}</span>
-          <span className="mx-1">-&gt;</span>
+          <span className="mx-1">-</span>
           <span>{colorOptions[toIdx]}</span>
           <span className="mx-1">:</span>
           <span>{value}</span>
         </div>
         <button
-          className="px-2 ml-4 text-lg cursor-pointer text-muted-foreground"
+          className="px-2 ml-auto text-lg cursor-pointer text-muted-foreground"
           title="Remove custom rule"
           onClick={() => {
             setCustomRules((prev) => {
@@ -152,12 +152,12 @@ export const RuleEditorBtn = ({
           Rules
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto min-w-[32rem] max-w-[28rem] p-0 ">
+      <PopoverContent className="w-[90vw] max-w-lg md:w-auto md:min-w-[32rem] p-0">
         <div className="grid gap-4 p-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Rules</h4>
           </div>
-          <div className="flex gap-2 pt-4 border-t border-border">
+          <div className="flex flex-col gap-2 pt-4 border-t sm:flex-row border-border">
             <Button
               type="button"
               className="flex-grow"
@@ -179,48 +179,53 @@ export const RuleEditorBtn = ({
             <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
               Set Rules
             </h5>
-            <div className="flex items-center gap-2 flex-nowrap">
-              <Select value={fromColor} onValueChange={setFromColor}>
-                <SelectTrigger className="h-8 px-2 py-1 cursor-pointer w-26">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {colorOptions.map((color) => (
-                    <SelectItem key={color} value={color} className="h-8">
-                      {color}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <MoveRight className="w-5 h-5" />
-              <Select value={toColor} onValueChange={setToColor}>
-                <SelectTrigger className="h-8 px-2 py-1 cursor-pointer w-26">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {colorOptions.map((color) => (
-                    <SelectItem key={color} value={color} className="h-8">
-                      {color}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Tally4 />
-              <Input
-                type="number"
-                min={-1}
-                max={1}
-                step={0.01}
-                value={ruleValue}
-                onChange={(e) => setRuleValue(e.target.value)}
-                className="w-20 px-2 py-1 h-9 "
-              />
-              <Button
-                className="flex-grow px-4 h-9 nowrap"
-                onClick={handleSetRule}
-              >
-                Set Rule
-              </Button>
+            <div className="flex flex-col gap-2 md:flex-row md:items-center">
+              <div className="flex items-center flex-grow gap-2">
+                <Select value={fromColor} onValueChange={setFromColor}>
+                  <SelectTrigger className="w-full h-8 px-2 py-1 cursor-pointer">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {colorOptions.map((color) => (
+                      <SelectItem key={color} value={color} className="h-8">
+                        {color}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <ArrowRightLeft className="hidden w-20 md:block" />
+                <span className="font-bold md:hidden">-</span>
+                <Select value={toColor} onValueChange={setToColor}>
+                  <SelectTrigger className="w-full h-8 px-2 py-1 cursor-pointer">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {colorOptions.map((color) => (
+                      <SelectItem key={color} value={color} className="h-8">
+                        {color}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <span className="font-bold md:hidden">:</span>
+                <Tally4 className="hidden w-20 md:block" />
+                <Input
+                  type="number"
+                  min={-1}
+                  max={1}
+                  step={0.01}
+                  value={ruleValue}
+                  onChange={(e) => setRuleValue(e.target.value)}
+                  className="px-2 py-1 h-9 grow"
+                />
+              </div>
+              <div className="flex items-center flex-grow gap-2">
+                <div className="flex items-center gap-2 grow">
+                  <Button className="px-4 h-9 grow-2" onClick={handleSetRule}>
+                    Set Rule
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
           {customRuleList.length > 0 && (
