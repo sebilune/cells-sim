@@ -36,8 +36,8 @@ export default function Controls({
 }: ControlsProps) {
   return (
     <>
-      <div className="flex flex-col w-full md:flex-row">
-        <div className="flex flex-col w-full md:flex-row md:items-center md:justify-start md:w-auto">
+      <div className="flex flex-col w-full lg:flex-row">
+        <div className="flex flex-col w-full lg:flex-row lg:items-center lg:justify-start lg:w-auto">
           {settings.showOverlay && (
             <Button asChild variant="custom" title="View source code">
               <a
@@ -51,14 +51,14 @@ export default function Controls({
             </Button>
           )}
         </div>
-        <div className="flex flex-row flex-wrap items-center justify-center flex-1 gap-2 mt-2 md:flex-nowrap md:justify-end md:mt-0">
+        <div className="flex flex-row flex-wrap items-center justify-center flex-1 gap-2 mt-2 lg:flex-nowrap lg:justify-end lg:mt-0">
           {settings.showOverlay && (
             <>
               <Button
                 onClick={handleReset}
                 title="Reset simulation"
                 variant="default"
-                className="flex-grow text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70 md:flex-none"
+                className="flex-grow text-white bg-red-500 border-red-400 dark:bg-red-500/90 border-1 hover:bg-red-500/90 dark:hover:bg-red-500/70 lg:flex-none"
               >
                 Reset
               </Button>
@@ -68,13 +68,13 @@ export default function Controls({
                   handleReset();
                 }}
                 title="Randomize simulation (R)"
-                className="flex-grow md:flex-none"
+                className="flex-grow lg:flex-none"
                 variant="custom"
               >
                 Randomize
               </Button>
               <SeedBtn
-                className="flex-grow md:flex-none"
+                className="flex-grow lg:flex-none"
                 seed={matrixToSeed(rules)}
                 onImport={(seed) => {
                   try {
@@ -89,20 +89,20 @@ export default function Controls({
             </>
           )}
           <RuleEditorBtn
-            className="flex-grow md:flex-none"
+            className="flex-grow lg:flex-none"
             colorOptions={["Red", "Green", "Blue", "Yellow", "Cyan", "Magenta"]}
             rules={rules}
             setRules={setRules}
             variant="custom"
           />
           <SettingsBtn
-            className="flex-grow md:flex-none"
+            className="flex-grow lg:flex-none"
             onResetAll={handleResetAll}
             handleReset={handleReset}
             title="Settings"
             variant="custom"
           />
-          <ThemeBtn className="flex-grow md:flex-none" variant="custom" />
+          <ThemeBtn className="flex-grow lg:flex-none" variant="custom" />
         </div>
       </div>
       {settings.showOverlay && (
