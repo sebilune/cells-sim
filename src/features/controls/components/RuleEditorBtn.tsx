@@ -116,9 +116,7 @@ export const RuleEditorBtn = ({
     return (
       <div
         key={key}
-        className={`flex items-center justify-between px-4 py-2 mb-2 font-mono text-sm border rounded-md gap-x-2 gap-y-1 ${
-          Object.keys(customRules).length >= 5 ? "mr-3" : ""
-        }`}
+        className="flex items-center justify-between px-4 py-2 mb-2 font-mono text-sm border rounded-md gap-x-2 gap-y-1"
       >
         <div className="flex-wrap items-center gap-2">
           <span>{colorOptions[fromIdx]}</span>
@@ -236,7 +234,7 @@ export const RuleEditorBtn = ({
               <h5 className="mb-2 text-xs font-semibold text-muted-foreground">
                 Custom Rules
               </h5>
-              <ScrollArea className="flex flex-col gap-1 max-h-60">
+              <ScrollArea className="flex flex-col gap-1 max-h-[18vh]">
                 {customRuleList}
               </ScrollArea>
             </div>
