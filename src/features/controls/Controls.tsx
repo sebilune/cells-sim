@@ -37,7 +37,7 @@ export default function Controls({
   return (
     <>
       <div className="flex flex-col w-full lg:flex-row">
-        <div className="flex flex-col w-full lg:flex-row lg:items-center lg:justify-start lg:w-auto">
+        <div className="flex flex-col w-full lg:flex-row lg:justify-start lg:w-auto">
           {settings.showOverlay && (
             <Button
               asChild
@@ -52,7 +52,7 @@ export default function Controls({
                 className="flex flex-wrap items-center"
               >
                 <Github className="w-4 h-4" />
-                <span className="mr-1">Sebi's Cellular Automata:</span>
+                <span>Sebi's Cellular Automata:</span>
                 <span>A "Clusters" Variation</span>
               </a>
             </Button>
