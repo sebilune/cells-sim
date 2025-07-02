@@ -111,36 +111,42 @@ export const RuleEditorBtn = ({
   };
 
   // Helper to display custom rules
-  const customRuleList = Object.entries(customRules).map(([key, value]) => {
-    const [fromIdx, toIdx] = key.split(",").map(Number);
-    return (
-      <div
-        key={key}
-        className="flex items-center justify-between px-4 py-2 mb-2 font-mono text-sm border rounded-md gap-x-2 gap-y-1"
-      >
-        <div className="flex-wrap items-center gap-2">
-          <span>{colorOptions[fromIdx]}</span>
-          <span className="mx-1">-</span>
-          <span>{colorOptions[toIdx]}</span>
-          <span className="mx-1">:</span>
-          <span>{value}</span>
+  const customRuleList = Object.entries(customRules).map(
+    ([key, value], index, array) => {
+      const [fromIdx, toIdx] = key.split(",").map(Number);
+
+      // Gap using margin, previous flex gap implementation broke when using Shadcn slider for some rason :(
+      const isLast = index === array.length - 1;
+      const containerClass = `flex items-center justify-between px-4 py-2 font-mono text-sm border rounded-md gap-x-2 gap-y-1 ${
+        !isLast ? "mb-2" : ""
+      }`;
+
+      return (
+        <div key={key} className={containerClass}>
+          <div className="flex-wrap items-center gap-2">
+            <span>{colorOptions[fromIdx]}</span>
+            <span className="mx-1">-</span>
+            <span>{colorOptions[toIdx]}</span>
+            <span className="mx-1">:</span>
+            <span>{value}</span>
+          </div>
+          <button
+            className="px-2 ml-auto text-lg cursor-pointer text-muted-foreground"
+            title="Remove custom rule"
+            onClick={() => {
+              setCustomRules((prev) => {
+                const next = { ...prev };
+                delete next[key];
+                return next;
+              });
+            }}
+          >
+            X
+          </button>
         </div>
-        <button
-          className="px-2 ml-auto text-lg cursor-pointer text-muted-foreground"
-          title="Remove custom rule"
-          onClick={() => {
-            setCustomRules((prev) => {
-              const next = { ...prev };
-              delete next[key];
-              return next;
-            });
-          }}
-        >
-          X
-        </button>
-      </div>
-    );
-  });
+      );
+    }
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
