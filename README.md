@@ -2,7 +2,7 @@
 
 <img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="120" align="right" />
 
-A web based cellular automata simulation playground powered by my own variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of hundreds of thousands of particles using rules of attraction and repulsion, creating complex and organic patterns.
+A web based cellular automata simulation playground powered by my variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of hundreds of thousands of particles using rules of attraction and repulsion, creating complex and organic patterns.
 
 ### Features
 
@@ -36,7 +36,7 @@ The simulation's emergent behavior lies in a `6x6` interaction matrix. This matr
 - If `g` is **positive**, the force is **attractive**, pulling the particles together.
 - If `g` is **negative**, the force is **repulsive**, pushing them apart.
 
-The magnitude of this interaction coefficient determines the strength of the force. At the start of each simulation, or when the rules are randomized, this matrix is populated with random values between `-1` and `1`. These randomizations lead to an almost infinite diversity of patterns.
+The magnitude of this interaction coefficient determines the strength of the force. When the rules are randomized, this matrix is populated with random values between `-1` and `1`. This leads to an almost infinite diversity of patterns.
 
 <br>
 <div align="center">
@@ -147,7 +147,7 @@ To make the real-time simulation of thousands of particles possible, the entire 
 
 ### Emergence
 
-The organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The interaction rules, when applied simultaneously to thousands of particles, give rise to self-organizing structures. Depending on the rule set, you can see behaviors similar to flocking, cellular division, predator-prey dynamics, and the formation of stable, complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
+The organic looking patterns you see are not explicitly designed. They are **emergent properties** of the algorithm. The interaction rules, when applied simultaneously to thousands of particles, give rise to self-organizing structures. Depending on the rule set, you can see behaviors similar to flocking, cellular division, predator-prey dynamics, and the formation of complex "organisms." Cellular automata like this show how complexity can arise from simplicity, a fundamental concept in chaos theory and artificial life.
 
 <!-- TODO: Add a gallery of screenshots here -->
 
@@ -168,7 +168,7 @@ The simulation can be controlled using the settings panel, in the top-right corn
 - **Rules:** Defines the interaction rules between particle types. You can adjust the values in the `6x6` matrix to change how particles of different types interact with each other.
 - **Physics:** Controls the physical properties of the simulation. You can adjust parameters such as:
   - `maxDistance`: Maximum distance for particle interactions.
-  - `damping`: Amount of velocity reduction per step (friction).
+  - `damping`: Amount of velocity reduction per step.
   - `timeScale`: Speed at which the simulation runs.
   - `wallRepel`: Strength of repulsion from the simulation boundaries.
   - `wallForce`: Additional force applied near the walls.
@@ -206,13 +206,13 @@ cd cells-sim
 npm install
 ```
 
-Then, start the development server:
+Then, build the app:
 
 ```bash
-npm run dev
+npm run build
 ```
 
-This will start the development server at `http://localhost:5173`.
+This will generate a `dist` directory at the root of the project, containing a portable build of the app. To run the app, open the `dist/index.html` file in any modern web browser.
 
 ##
 
