@@ -167,13 +167,13 @@ The simulation can be controlled using the settings panel, in the top-right corn
 - **Population:** Controls the number of particles in the simulation.
 - **Rules:** Defines the interaction rules between particle types. You can adjust the values in the `6x6` matrix to change how particles of different types interact with each other.
 - **Physics:** Controls the physical properties of the simulation. You can adjust parameters such as:
-  - `maxDistance`: Maximum distance for particle interactions.
-  - `damping`: Amount of velocity reduction per step.
-  - `timeScale`: Speed at which the simulation runs.
-  - `wallRepel`: Strength of repulsion from the simulation boundaries.
-  - `wallForce`: Additional force applied near the walls.
-  - `particleSize`: Size of each particle.
-  - `mouseRepel`: Strength of repulsion from the mouse cursor.
+  - `maxDistance`: Used as cutoff for force calculation.
+  - `damping`: Multiplies velocity after force is applied.
+  - `timeScale`: Multiplies velocity for position update.
+  - `wallRepel`: Defines the "soft" boundary region.
+  - `wallForce`: Multiplies the correction applied when near the wall.
+  - `particleSize`: Used for rendering, doesn't affect physics.
+  - `mouseRepel`: Used for mouse repulsion force.
 
 View settings can be controlled using the following mouse and keyboard shortcuts:
 
