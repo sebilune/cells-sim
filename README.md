@@ -186,7 +186,7 @@ View settings can be controlled using the following mouse and keyboard shortcuts
 
 ## Technologies
 
-<p align="center">
+<p align="left">
   <a href="https://github.com/sebilune">
     <img src="https://skillicons.dev/icons?i=vite,react,tailwind,ts,bun&perline=8" />
   </a>
