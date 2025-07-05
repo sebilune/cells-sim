@@ -1,5 +1,9 @@
 # 🧬 Cellular Simulations: A "Clusters" Variation
 
+![License](https://img.shields.io/github/license/sebilune/cells-sim)
+![Repo Size](https://img.shields.io/github/repo-size/sebilune/cells-sim)
+![Last Commit](https://img.shields.io/github/last-commit/sebilune/cells-sim)
+
 <img src="./docs/assets/img/logo.png" alt="Cells Sim Logo" width="120" align="right" />
 
 A web based cellular automata simulation playground powered by my variation of [Jeffrey Ventrella's "Clusters"](http://www.ventrella.com/Clusters) algorithm. It simulates the movement and interaction of hundreds of thousands of particles using rules of attraction and repulsion, creating complex and organic patterns.
