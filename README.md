@@ -1,6 +1,7 @@
 # 🧬 Cellular Simulations: A "Clusters" Variation
 
 ![License](https://img.shields.io/github/license/sebilune/cells-sim)
+![Code Size (bytes)](https://img.shields.io/github/languages/code-size/sebilune/cells-sim)
 ![Repo Size](https://img.shields.io/github/repo-size/sebilune/cells-sim)
 ![Last Commit](https://img.shields.io/github/last-commit/sebilune/cells-sim)
 
